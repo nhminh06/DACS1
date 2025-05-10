@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/add.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/Reports.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
         primaryStage.setScene(scene); primaryStage.setTitle("Cafe Order"); primaryStage.setWidth(1200); primaryStage.setHeight(900); primaryStage.setResizable(false); primaryStage.show();

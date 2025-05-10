@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cafe.controller.ReportsController">
+
+    <!-- Header -->
+    <top>
+        <HBox fx:id="header" styleClass="header">
+            <Label text="☕ Cafe Management System" styleClass="title"/>
+        </HBox>
+    </top>
+
+    <!-- Sidebar -->
+    <left>
+        <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
+            <Button text="🍽️ Orders" styleClass="sidebar-button"/>
+            <Button text="🏠 Management" styleClass="sidebar-button"/>
+            <Button text="👥 Customers" styleClass="sidebar-button"/>
+            <Button text="📊 Reports" styleClass="sidebar-button"/>
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <HBox spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- TableView Section (bên trái) -->
+            <VBox spacing="15" HBox.hgrow="ALWAYS">
+                <Label text="📊 Báo cáo Doanh thu"
+                       style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #00796B;"/>
+
+                <!-- Toolbar -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button fx:id="filterByDate" text="📅 Lọc theo ngày" styleClass="promo-button"/>
+                    <Button fx:id="filterByMonth" text="📆 Lọc theo tháng" styleClass="promo-button"/>
+                    <Button fx:id="exportReport" text="📤 Xuất báo cáo" styleClass="promo-button"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="searchReport" promptText="🔍 Tìm báo cáo..." prefWidth="200"
+                               styleClass="promo-text-field"/>
+                </HBox>
+
+                <!-- Table -->
+                <TableView fx:id="reportTable" prefHeight="250"
+                           VBox.vgrow="ALWAYS"
+                           style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
+                    <columns>
+                        <TableColumn fx:id="dateColumn" text="Ngày" prefWidth="100"/>
+                        <TableColumn fx:id="orderCountColumn" text="Số đơn hàng" prefWidth="120"/>
+                        <TableColumn fx:id="totalRevenueColumn" text="Doanh thu (VND)" prefWidth="150"/>
+                        <TableColumn fx:id="averageOrderValueColumn" text="Trung bình/đơn" prefWidth="150"/>
+                    </columns>
+                </TableView>
+
+                <!-- Line Chart -->
+                <LineChart fx:id="revenueChart" prefHeight="200" title="Xu hướng Doanh thu">
+                    <xAxis>
+                        <CategoryAxis fx:id="xAxis"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis fx:id="yAxis" label="Doanh thu (VND)"/>
+                    </yAxis>
+                </LineChart>
+            </VBox>
+
+            <!-- Chi tiết báo cáo (bên phải) -->
+            <VBox spacing="10" prefWidth="350"
+                  style="-fx-background-color: #f4f4f4; -fx-padding: 20; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8;">
+                <Label text="📈 Chi tiết Báo cáo"
+                       style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #00796B;"/>
+
+                <Label text="Ngày:"/>
+                <TextField fx:id="txtDate" editable="false"/>
+
+                <Label text="Số đơn hàng:"/>
+                <TextField fx:id="txtOrderCount" editable="false"/>
+
+                <Label text="Doanh thu:"/>
+                <TextField fx:id="txtTotalRevenue" editable="false"/>
+
+                <Label text="Trung bình mỗi đơn:"/>
+                <TextField fx:id="txtAverageOrderValue" editable="false"/>
+
+                <!-- Lịch sử đơn hàng -->
+                <Label text="📜 Lịch sử đơn hàng"
+                       style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #00796B;"/>
+                <ListView fx:id="orderHistoryList" prefHeight="100" VBox.vgrow="ALWAYS"/>
+            </VBox>
+        </HBox>
+    </center>
+</BorderPane>
