@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #e9f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.view.Register">
+
+    <!-- Ảnh bên trái -->
+    <ImageView fitHeight="400.0" fitWidth="322.0" layoutX="-22.0" preserveRatio="true">
+        <image>
+            <Image url="@caphe.jpg" />
+        </image>
+    </ImageView>
+
+    <!-- Form đăng ký bên phải -->
+    <VBox alignment="CENTER" layoutX="286.0" layoutY="3.0" prefHeight="394.0" prefWidth="300.0" spacing="20" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="3.0">
+
+        <!-- Tiêu đề -->
+        <Label style="-fx-text-fill: #004d40; -fx-font-size: 24px; -fx-font-weight: bold;" text="Đăng ký" />
+
+        <!-- Form -->
+        <GridPane alignment="CENTER" hgap="10" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="100" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints minHeight="40" />
+                <RowConstraints minHeight="40" />
+                <RowConstraints minHeight="40" />
+                <RowConstraints minHeight="40" />
+            </rowConstraints>
+
+            <Label text="Tài khoản:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="usernameField" promptText="Nhập tên đăng nhập" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Label text="Mật khẩu:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <PasswordField fx:id="passwordField" promptText="Nhập mật khẩu" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Nhập lại MK:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <PasswordField fx:id="confirmPasswordField" promptText="Xác nhận mật khẩu" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <TextField fx:id="emailField" promptText="Nhập email" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        </GridPane>
+
+        <!-- Nút đăng ký -->
+        <Button fx:id="registerButton" maxWidth="150" onAction="#handleRegister"
+                style="-fx-background-color: #00796b; -fx-text-fill: white; -fx-font-weight: bold;" text="Đăng ký" />
+
+        <!-- Thông báo -->
+        <Label fx:id="messageLabel" text="" textFill="red" visible="false" />
+    </VBox>
+</AnchorPane>

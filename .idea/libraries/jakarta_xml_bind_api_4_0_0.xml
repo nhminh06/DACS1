@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="jakarta.xml.bind-api-4.0.0">
+    <CLASSES>
+      <root url="jar://D:/libraryjava/jakarta.xml.bind-api-4.0.0.jar!/" />
+      <root url="jar://D:/libraryjava/jaxb-runtime-4.0.2.jar!/" />
+      <root url="jar://D:/libraryjava/jfoenix-9.0.10.jar!/" />
+      <root url="jar://D:/libraryjava/jsoup-1.19.1.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/jfx.incubator.richtext.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/jfx.incubator.input.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/jdk.jsobject.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/javafx.web.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/javafx.media.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/javafx.swing.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/javafx.graphics.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/javafx.fxml.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/javafx.controls.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/javafx.base.jar!/" />
+      <root url="jar://D:/libraryjava/javafx-sdk-24.0.1/lib/javafx-swt.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
