@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cafe.controller.ManagementController">
+
+    <!-- Header -->
+    <top>
+        <HBox fx:id="header" styleClass="header">
+            <Label text="☕ Cafe Management System" styleClass="title"/>
+        </HBox>
+    </top>
+
+    <!-- Sidebar -->
+    <left>
+        <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
+            <Button text="🍽️ Orders" styleClass="sidebar-button"/>
+            <Button text="🏠 Management" styleClass="sidebar-button"/>
+            <Button text="👥 Customers" styleClass="sidebar-button"/>
+            <Button text="📊 Reports" styleClass="sidebar-button"/>
+        </VBox>
+    </left>
+
+    <!-- Main content -->
+    <center>
+        <HBox spacing="30" styleClass="content-area">
+
+            <!-- Phần quản lý sản phẩm -->
+            <VBox spacing="20" prefWidth="600" style="-fx-background-color: #ffffff; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;">
+
+                <!-- Thanh công cụ -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button text="➕ Thêm" styleClass="promo-button"/>
+                    <Button text="✏️ Sửa" styleClass="promo-button"/>
+                    <Button text="❌ Xóa" styleClass="promo-button"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="timKiem" promptText="🔍 Tìm sản phẩm..." prefWidth="200"
+                               styleClass="promo-text-field"/>
+                </HBox>
+
+                <!-- Bảng sản phẩm -->
+                <Label text="📦 Danh sách sản phẩm" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
+                <TableView fx:id="bangSanPham" prefHeight="400" prefWidth="560"
+                           style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
+                    <columns>
+                        <TableColumn fx:id="cotTen" text="Tên sản phẩm" prefWidth="220"/>
+                        <TableColumn fx:id="cotGia" text="Giá" prefWidth="100"/>
+                        <TableColumn fx:id="cotMoTa" text="Mô tả" prefWidth="240"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Phần khuyến mãi -->
+            <VBox spacing="20" styleClass="promo-list-area" prefWidth="380">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <Label text="🎁 Tạo mã khuyến mãi" style="-fx-font-weight: bold; -fx-font-size: 16"/>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Tên mã:" prefWidth="100" style="-fx-alignment: CENTER-RIGHT;"/>
+                    <TextField fx:id="tenKhuyenMai" promptText="VD: GIAM10"
+                               prefWidth="250" prefHeight="30" styleClass="promo-text-field"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Giá trị (%):" prefWidth="100" style="-fx-alignment: CENTER-RIGHT;"/>
+                    <TextField fx:id="giaTriKhuyenMai" promptText="VD: 10"
+                               prefWidth="250" prefHeight="30" styleClass="promo-text-field"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Hết hạn:" prefWidth="100" style="-fx-alignment: CENTER-RIGHT;"/>
+                    <DatePicker fx:id="ngayHetHan" prefWidth="250" prefHeight="30" styleClass="promo-date-picker"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="✅ Tạo khuyến mãi" prefHeight="30" styleClass="promo-button"/>
+                </HBox>
+
+                <Separator/>
+
+                <Label text="📜 Danh sách mã khuyến mãi" style="-fx-font-weight: bold; -fx-font-size: 14"/>
+                <TableView fx:id="bangKhuyenMai" prefHeight="200" prefWidth="340"
+                           style="-fx-background-color: #ffffff; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
+                    <columns>
+                        <TableColumn fx:id="cotTenKhuyenMai" text="Tên mã" prefWidth="100"/>
+                        <TableColumn fx:id="cotGiaTri" text="Giá trị (%)" prefWidth="80"/>
+                        <TableColumn fx:id="cotNgayHetHan" text="Ngày hết hạn" prefWidth="120"/>
+                    </columns>
+                </TableView>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button fx:id="xoaKhuyenMai" text="❌ Xóa khuyến mãi" styleClass="promo-button"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+
+</BorderPane>

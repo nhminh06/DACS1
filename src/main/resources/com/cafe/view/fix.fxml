@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.cafe.controller.fixController"
+      spacing="15"
+      style="-fx-background-color: #f9f9f9; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;">
+
+    <Label text="✏️ Sửa thông tin sản phẩm"
+           style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #00796B;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Tên sản phẩm:" GridPane.columnIndex="0" GridPane.rowIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: #263238;"/>
+        <TextField fx:id="tenSanPhamSua" promptText="Nhập tên sản phẩm" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                   prefWidth="300" styleClass="promo-text-field"/>
+
+        <Label text="Giá:" GridPane.columnIndex="0" GridPane.rowIndex="1"
+               style="-fx-font-weight: bold; -fx-text-fill: #263238;"/>
+        <TextField fx:id="giaSanPhamSua" promptText="Nhập giá (VNĐ)" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                   prefWidth="300" styleClass="promo-text-field"/>
+
+        <Label text="Mô tả:" GridPane.columnIndex="0" GridPane.rowIndex="2"
+               style="-fx-font-weight: bold; -fx-text-fill: #263238;"/>
+        <TextArea fx:id="moTaSanPhamSua" promptText="Nhập mô tả sản phẩm" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                  prefWidth="300" prefHeight="80" styleClass="promo-text-area"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="✅ Lưu thay đổi"  styleClass="promo-button"/>
+        <Button text="❌ Hủy"  styleClass="promo-button"/>
+    </HBox>
+
+    <Label fx:id="thongTinSanPhamSua" style="-fx-font-style: italic; -fx-text-fill: #757575;"/>
+
+</VBox>
