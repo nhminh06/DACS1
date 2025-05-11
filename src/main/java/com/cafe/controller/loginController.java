@@ -54,7 +54,7 @@ public class loginController {
             stmt.setString(2, pass);
             ResultSet rs = stmt.executeQuery();
 
-            return rs.next(); // Nếu có dữ liệu, đăng nhập thành công
+            return rs.next();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,12 +67,12 @@ public class loginController {
             Parent root = loader.load();
             root.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
 
-            Stage stage = (Stage) loginButton.getScene().getWindow(); // Lấy cửa sổ hiện tại
+            Stage stage = (Stage) loginButton.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setWidth(1200);
             stage.setHeight(900);
-            stage.centerOnScreen(); // Căn giữa cửa sổ trên màn hình
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
