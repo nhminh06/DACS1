@@ -1,5 +1,6 @@
 package com.cafe.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ public class loginController {
     @FXML private Label errorLabel;
     @FXML private Button loginButton;
 
+
     @FXML
     private void handleLogin() {
         String user = usernameField.getText();
@@ -36,7 +38,7 @@ public class loginController {
 
     public Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "");
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -70,6 +72,7 @@ public class loginController {
             stage.setScene(scene);
             stage.setWidth(1200);
             stage.setHeight(900);
+            stage.centerOnScreen(); // Căn giữa cửa sổ trên màn hình
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
