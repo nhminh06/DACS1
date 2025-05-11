@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jfoenix-9.0.10">
+    <CLASSES>
+      <root url="jar://D:/libraryjava/jfoenix-9.0.10.jar!/" />
+      <root url="jar://D:/libraryjava/mysql-connector-j-9.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
