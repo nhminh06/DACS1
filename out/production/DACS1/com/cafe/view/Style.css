@@ -91,176 +91,190 @@
 
 /* Table Status Colors */
 .trang-thai {
- * {
-    -fx-font-size: 13px;
-    -fx-font-family: "Segoe UI";
+    * {
+        -fx-font-size: 13px;
+        -fx-font-family: "Segoe UI";
+    }
+
+    .trang-thai {
+        -fx-text-fill: #4caf50; /* Green - Available */
+    }
+
+    .trang-thai-occupied {
+        -fx-text-fill: #d32f2f; /* Red - Occupied */
+    }
+
+    .trang-thai-reserved {
+        -fx-text-fill: #f57c00; /* Orange - Reserved */
+    }
+
+    /* Product Box Styling */
+
+    .product-box {
+        -fx-background-color: #ffffff;
+        -fx-border-color: #b0bec5;
+        -fx-border-radius: 8;
+        -fx-background-radius: 8;
+        -fx-pref-width: 160;
+        -fx-pref-height: 220;
+        -fx-padding: 12;
+        -fx-alignment: center;
+        -fx-spacing: 10;
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 4, 0, 0, 2);
+        -fx-cursor: hand;
+    }
+
+    .product-box:hover {
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0, 0, 3);
+        -fx-background-color: #e0f2f1;
+    }
+
+    /* Product Name and Price */
+
+    .product-name {
+        -fx-font-size: 15px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #263238;
+        -fx-wrap-text: true;
+        -fx-alignment: center;
+        -fx-font-family: "Segoe UI";
+    }
+
+    .product-price {
+        -fx-font-size: 13px;
+        -fx-text-fill: #00695c;
+        -fx-alignment: center;
+        -fx-font-family: "Segoe UI";
+    }
+
+    /* Product Image Placeholder */
+
+    .product-image-placeholder {
+        -fx-background-color: #f5f5f5;
+        -fx-pref-width: 110;
+        -fx-pref-height: 110;
+        -fx-border-color: #b0bec5;
+        -fx-border-radius: 6;
+        -fx-background-radius: 6;
+    }
+
+    /* ScrollPane Styling */
+
+    .scroll-pane > .viewport {
+        -fx-background-color: transparent;
+    }
+
+    .scroll-bar:vertical, .scroll-bar:horizontal {
+        -fx-opacity: 0.3;
+        -fx-pref-width: 8;
+        -fx-pref-height: 8;
+        -fx-background-color: #b0bec5;
+    }
+
+    /* Promotion Text Field */
+
+    .promo-text-field {
+        -fx-background-color: #ffffff;
+        -fx-border-color: #00695c;
+        -fx-border-width: 2;
+        -fx-border-radius: 6;
+        -fx-background-radius: 6;
+        -fx-padding: 6 12;
+        -fx-font-size: 14;
+        -fx-font-family: "Segoe UI";
+    }
+
+    .promo-text-field:hover {
+        -fx-background-color: #f5f5f5;
+    }
+
+    /* Promotion Date Picker */
+
+    .promo-date-picker {
+        -fx-background-color: #ffffff;
+        -fx-border-color: #00695c;
+        -fx-border-width: 2;
+        -fx-border-radius: 6;
+        -fx-background-radius: 6;
+        -fx-padding: 6;
+        -fx-font-size: 14;
+        -fx-font-family: "Segoe UI";
+    }
+
+    .promo-date-picker:hover {
+        -fx-background-color: #f5f5f5;
+    }
+
+    /* Promotion Button */
+
+    .promo-button {
+        -fx-background-color: #00695c;
+        -fx-text-fill: #ffffff;
+        -fx-border-radius: 6;
+        -fx-background-radius: 6;
+        -fx-padding: 8 18;
+        -fx-font-size: 14;
+        -fx-font-family: "Segoe UI";
+        -fx-cursor: hand;
+    }
+
+    .promo-button:hover {
+        -fx-background-color: #00897b;
+    }
+
+    /* Promotion List Area */
+
+    .promo-list-area {
+        -fx-background-color: #f5f5f5;
+        -fx-border-color: #00695c;
+        -fx-border-width: 2;
+        -fx-border-radius: 6;
+    }
+
+    .product-box {
+        -fx-pref-height: 190px;
+        -fx-max-height: 190px;
+        -fx-pref-width: 150px;
+        -fx-alignment: center;
+    }
+
+    .product-image-placeholder {
+        -fx-pref-width: 100px;
+        -fx-pref-height: 100px;
+        -fx-background-color: #ddd;
+    }
+
+    .summary-label {
+        -fx-font-weight: bold;
+    }
+
+    .summary-value {
+        -fx-font-size: 14px;
+    }
+
+    .input-field {
+        -fx-pref-width: 120px;
+        -fx-padding: 5px;
+    }
+
+    .action-button {
+        -fx-background-color: #2e7d32;
+        -fx-text-fill: white;
+        -fx-padding: 5px 10px;
+    }
+
+    .summary-label {
+        -fx-font-size: 15px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #263238;
+        -fx-font-family: "Segoe UI";
+    }
+
+    .summary-value {
+        -fx-font-size: 14px;
+        -fx-text-fill: #00695c;
+        -fx-font-family: "Segoe UI";
+    }
 }
 
-.trang-thai {
-    -fx-text-fill: #4caf50; /* Green - Available */
-}
 
-.trang-thai-occupied {
-    -fx-text-fill: #d32f2f; /* Red - Occupied */
-}
-
-.trang-thai-reserved {
-    -fx-text-fill: #f57c00; /* Orange - Reserved */
-}
-
-/* Product Box Styling */
-.product-box {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #b0bec5;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-    -fx-pref-width: 160;
-    -fx-pref-height: 220;
-    -fx-padding: 12;
-    -fx-alignment: center;
-    -fx-spacing: 10;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 4, 0, 0, 2);
-    -fx-cursor: hand;
-}
-
-.product-box:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 6, 0, 0, 3);
-    -fx-background-color: #e0f2f1;
-}
-
-/* Product Name and Price */
-.product-name {
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #263238;
-    -fx-wrap-text: true;
-    -fx-alignment: center;
-    -fx-font-family: "Segoe UI";
-}
-
-.product-price {
-    -fx-font-size: 13px;
-    -fx-text-fill: #00695c;
-    -fx-alignment: center;
-    -fx-font-family: "Segoe UI";
-}
-
-/* Product Image Placeholder */
-.product-image-placeholder {
-    -fx-background-color: #f5f5f5;
-    -fx-pref-width: 110;
-    -fx-pref-height: 110;
-    -fx-border-color: #b0bec5;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-}
-
-/* ScrollPane Styling */
-.scroll-pane > .viewport {
-    -fx-background-color: transparent;
-}
-
-.scroll-bar:vertical, .scroll-bar:horizontal {
-    -fx-opacity: 0.3;
-    -fx-pref-width: 8;
-    -fx-pref-height: 8;
-    -fx-background-color: #b0bec5;
-}
-
-/* Promotion Text Field */
-.promo-text-field {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #00695c;
-    -fx-border-width: 2;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-    -fx-padding: 6 12;
-    -fx-font-size: 14;
-    -fx-font-family: "Segoe UI";
-}
-
-.promo-text-field:hover {
-    -fx-background-color: #f5f5f5;
-}
-
-/* Promotion Date Picker */
-.promo-date-picker {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #00695c;
-    -fx-border-width: 2;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-    -fx-padding: 6;
-    -fx-font-size: 14;
-    -fx-font-family: "Segoe UI";
-}
-
-.promo-date-picker:hover {
-    -fx-background-color: #f5f5f5;
-}
-
-/* Promotion Button */
-.promo-button {
-    -fx-background-color: #00695c;
-    -fx-text-fill: #ffffff;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-    -fx-padding: 8 18;
-    -fx-font-size: 14;
-    -fx-font-family: "Segoe UI";
-    -fx-cursor: hand;
-}
-
-.promo-button:hover {
-    -fx-background-color: #00897b;
-}
-
-/* Promotion List Area */
-.promo-list-area {
-    -fx-background-color: #f5f5f5;
-    -fx-border-color: #00695c;
-    -fx-border-width: 2;
-    -fx-border-radius: 6;
-}
-.product-box {
-    -fx-pref-height: 190px;
-    -fx-max-height: 190px;
-    -fx-pref-width: 150px;
-    -fx-alignment: center;
-}
-
-.product-image-placeholder {
-    -fx-pref-width: 100px;
-    -fx-pref-height: 100px;
-    -fx-background-color: #ddd;
-}
-.summary-label {
-    -fx-font-weight: bold;
-}
-
-.summary-value {
-    -fx-font-size: 14px;
-}
-
-.input-field {
-    -fx-pref-width: 120px;
-    -fx-padding: 5px;
-}
-
-.action-button {
-    -fx-background-color: #2e7d32;
-    -fx-text-fill: white;
-    -fx-padding: 5px 10px;
-}
-.summary-label {
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #263238;
-    -fx-font-family: "Segoe UI";
-}
-
-.summary-value {
-    -fx-font-size: 14px;
-    -fx-text-fill: #00695c;
-    -fx-font-family: "Segoe UI";
-}

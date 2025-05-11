@@ -7,7 +7,7 @@
 <?import javafx.scene.control.SplitPane?>
 
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cafe.controller.Ordercontroller">
+            fx:controller="com.cafe.controller.OrderController">
 
     <top>
         <HBox fx:id="header" styleClass="header">
@@ -19,10 +19,10 @@
     <left>
         <HBox spacing="20" alignment="TOP_LEFT">
             <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
-                <Button text="🍽️ Orders" styleClass="sidebar-button"/>
-                <Button text="🏠 Management" styleClass="sidebar-button"/>
-                <Button text="👥 Customers" styleClass="sidebar-button"/>
-                <Button text="📊 Reports" styleClass="sidebar-button"/>
+                <Button text="🍽️ Orders" styleClass="sidebar-button" />
+                <Button text="🏠 Management" styleClass="sidebar-button" onAction="#gotoManagement"/>
+                <Button text="👥 Customers" styleClass="sidebar-button" onAction="#gotocustomers"/>
+                <Button text="📊 Reports" styleClass="sidebar-button" onAction="#gotoreports"/>
                 <Region VBox.vgrow="ALWAYS"/>
             </VBox>
 

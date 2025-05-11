@@ -18,10 +18,10 @@
     <!-- Sidebar -->
     <left>
         <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
-            <Button text="🍽️ Orders" styleClass="sidebar-button"/>
-            <Button text="🏠 Management" styleClass="sidebar-button"/>
+            <Button text="🍽️ Orders" styleClass="sidebar-button" onAction="#gotoorder"/>
+            <Button text="🏠 Management" styleClass="sidebar-button" onAction="#gotoManagement"/>
             <Button text="👥 Customers" styleClass="sidebar-button"/>
-            <Button text="📊 Reports" styleClass="sidebar-button"/>
+            <Button text="📊 Reports" styleClass="sidebar-button" onAction="#gotoreports"/>
         </VBox>
     </left>
 

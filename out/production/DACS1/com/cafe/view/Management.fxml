@@ -17,10 +17,10 @@
     <!-- Sidebar -->
     <left>
         <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
-            <Button text="🍽️ Orders" styleClass="sidebar-button"/>
+            <Button text="🍽️ Orders" styleClass="sidebar-button" onAction="#gotoorder"/>
             <Button text="🏠 Management" styleClass="sidebar-button"/>
-            <Button text="👥 Customers" styleClass="sidebar-button"/>
-            <Button text="📊 Reports" styleClass="sidebar-button"/>
+            <Button text="👥 Customers" styleClass="sidebar-button" onAction="#gotocustomers"/>
+            <Button text="📊 Reports" styleClass="sidebar-button" onAction="#gotoreports"/>
         </VBox>
     </left>
 
@@ -33,9 +33,9 @@
 
                 <!-- Thanh công cụ -->
                 <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Button text="➕ Thêm" styleClass="promo-button"/>
-                    <Button text="✏️ Sửa" styleClass="promo-button"/>
-                    <Button text="❌ Xóa" styleClass="promo-button"/>
+                    <Button text="➕ Thêm" styleClass="promo-button" onAction="#gotoadd"/>
+                    <Button text="✏️ Sửa" styleClass="promo-button" onAction="#gotofix"/>
+                    <Button text="❌ Xóa" styleClass="promo-button" onAction="#gotodelete"/>
                     <Region HBox.hgrow="ALWAYS"/>
                     <TextField fx:id="timKiem" promptText="🔍 Tìm sản phẩm..." prefWidth="200"
                                styleClass="promo-text-field"/>

@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 
-public class ReportsController {
+public class OrderController {
     @FXML
     public void gotoManagement(ActionEvent event) {
         try {
@@ -39,9 +39,9 @@ public class ReportsController {
         }
     }
     @FXML
-    public void gotoorder(ActionEvent event) {
+    public void gotoreports(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/order.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/reports.fxml"));
             Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
