@@ -64,8 +64,12 @@ public class loginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/Order.fxml"));
             Parent root = loader.load();
             root.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
+
             Stage stage = (Stage) loginButton.getScene().getWindow(); // Lấy cửa sổ hiện tại
-            stage.setScene(new Scene(root)); // Cập nhật giao diện mới
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setWidth(1200);
+            stage.setHeight(900);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
