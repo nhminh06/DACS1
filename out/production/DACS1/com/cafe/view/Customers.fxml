@@ -4,6 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.CustomersController">
 
     <!-- Header -->
@@ -51,7 +53,6 @@
                         <TableColumn fx:id="cotChucVu" prefWidth="120" text="Chức vụ" />
                         <TableColumn fx:id="cotSdt" prefWidth="120" text="SĐT" />
                         <TableColumn fx:id="cotEmail" prefWidth="180" text="Email" />
-
                     </columns>
                 </TableView>
             </VBox>
@@ -74,6 +75,33 @@
 
                 <Label text="Email:" />
                 <TextField fx:id="txtEmail" editable="false" />
+
+                <!-- Lương -->
+                <Label text="Lương:" />
+                <TextField fx:id="txtLuong" editable="false" />
+
+                <!-- Nguyên nhân thay đổi -->
+                <Label text="Nguyên nhân tăng/giảm:" />
+                <ComboBox fx:id="comboNguyenNhan" prefWidth="200">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Làm thêm" />
+                            <String fx:value="Thưởng" />
+                            <String fx:value="Vi phạm" />
+                            <String fx:value="Kỷ luật" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+
+                <!-- Nhập số tiền -->
+                <Label text="Số tiền điều chỉnh (VNĐ):" />
+                <TextField fx:id="txtSoTien" promptText="Nhập số tiền..." />
+
+                <!-- Nút thao tác -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button fx:id="btnGiamLuong" text="➖ Giảm"  onAction="#giamLuong"/>
+                    <Button fx:id="btnTangLuong" text="➕ Tăng" onAction="#tangLuong" />
+                </HBox>
             </VBox>
 
         </HBox>

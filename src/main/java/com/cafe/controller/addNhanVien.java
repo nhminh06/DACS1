@@ -1,111 +1,122 @@
 package com.cafe.controller;
 
+import com.cafe.model.NhanVien;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
-import java.io.File;
-import java.util.regex.Pattern;
+import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class addNhanVien {
 
-    @FXML private TextField txtHoTen;
-    @FXML private TextField txtSoDienThoai;
-    @FXML private TextField txtDiaChi;
-    @FXML private TextField txtEmail;
-    @FXML private ComboBox<String> comboChucVu;
-    @FXML private ImageView imgAnhNhanVien;
-    @FXML private Button btnChonAnh;
-    @FXML private Button btnLuu;
-    @FXML private Button btnHuy;
-
-    private File selectedImageFile;
-
-    // Gọi khi nhấn nút chọn ảnh
     @FXML
-    private void handleChonAnh(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Chọn ảnh nhân viên");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Hình ảnh", "*.png", "*.jpg", "*.jpeg")
-        );
-        File file = fileChooser.showOpenDialog(null);
-        if (file != null) {
-            selectedImageFile = file;
-            Image image = new Image(file.toURI().toString());
-            imgAnhNhanVien.setImage(image);
-        }
+    private TextField txtHoTen, txtSoDienThoai, txtEmail, txtLuong;
+
+    @FXML
+    private ComboBox<String> comboChucVu;
+
+    @FXML
+    private Button btnLuu, btnHuy;
+
+    private ObservableList<NhanVien> danhSach; // Thêm trường để giữ danhSach từ CustomersController
+
+    // Thông tin kết nối CSDL
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/taikhoan";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "";
+
+    // Hàm để thiết lập danhSach
+    public void setDanhSach(ObservableList<NhanVien> danhSach) {
+        this.danhSach = danhSach;
     }
 
-    // Gọi khi nhấn nút Lưu
     @FXML
-    private void handleLuu(ActionEvent event) {
+    public void initialize() {
+        btnHuy.setOnAction((ActionEvent e) -> {
+            ((Stage) btnHuy.getScene().getWindow()).close();
+        });
+
+        btnLuu.setOnAction(this::luuNhanVienMoi);
+    }
+
+    private void luuNhanVienMoi(ActionEvent event) {
         String hoTen = txtHoTen.getText();
         String sdt = txtSoDienThoai.getText();
-        String diaChi = txtDiaChi.getText();
         String email = txtEmail.getText();
         String chucVu = comboChucVu.getValue();
 
-        if (hoTen.isEmpty() || sdt.isEmpty() || diaChi.isEmpty() || email.isEmpty() || chucVu == null) {
-            showAlert(Alert.AlertType.ERROR, "Vui lòng nhập đầy đủ thông tin.");
+        if (hoTen.isEmpty() || sdt.isEmpty() || email.isEmpty() || chucVu == null) {
+            showAlert("Vui lòng điền đầy đủ thông tin.");
             return;
         }
 
-        if (!isValidPhoneNumber(sdt)) {
-            showAlert(Alert.AlertType.WARNING, "Số điện thoại không hợp lệ.");
+        String luongText = txtLuong.getText();
+        if (luongText.isEmpty()) {
+            showAlert("Vui lòng nhập lương.");
             return;
         }
 
-        if (!isValidEmail(email)) {
-            showAlert(Alert.AlertType.WARNING, "Email không hợp lệ.");
+        double luong;
+        try {
+            luong = Double.parseDouble(luongText);
+        } catch (NumberFormatException e) {
+            showAlert("Lương phải là một số hợp lệ.");
             return;
         }
 
-        // Giả lập lưu dữ liệu
-        System.out.println("Nhân viên mới:");
-        System.out.println("Họ tên: " + hoTen);
-        System.out.println("SĐT: " + sdt);
-        System.out.println("Địa chỉ: " + diaChi);
-        System.out.println("Email: " + email);
-        System.out.println("Chức vụ: " + chucVu);
-        System.out.println("Ảnh: " + (selectedImageFile != null ? selectedImageFile.getAbsolutePath() : "Chưa chọn"));
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            // Sinh mã nhân viên tự động không trùng
+            int index = 1;
+            String maNV;
+            while (true) {
+                maNV = "NV" + index;
+                PreparedStatement checkStmt = conn.prepareStatement("SELECT MaNV FROM nhanvien WHERE MaNV = ?");
+                checkStmt.setString(1, maNV);
+                if (!checkStmt.executeQuery().next()) {
+                    break; // Không trùng -> dùng được
+                }
+                index++;
+            }
 
-        showAlert(Alert.AlertType.INFORMATION, "Thêm nhân viên thành công!");
+            // Tạo đối tượng NhanVien
+            NhanVien nv = new NhanVien(maNV, hoTen, chucVu, sdt, email, luong);
 
-        // Xóa form sau khi lưu
-        clearForm();
+            // Lưu vào CSDL
+            String sql = "INSERT INTO nhanvien (MaNV, HoTen, ChucVu, Sdt, Email, Luong) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, maNV);
+            stmt.setString(2, hoTen);
+            stmt.setString(3, chucVu);
+            stmt.setString(4, sdt);
+            stmt.setString(5, email);
+            stmt.setDouble(6, luong);
+
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted > 0) {
+                // Thêm NhanVien mới vào danhSach
+                danhSach.add(nv);
+                showAlert("Thêm nhân viên thành công!");
+                ((Stage) btnLuu.getScene().getWindow()).close();
+            } else {
+                showAlert("Không thể thêm nhân viên.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Lỗi khi lưu vào cơ sở dữ liệu.");
+        }
     }
 
-    @FXML
-    private void handleHuy(ActionEvent event) {
-        clearForm();
-    }
-
-    private void clearForm() {
-        txtHoTen.clear();
-        txtSoDienThoai.clear();
-        txtDiaChi.clear();
-        txtEmail.clear();
-        comboChucVu.setValue(null);
-        imgAnhNhanVien.setImage(null);
-        selectedImageFile = null;
-    }
-
-    private void showAlert(Alert.AlertType alertType, String message) {
-        Alert alert = new Alert(alertType);
+    private void showAlert(String noiDung) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText(noiDung);
         alert.showAndWait();
     }
-
-    private boolean isValidPhoneNumber(String sdt) {
-        return sdt.matches("\\d{9,11}");
-    }
-
-    private boolean isValidEmail(String email) {
-        return Pattern.matches("^\\S+@\\S+\\.\\S+$", email);
-    }
 }
-

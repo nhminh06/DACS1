@@ -1,110 +1,222 @@
 package com.cafe.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 import java.io.IOException;
+import java.sql.*;
+import com.cafe.model.NhanVien;
 
 public class CustomersController {
+
+    @FXML private TableView<NhanVien> bangNhanVien;
+    @FXML private TableColumn<NhanVien, String> cotMaNV, cotTenNV, cotChucVu, cotSdt, cotEmail;
+    @FXML private TextField txtMaNV, txtTenNV, txtChucVu, txtSdt, txtEmail, txtLuong;
+    @FXML private ComboBox<String> comboNguyenNhan;
+    @FXML private TextField txtSoTien;
+    @FXML private TextField timNhanVien;
+
+    private ObservableList<NhanVien> danhSach = FXCollections.observableArrayList();
+
+    private Connection connectDB() throws SQLException {
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "");
+    }
+
+    @FXML
+    public void initialize() {
+        cotMaNV.setCellValueFactory(cell -> cell.getValue().maNVProperty());
+        cotTenNV.setCellValueFactory(cell -> cell.getValue().hoTenProperty());
+        cotChucVu.setCellValueFactory(cell -> cell.getValue().chucVuProperty());
+        cotSdt.setCellValueFactory(cell -> cell.getValue().sdtProperty());
+        cotEmail.setCellValueFactory(cell -> cell.getValue().emailProperty());
+
+        bangNhanVien.setItems(danhSach);
+        loadData();
+
+        bangNhanVien.setOnMouseClicked(this::hienThiChiTiet);
+        timNhanVien.textProperty().addListener((obs, oldText, newText) -> timKiemNhanVien());
+    }
+
+    private void loadData() {
+        danhSach.clear();
+        String query = "SELECT * FROM NhanVien";
+        try (Connection conn = connectDB(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                danhSach.add(new NhanVien(
+                        rs.getString("MaNV"),
+                        rs.getString("HoTen"),
+                        rs.getString("ChucVu"),
+                        rs.getString("Sdt"),
+                        rs.getString("Email"),
+                        rs.getDouble("Luong")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void hienThiChiTiet(MouseEvent event) {
+        NhanVien nv = bangNhanVien.getSelectionModel().getSelectedItem();
+        if (nv != null) {
+            txtMaNV.setText(nv.getMaNV());
+            txtTenNV.setText(nv.getHoTen());
+            txtChucVu.setText(nv.getChucVu());
+            txtSdt.setText(nv.getSdt());
+            txtEmail.setText(nv.getEmail());
+            txtLuong.setText(String.format("%,.0f", nv.getLuong()));
+        }
+    }
+
+    private void timKiemNhanVien() {
+        String tuKhoa = timNhanVien.getText().toLowerCase();
+        ObservableList<NhanVien> ketQua = FXCollections.observableArrayList();
+
+        for (NhanVien nv : danhSach) {
+            if (nv.getHoTen().toLowerCase().contains(tuKhoa) ||
+                    nv.getMaNV().toLowerCase().contains(tuKhoa) ||
+                    nv.getSdt().toLowerCase().contains(tuKhoa) ||
+                    nv.getEmail().toLowerCase().contains(tuKhoa) ||
+                    nv.getChucVu().toLowerCase().contains(tuKhoa)) {
+                ketQua.add(nv);
+            }
+        }
+
+        bangNhanVien.setItems(ketQua);
+    }
+
+    @FXML
+    private void tangLuong() {
+        thayDoiLuong(true);
+    }
+
+    @FXML
+    private void giamLuong() {
+        thayDoiLuong(false);
+    }
+
+    private void thayDoiLuong(boolean isTang) {
+        String maNV = txtMaNV.getText();
+        String nguyenNhan = comboNguyenNhan.getValue();
+        double soTien;
+
+        try {
+            soTien = Double.parseDouble(txtSoTien.getText());
+            if (!isTang) soTien = -soTien;
+        } catch (NumberFormatException e) {
+            showAlert("Vui lòng nhập số tiền hợp lệ.");
+            return;
+        }
+
+        String sql = "UPDATE NhanVien SET Luong = Luong + ? WHERE MaNV = ?";
+        try (Connection conn = connectDB(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setDouble(1, soTien);
+            stmt.setString(2, maNV);
+            stmt.executeUpdate();
+            loadData();
+            txtSoTien.clear();
+            comboNguyenNhan.setValue(null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Không thể cập nhật lương!");
+        }
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setContentText(message);
+        alert.show();
+    }
+
+    // ==== Các hàm chuyển cảnh ====
+
     @FXML
     public void gotoManagement(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/management.fxml"));
-            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Cafe Order");
-            primaryStage.setScene(scene); primaryStage.setTitle("Cafe Order"); primaryStage.setWidth(1200); primaryStage.setHeight(900); primaryStage.setResizable(false); primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        chuyenManHinh(event, "/com/cafe/view/management.fxml", 1200, 900);
     }
+
     @FXML
     public void gotoorder(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/order.fxml"));
-            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Cafe Order");
-            primaryStage.setScene(scene); primaryStage.setTitle("Cafe Order"); primaryStage.setWidth(1200); primaryStage.setHeight(900); primaryStage.setResizable(false); primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        chuyenManHinh(event, "/com/cafe/view/order.fxml", 1200, 900);
     }
+
     @FXML
     public void gotoreports(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/reports.fxml"));
-            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Cafe Order");
-            primaryStage.setScene(scene); primaryStage.setTitle("Cafe Order"); primaryStage.setWidth(1200); primaryStage.setHeight(900); primaryStage.setResizable(false); primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        chuyenManHinh(event, "/com/cafe/view/reports.fxml", 1200, 900);
     }
+
     @FXML
     public void gotoaddnhanvien(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/addnhanvien.fxml"));
-            Stage newStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/addnhanvien.fxml"));
+            Parent root = loader.load();
+
+            // Lấy controller của addNhanVien và truyền danhSach
+            addNhanVien controller = loader.getController();
+            controller.setDanhSach(danhSach);
+
+            Stage stage = new Stage();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
-
-            newStage.setScene(scene);
-            newStage.setTitle("Cafe Order");
-            newStage.setWidth(700);
-            newStage.setHeight(400);
-            newStage.setResizable(false);
-            newStage.show();
-
+            stage.setScene(scene);
+            stage.setTitle("Thêm Nhân Viên");
+            stage.setWidth(700);
+            stage.setHeight(400);
+            stage.setResizable(false);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
     public void gotofixnhanvien(ActionEvent event) {
+        moManHinhPhu("/com/cafe/view/fixnhanvien.fxml", 700, 400);
+    }
+
+    @FXML
+    public void gotodeletenhanvien(ActionEvent event) {
+        moManHinhPhu("/com/cafe/view/deletenhanvien.fxml", 700, 400);
+    }
+
+    // ==== Hàm phụ ====
+
+    private void chuyenManHinh(ActionEvent event, String fxmlPath, int width, int height) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/fixnhanvien.fxml"));
-            Stage newStage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
-
-            newStage.setScene(scene);
-            newStage.setTitle("Cafe Order");
-            newStage.setWidth(700);
-            newStage.setHeight(400);
-            newStage.setResizable(false);
-            newStage.show();
-
+            stage.setScene(scene);
+            stage.setTitle("Cafe Order");
+            stage.setWidth(width);
+            stage.setHeight(height);
+            stage.setResizable(false);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    @FXML
-    public void gotodeletenhanvien(ActionEvent event) {
+
+    private void moManHinhPhu(String fxmlPath, int width, int height) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/deletenhanvien.fxml"));
-            Stage newStage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Stage stage = new Stage();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
-
-            newStage.setScene(scene);
-            newStage.setTitle("Cafe Order");
-            newStage.setWidth(700);
-            newStage.setHeight(400);
-            newStage.setResizable(false);
-            newStage.show();
-
+            stage.setScene(scene);
+            stage.setTitle("Cafe Order");
+            stage.setWidth(width);
+            stage.setHeight(height);
+            stage.setResizable(false);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
