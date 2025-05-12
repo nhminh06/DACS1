@@ -6,7 +6,7 @@
 <VBox spacing="15" style="-fx-background-color: #f9f9f9; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;"
       xmlns="http://javafx.com/javafx/17.0.12"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.cafe.controller.EditEmployeeController">
+      fx:controller="com.cafe.controller.fixNhanVien">
 
     <Label style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #00796B;"
            text="✏ Sửa thông tin nhân viên" />

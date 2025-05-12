@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.CustomersController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.CustomersController">
 
     <!-- Header -->
     <top>
@@ -43,9 +36,9 @@
 
                 <!-- Toolbar -->
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Button fx:id="themNhanVien" styleClass="promo-button" text="➕ Thêm" />
-                    <Button fx:id="suaNhanVien" styleClass="promo-button" text="✏Sửa" />
-                    <Button styleClass="promo-button" text="❌ Xóa" fx:id="xoaNhanVien" />
+                    <Button fx:id="themNhanVien" styleClass="promo-button" text="➕ Thêm" onAction="#gotoaddnhanvien"/>
+                    <Button fx:id="suaNhanVien" styleClass="promo-button" text="✏Sửa" onAction="#gotofixnhanvien"/>
+                    <Button styleClass="promo-button" text="❌ Xóa" fx:id="xoaNhanVien" onAction="#gotodeletenhanvien"/>
                     <Region HBox.hgrow="ALWAYS" />
                     <TextField fx:id="timNhanVien" prefWidth="200" promptText="🔍 Tìm nhân viên..." styleClass="promo-text-field" />
                 </HBox>
@@ -53,12 +46,11 @@
                 <!-- Table -->
                 <TableView fx:id="bangNhanVien" prefHeight="400" style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="cotMaNV" prefWidth="43.99999809265137" text="Mã NV" />
-                        <TableColumn fx:id="cotTenNV" prefWidth="162.40001678466797" text="Họ và Tên" />
-                        <TableColumn fx:id="cotEmail" prefWidth="181.60003662109375" text="Email" />
-                        <TableColumn fx:id="cotSdt" prefWidth="112.79995727539062" text="SĐT" />
-                  <TableColumn fx:id="cotMaNV1" prefWidth="168.0" text="Địa Chỉ" />
-                        <TableColumn fx:id="cotChucVu" prefWidth="94.4000244140625" text="Chức vụ" />
+                        <TableColumn fx:id="cotMaNV" prefWidth="80" text="Mã NV" />
+                        <TableColumn fx:id="cotTenNV" prefWidth="180" text="Họ và Tên" />
+                        <TableColumn fx:id="cotChucVu" prefWidth="120" text="Chức vụ" />
+                        <TableColumn fx:id="cotSdt" prefWidth="120" text="SĐT" />
+                        <TableColumn fx:id="cotEmail" prefWidth="180" text="Email" />
                     </columns>
                 </TableView>
             </VBox>
