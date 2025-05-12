@@ -342,10 +342,6 @@
     -fx-background-radius: 8;
 }
 
-
-
-
-
 #matcha .product-image-placeholder {
     -fx-background-image: url("matcha.jpg");
     -fx-background-size: cover;
