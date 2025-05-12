@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" style="-fx-background-color: #f9f9f9; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cafe.controller.EditEmployeeController">
+
+    <Label style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #00796B;"
+           text="✏ Sửa thông tin nhân viên" />
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Họ và Tên:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="txtHoTen" prefWidth="300" promptText="Nhập họ tên" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+        <Label text="Số điện thoại:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <TextField fx:id="txtSoDienThoai" prefWidth="300" promptText="Nhập SĐT" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+        <Label text="Địa chỉ:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <TextField fx:id="txtDiaChi" prefWidth="300" promptText="Nhập địa chỉ" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+        <Label text="Email:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <TextField fx:id="txtEmail" prefWidth="300" promptText="Nhập email" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+        <Label text="Chức vụ:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+        <ComboBox fx:id="comboChucVu" prefWidth="300" promptText="Chọn chức vụ" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+    </GridPane>
+
+    <HBox alignment="CENTER_RIGHT" spacing="10">
+        <Button fx:id="btnLuu" text="✅ Lưu thay đổi" />
+        <Button fx:id="btnHuy" text="❌ Hủy" />
+    </HBox>
+
+    <Label fx:id="lblThongBao" style="-fx-font-style: italic; -fx-text-fill: #757575;" />
+</VBox>

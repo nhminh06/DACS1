@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cafe.controller.CustomersController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.CustomersController">
 
     <!-- Header -->
     <top>
         <HBox fx:id="header" styleClass="header">
-            <Label text="☕ Cafe Management System" styleClass="title"/>
+            <Label styleClass="title" text="☕ Cafe Management System" />
         </HBox>
     </top>
 
     <!-- Sidebar -->
     <left>
         <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
-            <Button text="🍽️ Orders" styleClass="sidebar-button" onAction="#gotoorder"/>
-            <Button text="🏠 Management" styleClass="sidebar-button" onAction="#gotoManagement"/>
-            <Button text="👥 Customers" styleClass="sidebar-button"/>
-            <Button text="📊 Reports" styleClass="sidebar-button" onAction="#gotoreports"/>
+            <Button onAction="#gotoorder" styleClass="sidebar-button" text="🍽 Orders" />
+            <Button onAction="#gotoManagement" styleClass="sidebar-button" text="🏠 Management" />
+            <Button styleClass="sidebar-button" text="👥 Customers" />
+            <Button onAction="#gotoreports" styleClass="sidebar-button" text="📊 Reports" />
         </VBox>
     </left>
 
@@ -29,58 +27,52 @@
     <center>
         <HBox spacing="20">
             <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
+                <Insets bottom="20" left="20" right="20" top="20" />
             </padding>
 
             <!-- TableView Section (bên trái) -->
             <VBox spacing="15" HBox.hgrow="ALWAYS">
-                <Label text="👥 Danh sách Nhân viên"
-                       style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #00796B;"/>
+                <Label style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #00796B;" text="👥 Danh sách Nhân viên" />
 
                 <!-- Toolbar -->
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Button fx:id="themNhanVien" text="➕ Thêm" styleClass="promo-button"/>
-                    <Button fx:id="suaNhanVien" text="✏️ Sửa" styleClass="promo-button"/>
-                    <Button fx:id="xoaNhanVien" text="❌ Xóa" styleClass="promo-button"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <TextField fx:id="timNhanVien" promptText="🔍 Tìm nhân viên..." prefWidth="200"
-                               styleClass="promo-text-field"/>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Button fx:id="themNhanVien" styleClass="promo-button" text="➕ Thêm" />
+                    <Button fx:id="suaNhanVien" styleClass="promo-button" text="✏Sửa" />
+                    <Button styleClass="promo-button" text="❌ Xóa" fx:id="xoaNhanVien" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="timNhanVien" prefWidth="200" promptText="🔍 Tìm nhân viên..." styleClass="promo-text-field" />
                 </HBox>
 
                 <!-- Table -->
-                <TableView fx:id="bangNhanVien" prefHeight="400"
-                           VBox.vgrow="ALWAYS"
-                           style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
+                <TableView fx:id="bangNhanVien" prefHeight="400" style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="cotMaNV" text="Mã NV" prefWidth="80"/>
-                        <TableColumn fx:id="cotTenNV" text="Họ và Tên" prefWidth="180"/>
-                        <TableColumn fx:id="cotChucVu" text="Chức vụ" prefWidth="120"/>
-                        <TableColumn fx:id="cotSdt" text="SĐT" prefWidth="120"/>
-                        <TableColumn fx:id="cotEmail" text="Email" prefWidth="180"/>
+                        <TableColumn fx:id="cotMaNV" prefWidth="80" text="Mã NV" />
+                        <TableColumn fx:id="cotTenNV" prefWidth="180" text="Họ và Tên" />
+                        <TableColumn fx:id="cotChucVu" prefWidth="120" text="Chức vụ" />
+                        <TableColumn fx:id="cotSdt" prefWidth="120" text="SĐT" />
+                        <TableColumn fx:id="cotEmail" prefWidth="180" text="Email" />
                     </columns>
                 </TableView>
             </VBox>
 
             <!-- Chi tiết nhân viên (bên phải) -->
-            <VBox spacing="10" prefWidth="350"
-                  style="-fx-background-color: #f4f4f4; -fx-padding: 20; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8;">
-                <Label text="📄 Thông tin chi tiết"
-                       style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #00796B;"/>
+            <VBox prefWidth="350" spacing="10" style="-fx-background-color: #f4f4f4; -fx-padding: 20; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8;">
+                <Label style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #00796B;" text="📄 Thông tin chi tiết" />
 
-                <Label text="Mã NV:"/>
-                <TextField fx:id="txtMaNV" editable="false"/>
+                <Label text="Mã NV:" />
+                <TextField fx:id="txtMaNV" editable="false" />
 
-                <Label text="Họ và Tên:"/>
-                <TextField fx:id="txtTenNV" editable="false"/>
+                <Label text="Họ và Tên:" />
+                <TextField fx:id="txtTenNV" editable="false" />
 
-                <Label text="Chức vụ:"/>
-                <TextField fx:id="txtChucVu" editable="false"/>
+                <Label text="Chức vụ:" />
+                <TextField fx:id="txtChucVu" editable="false" />
 
-                <Label text="Số điện thoại:"/>
-                <TextField fx:id="txtSdt" editable="false"/>
+                <Label text="Số điện thoại:" />
+                <TextField fx:id="txtSdt" editable="false" />
 
-                <Label text="Email:"/>
-                <TextField fx:id="txtEmail" editable="false"/>
+                <Label text="Email:" />
+                <TextField fx:id="txtEmail" editable="false" />
             </VBox>
 
         </HBox>

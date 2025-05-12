@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cafe.controller.ManagementController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.ManagementController">
 
     <!-- Header -->
     <top>
         <HBox fx:id="header" styleClass="header">
-            <Label text="☕ Cafe Management System" styleClass="title"/>
+            <Label styleClass="title" text="☕ Cafe Management System" />
         </HBox>
     </top>
 
     <!-- Sidebar -->
     <left>
         <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
-            <Button text="🍽️ Orders" styleClass="sidebar-button" onAction="#gotoorder"/>
-            <Button text="🏠 Management" styleClass="sidebar-button"/>
-            <Button text="👥 Customers" styleClass="sidebar-button" onAction="#gotocustomers"/>
-            <Button text="📊 Reports" styleClass="sidebar-button" onAction="#gotoreports"/>
+            <Button onAction="#gotoorder" styleClass="sidebar-button" text="🍽Orders" />
+            <Button styleClass="sidebar-button" text="🏠 Management" />
+            <Button onAction="#gotocustomers" styleClass="sidebar-button" text="👥 Customers" />
+            <Button onAction="#gotoreports" styleClass="sidebar-button" text="📊 Reports" />
         </VBox>
     </left>
 
@@ -29,73 +28,68 @@
         <HBox spacing="30" styleClass="content-area">
 
             <!-- Phần quản lý sản phẩm -->
-            <VBox spacing="20" prefWidth="600" style="-fx-background-color: #ffffff; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;">
+            <VBox prefWidth="600" spacing="20" style="-fx-background-color: #ffffff; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;">
 
                 <!-- Thanh công cụ -->
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Button text="➕ Thêm" styleClass="promo-button" onAction="#gotoadd"/>
-                    <Button text="✏️ Sửa" styleClass="promo-button" onAction="#gotofix"/>
-                    <Button text="❌ Xóa" styleClass="promo-button" onAction="#gotodelete"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <TextField fx:id="timKiem" promptText="🔍 Tìm sản phẩm..." prefWidth="200"
-                               styleClass="promo-text-field"/>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Button onAction="#gotoadd" styleClass="promo-button" text="➕ Thêm" />
+                    <Button onAction="#gotofix" styleClass="promo-button" text="✏Sửa" />
+                    <Button onAction="#gotodelete" styleClass="promo-button" text="❌ Xóa" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="timKiem" prefWidth="200" promptText="🔍 Tìm sản phẩm..." styleClass="promo-text-field" />
                 </HBox>
 
                 <!-- Bảng sản phẩm -->
-                <Label text="📦 Danh sách sản phẩm" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
-                <TableView fx:id="bangSanPham" prefHeight="400" prefWidth="560"
-                           style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
+                <Label style="-fx-font-weight: bold; -fx-font-size: 16;" text="📦 Danh sách sản phẩm" />
+                <TableView fx:id="bangSanPham" prefHeight="400" prefWidth="560" style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
                     <columns>
-                        <TableColumn fx:id="cotTen" text="Tên sản phẩm" prefWidth="220"/>
-                        <TableColumn fx:id="cotGia" text="Giá" prefWidth="100"/>
-                        <TableColumn fx:id="cotMoTa" text="Mô tả" prefWidth="240"/>
+                        <TableColumn fx:id="cotTen" prefWidth="220" text="Tên sản phẩm" />
+                        <TableColumn fx:id="cotGia" prefWidth="100" text="Giá" />
+                        <TableColumn fx:id="cotMoTa" prefWidth="240" text="Mô tả" />
                     </columns>
                 </TableView>
             </VBox>
 
             <!-- Phần khuyến mãi -->
-            <VBox spacing="20" styleClass="promo-list-area" prefWidth="380">
+            <VBox prefWidth="380" spacing="20" styleClass="promo-list-area">
                 <padding>
-                    <Insets top="20" right="20" bottom="20" left="20"/>
+                    <Insets bottom="20" left="20" right="20" top="20" />
                 </padding>
 
-                <Label text="🎁 Tạo mã khuyến mãi" style="-fx-font-weight: bold; -fx-font-size: 16"/>
+                <Label style="-fx-font-weight: bold; -fx-font-size: 16" text="🎁 Tạo mã khuyến mãi" />
 
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="Tên mã:" prefWidth="100" style="-fx-alignment: CENTER-RIGHT;"/>
-                    <TextField fx:id="tenKhuyenMai" promptText="VD: GIAM10"
-                               prefWidth="250" prefHeight="30" styleClass="promo-text-field"/>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label prefWidth="100" style="-fx-alignment: CENTER-RIGHT;" text="Tên mã:" />
+                    <TextField fx:id="tenKhuyenMai" prefHeight="30" prefWidth="250" promptText="VD: GIAM10" styleClass="promo-text-field" />
                 </HBox>
 
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="Giá trị (%):" prefWidth="100" style="-fx-alignment: CENTER-RIGHT;"/>
-                    <TextField fx:id="giaTriKhuyenMai" promptText="VD: 10"
-                               prefWidth="250" prefHeight="30" styleClass="promo-text-field"/>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label prefWidth="100" style="-fx-alignment: CENTER-RIGHT;" text="Giá trị (%):" />
+                    <TextField fx:id="giaTriKhuyenMai" prefHeight="30" prefWidth="250" promptText="VD: 10" styleClass="promo-text-field" />
                 </HBox>
 
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="Hết hạn:" prefWidth="100" style="-fx-alignment: CENTER-RIGHT;"/>
-                    <DatePicker fx:id="ngayHetHan" prefWidth="250" prefHeight="30" styleClass="promo-date-picker"/>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label prefWidth="100" style="-fx-alignment: CENTER-RIGHT;" text="Hết hạn:" />
+                    <DatePicker fx:id="ngayHetHan" prefHeight="30" prefWidth="250" styleClass="promo-date-picker" />
                 </HBox>
 
-                <HBox spacing="10" alignment="CENTER">
-                    <Button text="✅ Tạo khuyến mãi" prefHeight="30" styleClass="promo-button"/>
+                <HBox alignment="CENTER" spacing="10">
+                    <Button prefHeight="30" styleClass="promo-button" text="✅ Tạo khuyến mãi" />
                 </HBox>
 
-                <Separator/>
+                <Separator />
 
-                <Label text="📜 Danh sách mã khuyến mãi" style="-fx-font-weight: bold; -fx-font-size: 14"/>
-                <TableView fx:id="bangKhuyenMai" prefHeight="200" prefWidth="340"
-                           style="-fx-background-color: #ffffff; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
+                <Label style="-fx-font-weight: bold; -fx-font-size: 14" text="📜 Danh sách mã khuyến mãi" />
+                <TableView fx:id="bangKhuyenMai" prefHeight="200" prefWidth="340" style="-fx-background-color: #ffffff; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
                     <columns>
-                        <TableColumn fx:id="cotTenKhuyenMai" text="Tên mã" prefWidth="100"/>
-                        <TableColumn fx:id="cotGiaTri" text="Giá trị (%)" prefWidth="80"/>
-                        <TableColumn fx:id="cotNgayHetHan" text="Ngày hết hạn" prefWidth="120"/>
+                        <TableColumn fx:id="cotTenKhuyenMai" prefWidth="100" text="Tên mã" />
+                        <TableColumn fx:id="cotGiaTri" prefWidth="80" text="Giá trị (%)" />
+                        <TableColumn fx:id="cotNgayHetHan" prefWidth="120" text="Ngày hết hạn" />
                     </columns>
                 </TableView>
 
-                <HBox spacing="10" alignment="CENTER">
-                    <Button fx:id="xoaKhuyenMai" text="❌ Xóa khuyến mãi" styleClass="promo-button"/>
+                <HBox alignment="CENTER" spacing="10">
+                    <Button styleClass="promo-button" text="❌ Xóa khuyến mãi" fx:id="xoaKhuyenMai" />
                 </HBox>
             </VBox>
         </HBox>
