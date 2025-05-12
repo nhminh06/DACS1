@@ -276,5 +276,18 @@
         -fx-font-family: "Segoe UI";
     }
 }
+.add-button {
+    -fx-background-color: #00695c;
+    -fx-text-fill: #ffffff;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 6 12;
+    -fx-font-size: 13;
+    -fx-font-family: "Segoe UI";
+    -fx-cursor: hand;
+}
+.add-button:hover {
+    -fx-background-color: #00897b;
+}
 
 

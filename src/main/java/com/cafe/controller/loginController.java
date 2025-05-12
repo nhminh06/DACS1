@@ -1,5 +1,6 @@
 package com.cafe.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +19,9 @@ public class loginController {
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
     @FXML private Button loginButton;
+    @FXML
+    private Hyperlink signupLink;
+
 
     @FXML
     private void handleLogin() {
@@ -36,7 +40,7 @@ public class loginController {
 
     public Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "");
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -52,7 +56,7 @@ public class loginController {
             stmt.setString(2, pass);
             ResultSet rs = stmt.executeQuery();
 
-            return rs.next(); // Nếu có dữ liệu, đăng nhập thành công
+            return rs.next();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,11 +68,38 @@ public class loginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/Order.fxml"));
             Parent root = loader.load();
             root.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
-            Stage stage = (Stage) loginButton.getScene().getWindow(); // Lấy cửa sổ hiện tại
-            stage.setScene(new Scene(root)); // Cập nhật giao diện mới
+
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setWidth(1200);
+            stage.setHeight(900);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+
+    @FXML
+    private void gotoregister(javafx.event.ActionEvent event) {
+        try {
+            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/register.fxml"));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Cafe Order");
+            primaryStage.setWidth(800);
+            primaryStage.setHeight(437);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

@@ -63,7 +63,7 @@
         <!-- Phần đăng ký -->
         <HBox alignment="CENTER" spacing="5">
             <Label text="Chưa có tài khoản?" style="-fx-text-fill: #333;" />
-            <Hyperlink fx:id="signupLink" text="Đăng ký ngay"/>
+            <Hyperlink fx:id="signupLink" text="Đăng ký ngay" onAction="#gotoregister" />
         </HBox>
 
     </VBox>
