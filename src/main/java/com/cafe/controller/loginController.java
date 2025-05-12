@@ -40,7 +40,7 @@ public class loginController {
 
     public Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost:13306/co", "root", "");
+            return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
         } catch (Exception e) {
             e.printStackTrace();
             return null;
