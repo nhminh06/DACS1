@@ -16,7 +16,7 @@
     <!-- Sidebar -->
     <left>
         <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
-            <Button onAction="#gotoorder" styleClass="sidebar-button" text="🍽Orders" />
+            <Button onAction="#gotoorder" styleClass="sidebar-button" text="🍽 Orders" />
             <Button styleClass="sidebar-button" text="🏠 Management" />
             <Button onAction="#gotocustomers" styleClass="sidebar-button" text="👥 Customers" />
             <Button onAction="#gotoreports" styleClass="sidebar-button" text="📊 Reports" />
