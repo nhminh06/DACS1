@@ -53,6 +53,8 @@
                         <TableColumn fx:id="cotChucVu" prefWidth="120" text="Chức vụ" />
                         <TableColumn fx:id="cotSdt" prefWidth="120" text="SĐT" />
                         <TableColumn fx:id="cotEmail" prefWidth="180" text="Email" />
+                        <TableColumn fx:id="cotLuong" prefWidth="120" text="Lương" />
+
                     </columns>
                 </TableView>
             </VBox>

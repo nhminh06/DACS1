@@ -26,7 +26,7 @@ public class CustomersController {
     private ObservableList<NhanVien> danhSach = FXCollections.observableArrayList();
 
     private Connection connectDB() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "");
+        return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
     }
 
     @FXML
@@ -46,7 +46,7 @@ public class CustomersController {
 
     private void loadData() {
         danhSach.clear();
-        String query = "SELECT * FROM NhanVien";
+        String query = "SELECT * FROM nhanvien";
         try (Connection conn = connectDB(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 danhSach.add(new NhanVien(
