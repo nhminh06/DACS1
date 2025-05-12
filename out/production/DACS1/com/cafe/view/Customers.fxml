@@ -36,9 +36,9 @@
 
                 <!-- Toolbar -->
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Button fx:id="themNhanVien" styleClass="promo-button" text="➕ Thêm" />
-                    <Button fx:id="suaNhanVien" styleClass="promo-button" text="✏Sửa" />
-                    <Button styleClass="promo-button" text="❌ Xóa" fx:id="xoaNhanVien" />
+                    <Button fx:id="themNhanVien" styleClass="promo-button" text="➕ Thêm" onAction="#gotoaddnhanvien"/>
+                    <Button fx:id="suaNhanVien" styleClass="promo-button" text="✏Sửa" onAction="#gotofixnhanvien"/>
+                    <Button styleClass="promo-button" text="❌ Xóa" fx:id="xoaNhanVien" onAction="#gotodeletenhanvien"/>
                     <Region HBox.hgrow="ALWAYS" />
                     <TextField fx:id="timNhanVien" prefWidth="200" promptText="🔍 Tìm nhân viên..." styleClass="promo-text-field" />
                 </HBox>

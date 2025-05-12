@@ -52,4 +52,61 @@ public class CustomersController {
             e.printStackTrace();
         }
     }
+    @FXML
+    public void gotoaddnhanvien(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/addnhanvien.fxml"));
+            Stage newStage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
+
+            newStage.setScene(scene);
+            newStage.setTitle("Cafe Order");
+            newStage.setWidth(700);
+            newStage.setHeight(400);
+            newStage.setResizable(false);
+            newStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void gotofixnhanvien(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/fixnhanvien.fxml"));
+            Stage newStage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
+
+            newStage.setScene(scene);
+            newStage.setTitle("Cafe Order");
+            newStage.setWidth(700);
+            newStage.setHeight(400);
+            newStage.setResizable(false);
+            newStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void gotodeletenhanvien(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/deletenhanvien.fxml"));
+            Stage newStage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
+
+            newStage.setScene(scene);
+            newStage.setTitle("Cafe Order");
+            newStage.setWidth(700);
+            newStage.setHeight(400);
+            newStage.setResizable(false);
+            newStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

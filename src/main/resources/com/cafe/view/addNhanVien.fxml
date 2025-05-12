@@ -6,7 +6,7 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
-<VBox spacing="15" style="-fx-background-color: #f9f9f9; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.AddEmployeeController">
+<VBox spacing="15" style="-fx-background-color: #f9f9f9; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.addNhanVien">
 
     <Label style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #00796B;" text="👤 Thêm Nhân Viên Mới" />
 
@@ -31,6 +31,7 @@
                     <String fx:value="Thu ngân" />
                     <String fx:value="Pha chế" />
                     <String fx:value="Phục vụ" />
+                    <String fx:value="Bảo vệ" />
                 </FXCollections>
             </items>
         </ComboBox>
