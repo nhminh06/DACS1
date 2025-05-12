@@ -129,7 +129,7 @@
                                     <Button styleClass="add-button" text="Thêm" />
                                 </VBox>
 
-                                <VBox id="soda chanh" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <VBox id="soda-chanh" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                     <Pane styleClass="product-image-placeholder" />
                                     <Label styleClass="product-name" text="Soda Chanh" />
                                     <Label styleClass="product-price" text="20,000 VNĐ" />

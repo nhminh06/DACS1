@@ -382,6 +382,11 @@
     -fx-background-size: cover;
     -fx-background-radius: 8;
 }
+#soda-chanh .product-image-placeholder {
+    -fx-background-image: url("ok.jpg");
+    -fx-background-size: cover;
+    -fx-background-radius: 8;
+}
 
 
 
