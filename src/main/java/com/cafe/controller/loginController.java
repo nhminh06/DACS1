@@ -19,6 +19,8 @@ public class loginController {
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
     @FXML private Button loginButton;
+    @FXML
+    private Hyperlink signupLink;
 
 
     @FXML
@@ -78,4 +80,26 @@ public class loginController {
             e.printStackTrace();
         }
     }
+
+
+
+    @FXML
+    private void gotoregister(javafx.event.ActionEvent event) {
+        try {
+            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/register.fxml"));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Cafe Order");
+            primaryStage.setWidth(800);
+            primaryStage.setHeight(437);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

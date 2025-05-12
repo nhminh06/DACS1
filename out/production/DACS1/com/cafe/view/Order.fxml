@@ -219,7 +219,7 @@
                 </VBox>
             </StackPane>
 
-            <!-- Invoice display -->
+            <!-- Invoice Display -->
             <StackPane fx:id="invoiceDisplay" styleClass="content-area">
                 <VBox spacing="15">
                     <Label text="Invoice" styleClass="ban-label" alignment="CENTER">
