@@ -317,11 +317,6 @@
     -fx-background-radius: 8;
 }
 
-#soda-chanh .product-image-placeholder {
-    -fx-background-image: url("sodachanh.jpg");
-    -fx-background-size: cover;
-    -fx-background-radius: 8;
-}
 
 #cafe-den .product-image-placeholder {
     -fx-background-image: url("cafeden.jpg");
@@ -352,42 +347,42 @@
 
 
 #matcha .product-image-placeholder {
-    -fx-background-image: url("tradao.png");
+    -fx-background-image: url("matcha.jpg");
     -fx-background-size: cover;
     -fx-background-radius: 8;
 }
 
 #nuoc-dua .product-image-placeholder {
-    -fx-background-image: url("nuoccam.webp");
+    -fx-background-image: url("nuocdua.jpg");
     -fx-background-size: cover;
     -fx-background-radius: 8;
 }
 
 #cafe-phin .product-image-placeholder {
-    -fx-background-image: url("traxanh.jpg");
+    -fx-background-image: url("cafephin.jpg");
     -fx-background-size: cover;
     -fx-background-radius: 8;
 }
 #tra-sen .product-image-placeholder {
-    -fx-background-image: url("tradao.png");
+    -fx-background-image: url("trasen.jpg");
     -fx-background-size: cover;
     -fx-background-radius: 8;
 }
 
 #nuoc-chanh .product-image-placeholder {
-    -fx-background-image: url("nuoccam.webp");
+    -fx-background-image: url("nuocchanh.webp");
     -fx-background-size: cover;
     -fx-background-radius: 8;
 }
 
 #sua-chua .product-image-placeholder {
-    -fx-background-image: url("traxanh.jpg");
+    -fx-background-image: url("suachua.jpg");
     -fx-background-size: cover;
     -fx-background-radius: 8;
 }
 
 #cafe-latte .product-image-placeholder {
-    -fx-background-image: url("traxanh.jpg");
+    -fx-background-image: url("cafelatte.jpg");
     -fx-background-size: cover;
     -fx-background-radius: 8;
 }
