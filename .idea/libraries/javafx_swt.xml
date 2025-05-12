@@ -1,0 +1,29 @@
+<component name="libraryTable">
+  <library name="javafx-swt">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/javafx-swt.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/javafx.base.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/javafx.controls.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/javafx.fxml.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/javafx.graphics.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/javafx.media.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/javafx.swing.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/javafx.web.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/jdk.jsobject.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/jfx.incubator.input.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/javafx-sdk-24.0.1/lib/jfx.incubator.richtext.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/jakarta.xml.bind-api-4.0.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/jaxb-runtime-4.0.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/jfoenix-9.0.10.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/jsoup-1.19.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/mysql-connector-j-9.2.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/libraryjava/protobuf-java-4.29.0.jar!/" />
+      <root url="file://$PROJECT_DIR$" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/src/main/java" />
+      <root url="file://$PROJECT_DIR$/untitled/src" />
+    </SOURCES>
+  </library>
+</component>
