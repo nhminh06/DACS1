@@ -17,14 +17,11 @@
         <Label text="Số điện thoại:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold; -fx-text-fill: #263238;" />
         <TextField fx:id="txtSoDienThoai" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="300" promptText="Nhập số điện thoại" />
 
-        <Label text="Địa chỉ:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold; -fx-text-fill: #263238;" />
-        <TextField fx:id="txtDiaChi" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="300" promptText="Nhập địa chỉ" />
+        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold; -fx-text-fill: #263238;" />
+        <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="300" promptText="Nhập email" />
 
-        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold; -fx-text-fill: #263238;" />
-        <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="300" promptText="Nhập email" />
-
-        <Label text="Chức vụ:" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-weight: bold; -fx-text-fill: #263238;" />
-        <ComboBox fx:id="comboChucVu" GridPane.columnIndex="1" GridPane.rowIndex="4" prefWidth="300" promptText="Chọn chức vụ">
+        <Label text="Chức vụ:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold; -fx-text-fill: #263238;" />
+        <ComboBox fx:id="comboChucVu" GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="300" promptText="Chọn chức vụ">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Quản lý" />

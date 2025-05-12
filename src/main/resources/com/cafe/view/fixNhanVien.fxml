@@ -18,14 +18,11 @@
         <Label text="Số điện thoại:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
         <TextField fx:id="txtSoDienThoai" prefWidth="300" promptText="Nhập SĐT" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-        <Label text="Địa chỉ:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-        <TextField fx:id="txtDiaChi" prefWidth="300" promptText="Nhập địa chỉ" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <TextField fx:id="txtEmail" prefWidth="300" promptText="Nhập email" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
-        <Label text="Email:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-        <TextField fx:id="txtEmail" prefWidth="300" promptText="Nhập email" GridPane.rowIndex="3" GridPane.columnIndex="1" />
-
-        <Label text="Chức vụ:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
-        <ComboBox fx:id="comboChucVu" prefWidth="300" promptText="Chọn chức vụ" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+        <Label text="Chức vụ:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <ComboBox fx:id="comboChucVu" prefWidth="300" promptText="Chọn chức vụ" GridPane.rowIndex="3" GridPane.columnIndex="1" />
     </GridPane>
 
     <HBox alignment="CENTER_RIGHT" spacing="10">

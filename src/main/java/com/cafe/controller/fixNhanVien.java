@@ -10,7 +10,6 @@ public class fixNhanVien {
 
     @FXML private TextField txtHoTen;
     @FXML private TextField txtSoDienThoai;
-    @FXML private TextField txtDiaChi;
     @FXML private TextField txtEmail;
     @FXML private ComboBox<String> comboChucVu;
     @FXML private Label lblThongBao;
@@ -25,13 +24,13 @@ public class fixNhanVien {
         comboChucVu.getItems().addAll("Quản lý", "Thu ngân", "Phục vụ", "Bếp", "Bảo vệ");
 
         // Ví dụ: tải dữ liệu nhân viên cũ (có thể gọi từ ngoài qua setter)
-        loadEmployeeData("Nguyễn Văn A", "0912345678", "Hà Nội", "a.nguyen@example.com", "Thu ngân");
+        loadEmployeeData("Nguyễn Văn A", "0912345678", "a.nguyen@example.com", "Thu ngân");
     }
 
-    public void loadEmployeeData(String hoTen, String sdt, String diaChi, String email, String chucVu) {
+    public void loadEmployeeData(String hoTen, String sdt, String email, String chucVu) {
         txtHoTen.setText(hoTen);
         txtSoDienThoai.setText(sdt);
-        txtDiaChi.setText(diaChi);
+
         txtEmail.setText(email);
         comboChucVu.setValue(chucVu);
         lblThongBao.setText("Đang sửa thông tin nhân viên: " + hoTen);
@@ -41,11 +40,10 @@ public class fixNhanVien {
     private void handleLuu(ActionEvent event) {
         String hoTen = txtHoTen.getText();
         String sdt = txtSoDienThoai.getText();
-        String diaChi = txtDiaChi.getText();
         String email = txtEmail.getText();
         String chucVu = comboChucVu.getValue();
 
-        if (hoTen.isEmpty() || sdt.isEmpty() || diaChi.isEmpty() || email.isEmpty() || chucVu == null) {
+        if (hoTen.isEmpty() || sdt.isEmpty()|| email.isEmpty() || chucVu == null) {
             showAlert(Alert.AlertType.WARNING, "Vui lòng điền đầy đủ thông tin.");
             return;
         }
@@ -64,7 +62,6 @@ public class fixNhanVien {
         System.out.println("Thông tin nhân viên đã cập nhật:");
         System.out.println("Họ tên: " + hoTen);
         System.out.println("SĐT: " + sdt);
-        System.out.println("Địa chỉ: " + diaChi);
         System.out.println("Email: " + email);
         System.out.println("Chức vụ: " + chucVu);
 
@@ -79,7 +76,6 @@ public class fixNhanVien {
     private void clearForm() {
         txtHoTen.clear();
         txtSoDienThoai.clear();
-        txtDiaChi.clear();
         txtEmail.clear();
         comboChucVu.setValue(null);
         lblThongBao.setText("");
