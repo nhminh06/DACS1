@@ -4,6 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import java.awt.TextField?>
+<?import java.awt.Button?>
+<?import sun.font.Decoration.Label?>
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.CustomersController">
 
     <!-- Header -->
