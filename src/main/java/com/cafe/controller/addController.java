@@ -73,6 +73,7 @@ public class addController {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Lỗi khi thêm sản phẩm.");
         }
+
     }
 
     private void showAlert(Alert.AlertType type, String message) {

@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.OrderController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cafe.controller.OrderController">
 
     <top>
         <HBox fx:id="header" styleClass="header">
@@ -24,7 +25,7 @@
                 <Region VBox.vgrow="ALWAYS" />
             </VBox>
 
-            <VBox fx:id="cotBan" spacing="10" styleClass="cot-ban">
+            <VBox fx:id="cotBan" spacing="10" styleClass="cot-ban" prefWidth="200">
                 <Label alignment="CENTER" styleClass="ban-label" text="Table Status">
                     <font>
                         <Font size="16.0" />
@@ -86,8 +87,8 @@
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
 
-            <!-- Product display -->
-            <StackPane fx:id="productDisplay" styleClass="content-area">
+            <!-- Product display area (MỞ RỘNG) -->
+            <StackPane fx:id="productDisplay" styleClass="content-area" HBox.hgrow="ALWAYS">
                 <VBox spacing="10">
                     <Label alignment="CENTER" styleClass="ban-label" text="Menu">
                         <font>
@@ -96,143 +97,21 @@
                     </Label>
                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                         <content>
-                            <GridPane alignment="TOP_LEFT" hgap="15" vgap="15">
+                            <FlowPane fx:id="productContainer"
+                                      hgap="20"
+                                      vgap="20"
+                                      alignment="TOP_LEFT">
                                 <padding>
-                                    <Insets bottom="10" left="10" right="10" top="10" />
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
                                 </padding>
-
-                                <VBox id="cafe_sua" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Cà Phê Sữa" />
-                                    <Label styleClass="product-price" text="25,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="tra-sua" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Trà Sữa" />
-                                    <Label styleClass="product-price" text="30,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="nuoc-ep" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Nước Ép" />
-                                    <Label styleClass="product-price" text="35,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="sinh-to" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Sinh Tố" />
-                                    <Label styleClass="product-price" text="40,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="soda-chanh" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Soda Chanh" />
-                                    <Label styleClass="product-price" text="20,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="cafe-den" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Cà Phê Đen" />
-                                    <Label styleClass="product-price" text="22,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="tra-dao" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="0" GridPane.rowIndex="2">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Trà Đào" />
-                                    <Label styleClass="product-price" text="28,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="nuoc-cam" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Nước Cam" />
-                                    <Label styleClass="product-price" text="32,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="tra-xanh" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Trà Xanh" />
-                                    <Label styleClass="product-price" text="27,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="matcha" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="0" GridPane.rowIndex="3">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Matcha Latte" />
-                                    <Label styleClass="product-price" text="25,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="nuoc-dua" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Nước Dừa" />
-                                    <Label styleClass="product-price" text="30,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="cafe-phin" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Cà Phê Phin" />
-                                    <Label styleClass="product-price" text="28,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="tra-sen" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="0" GridPane.rowIndex="4">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Trà Sen" />
-                                    <Label styleClass="product-price" text="29,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="nuoc-chanh" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Nước Chanh" />
-                                    <Label styleClass="product-price" text="18,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="sua-chua" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Sữa Chua" />
-                                    <Label styleClass="product-price" text="26,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-
-                                <VBox id="cafe-latte" alignment="CENTER" spacing="8" styleClass="product-box" GridPane.columnIndex="0" GridPane.rowIndex="5">
-                                    <Pane styleClass="product-image-placeholder" />
-                                    <Label styleClass="product-name" text="Cà Phê Latte" />
-                                    <Label styleClass="product-price" text="35,000 VNĐ" />
-                                    <Button styleClass="add-button" text="Thêm" />
-                                </VBox>
-                        <columnConstraints>
-                           <ColumnConstraints />
-                           <ColumnConstraints />
-                           <ColumnConstraints />
-                        </columnConstraints>
-                        <rowConstraints>
-                           <RowConstraints />
-                           <RowConstraints />
-                           <RowConstraints />
-                           <RowConstraints />
-                           <RowConstraints />
-                           <RowConstraints />
-                        </rowConstraints>
-                            </GridPane>
+                            </FlowPane>
                         </content>
                     </ScrollPane>
                 </VBox>
             </StackPane>
 
-            <!-- Invoice Display -->
-            <StackPane fx:id="invoiceDisplay" styleClass="content-area">
+            <!-- Invoice Display (GIẢM CHIỀU RỘNG) -->
+            <StackPane fx:id="invoiceDisplay" styleClass="content-area" prefWidth="250">
                 <VBox spacing="15">
                     <Label alignment="CENTER" styleClass="ban-label" text="Invoice">
                         <font>

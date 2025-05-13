@@ -115,8 +115,8 @@
         -fx-border-color: #b0bec5;
         -fx-border-radius: 8;
         -fx-background-radius: 8;
-        -fx-pref-width: 160;
-        -fx-pref-height: 220;
+        -fx-pref-width: 115;
+        -fx-pref-height: 185;
         -fx-padding: 12;
         -fx-alignment: center;
         -fx-spacing: 10;
@@ -231,12 +231,7 @@
         -fx-border-radius: 6;
     }
 
-    .product-box {
-        -fx-pref-height: 190px;
-        -fx-max-height: 190px;
-        -fx-pref-width: 150px;
-        -fx-alignment: center;
-    }
+
 
     .product-image-placeholder {
         -fx-pref-width: 100px;
@@ -387,6 +382,7 @@
     -fx-background-size: cover;
     -fx-background-radius: 8;
 }
+
 
 
 
