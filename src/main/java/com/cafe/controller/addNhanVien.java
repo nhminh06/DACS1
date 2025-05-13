@@ -26,7 +26,7 @@ public class addNhanVien {
     private ObservableList<NhanVien> danhSach; // Thêm trường để giữ danhSach từ CustomersController
 
     // Thông tin kết nối CSDL
-    private static final String DB_URL = "jdbc:mysql://localhost:13306/coffee_shop";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/taikhoan";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.CustomersController">
 
     <!-- Header -->
@@ -38,25 +38,29 @@
 
                 <!-- Toolbar -->
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Button fx:id="themNhanVien" styleClass="promo-button" text="➕ Thêm" onAction="#gotoaddnhanvien"/>
-                    <Button fx:id="suaNhanVien" styleClass="promo-button" text="✏Sửa" onAction="#gotofixnhanvien"/>
-                    <Button styleClass="promo-button" text="❌ Xóa" fx:id="xoaNhanVien" onAction="#gotodeletenhanvien"/>
+                    <Button fx:id="themNhanVien" onAction="#gotoaddnhanvien" styleClass="promo-button" text="➕ Thêm" />
+                    <Button fx:id="suaNhanVien" onAction="#gotofixnhanvien" styleClass="promo-button" text="✏Sửa" />
+                    <Button onAction="#gotodeletenhanvien" styleClass="promo-button" text="❌ Xóa" fx:id="xoaNhanVien" />
+                    <Button fx:id="taiLaiNhanVien" onAction="#taiLaiTrang" styleClass="promo-button" text="🔄 Tải lại" />
                     <Region HBox.hgrow="ALWAYS" />
                     <TextField fx:id="timNhanVien" prefWidth="200" promptText="🔍 Tìm nhân viên..." styleClass="promo-text-field" />
                 </HBox>
 
-                <!-- Table -->
-                <TableView fx:id="bangNhanVien" prefHeight="400" style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn fx:id="cotMaNV" prefWidth="80" text="Mã NV" />
-                        <TableColumn fx:id="cotTenNV" prefWidth="180" text="Họ và Tên" />
-                        <TableColumn fx:id="cotChucVu" prefWidth="120" text="Chức vụ" />
-                        <TableColumn fx:id="cotSdt" prefWidth="120" text="SĐT" />
-                        <TableColumn fx:id="cotEmail" prefWidth="180" text="Email" />
-                        <TableColumn fx:id="cotLuong" prefWidth="120" text="Lương" />
-
-                    </columns>
-                </TableView>
+                <!-- Table with scroll -->
+                <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+                    <content>
+                        <TableView fx:id="bangNhanVien" prefHeight="400" style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="cotMaNV" prefWidth="80" text="Mã NV" />
+                                <TableColumn fx:id="cotTenNV" prefWidth="180" text="Họ và Tên" />
+                                <TableColumn fx:id="cotChucVu" prefWidth="120" text="Chức vụ" />
+                                <TableColumn fx:id="cotSdt" prefWidth="120" text="SĐT" />
+                                <TableColumn fx:id="cotEmail" prefWidth="180" text="Email" />
+                                <TableColumn fx:id="cotLuong" prefWidth="122.0" text="Lương" />
+                            </columns>
+                        </TableView>
+                    </content>
+                </ScrollPane>
             </VBox>
 
             <!-- Chi tiết nhân viên (bên phải) -->
@@ -100,9 +104,9 @@
                 <TextField fx:id="txtSoTien" promptText="Nhập số tiền..." />
 
                 <!-- Nút thao tác -->
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Button fx:id="btnGiamLuong" text="➖ Giảm"  onAction="#giamLuong"/>
-                    <Button fx:id="btnTangLuong" text="➕ Tăng" onAction="#tangLuong" />
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Button fx:id="btnGiamLuong" onAction="#giamLuong" text="➖ Giảm" />
+                    <Button fx:id="btnTangLuong" onAction="#tangLuong" text="➕ Tăng" />
                 </HBox>
             </VBox>
 

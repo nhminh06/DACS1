@@ -14,10 +14,13 @@ import java.io.IOException;
 import java.sql.*;
 import com.cafe.model.NhanVien;
 
+
 public class CustomersController {
 
     @FXML private TableView<NhanVien> bangNhanVien;
     @FXML private TableColumn<NhanVien, String> cotMaNV, cotTenNV, cotChucVu, cotSdt, cotEmail;
+    @FXML private TableColumn<NhanVien, Double> cotLuong;
+
     @FXML private TextField txtMaNV, txtTenNV, txtChucVu, txtSdt, txtEmail, txtLuong;
     @FXML private ComboBox<String> comboNguyenNhan;
     @FXML private TextField txtSoTien;
@@ -26,7 +29,7 @@ public class CustomersController {
     private ObservableList<NhanVien> danhSach = FXCollections.observableArrayList();
 
     private Connection connectDB() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "");
     }
 
     @FXML
@@ -36,6 +39,15 @@ public class CustomersController {
         cotChucVu.setCellValueFactory(cell -> cell.getValue().chucVuProperty());
         cotSdt.setCellValueFactory(cell -> cell.getValue().sdtProperty());
         cotEmail.setCellValueFactory(cell -> cell.getValue().emailProperty());
+        cotLuong.setCellValueFactory(cell -> cell.getValue().luongProperty().asObject());
+        cotLuong.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null :
+                        String.format("%,.0f VNĐ", item));
+            }
+        });
 
         bangNhanVien.setItems(danhSach);
         loadData();
@@ -43,6 +55,7 @@ public class CustomersController {
         bangNhanVien.setOnMouseClicked(this::hienThiChiTiet);
         timNhanVien.textProperty().addListener((obs, oldText, newText) -> timKiemNhanVien());
     }
+
 
     private void loadData() {
         danhSach.clear();
@@ -134,6 +147,20 @@ public class CustomersController {
         alert.setContentText(message);
         alert.show();
     }
+    @FXML
+    private void taiLaiTrang() {
+        loadData();
+        bangNhanVien.setItems(danhSach);
+        timNhanVien.clear();
+        txtMaNV.clear();
+        txtTenNV.clear();
+        txtChucVu.clear();
+        txtSdt.clear();
+        txtEmail.clear();
+        txtLuong.clear();
+        comboNguyenNhan.setValue(null);
+        txtSoTien.clear();
+    }
 
     // ==== Các hàm chuyển cảnh ====
 
@@ -183,8 +210,34 @@ public class CustomersController {
 
     @FXML
     public void gotodeletenhanvien(ActionEvent event) {
-        moManHinhPhu("/com/cafe/view/deletenhanvien.fxml", 700, 400);
+        NhanVien selected = bangNhanVien.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert("Vui lòng chọn nhân viên cần xóa!");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/deletenhanvien.fxml"));
+            Parent root = loader.load();
+
+            // Gửi dữ liệu sang controller của deletenhanvien
+            deletenhanvienController controller = loader.getController();
+            controller.setNhanVien(selected);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
+            stage.setScene(scene);
+            stage.setTitle("Xóa Nhân Viên");
+            stage.setWidth(400);
+            stage.setHeight(250);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     // ==== Hàm phụ ====
 
