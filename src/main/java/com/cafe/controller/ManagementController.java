@@ -201,8 +201,37 @@ public class ManagementController {
 
     @FXML
     public void gotofix(ActionEvent event) {
-        moManHinhMoi("/com/cafe/view/fixSanPham.fxml", "Cafe Order", 700, 400);
+        SanPham sp = bangSanPham.getSelectionModel().getSelectedItem();
+        if (sp == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setContentText("Vui lòng chọn sản phẩm cần sửa.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/fixSanPham.fxml"));
+            Parent root = loader.load();  // Load trước khi lấy controller
+
+            fixSanPham controller = loader.getController(); // Đảm bảo controller được lấy sau khi load
+            controller.setThongTinSanPham(sp.getId(), sp.getTen(), sp.getGia(), sp.getMoTa()); // Truyền dữ liệu sản phẩm
+
+            Stage stage = new Stage();
+            stage.setTitle("Sửa sản phẩm");
+            stage.setScene(new Scene(root, 700, 400));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Lỗi");
+            errorAlert.setContentText("Không thể mở cửa sổ sửa sản phẩm.");
+            errorAlert.showAndWait();
+        }
     }
+
+
+
 
     @FXML
     public void gotodelete(ActionEvent event) {
