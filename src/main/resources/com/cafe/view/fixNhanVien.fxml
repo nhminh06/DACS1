@@ -26,8 +26,8 @@
     </GridPane>
 
     <HBox alignment="CENTER_RIGHT" spacing="10">
-        <Button fx:id="btnLuu" text="✅ Lưu thay đổi" />
-        <Button fx:id="btnHuy" text="❌ Hủy" />
+        <Button fx:id="btnLuu" text="✅ Lưu thay đổi" onAction="#handleLuu"/>
+        <Button fx:id="btnHuy" text="❌ Hủy" onAction="#handleHuy"/>
     </HBox>
 
     <Label fx:id="lblThongBao" style="-fx-font-style: italic; -fx-text-fill: #757575;" />

@@ -205,8 +205,40 @@ public class CustomersController {
 
     @FXML
     public void gotofixnhanvien(ActionEvent event) {
-        moManHinhPhu("/com/cafe/view/fixnhanvien.fxml", 700, 400);
+        NhanVien selected = bangNhanVien.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert("Vui lòng chọn nhân viên cần sửa!");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/fixnhanvien.fxml"));
+            Parent root = loader.load();
+
+            // Lấy controller của fixNhanVien và truyền dữ liệu
+            fixNhanVien controller = loader.getController();
+            controller.setThongTinNhanVien(
+                    selected.getMaNV(),
+                    selected.getHoTen(),
+                    selected.getSdt(),
+                    selected.getEmail(),
+                    selected.getChucVu()
+            );
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
+            stage.setScene(scene);
+            stage.setTitle("Sửa Nhân Viên");
+            stage.setWidth(700);
+            stage.setHeight(400);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     public void gotodeletenhanvien(ActionEvent event) {

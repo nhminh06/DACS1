@@ -3,7 +3,9 @@ package com.cafe.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.sql.*;
 import java.util.regex.Pattern;
 
 public class fixNhanVien {
@@ -16,35 +18,32 @@ public class fixNhanVien {
     @FXML private Button btnLuu;
     @FXML private Button btnHuy;
 
-    private String employeeId; // dùng nếu bạn cần lưu ID để sửa trong DB
+    private String maNhanVien; // dùng để định danh nhân viên trong DB
 
     @FXML
     public void initialize() {
-        // Thêm dữ liệu chức vụ mẫu
         comboChucVu.getItems().addAll("Quản lý", "Thu ngân", "Phục vụ", "Bếp", "Bảo vệ");
-
-        // Ví dụ: tải dữ liệu nhân viên cũ (có thể gọi từ ngoài qua setter)
-        loadEmployeeData("Nguyễn Văn A", "0912345678", "a.nguyen@example.com", "Thu ngân");
     }
 
-    public void loadEmployeeData(String hoTen, String sdt, String email, String chucVu) {
+    // Hàm gọi từ ngoài để đổ dữ liệu nhân viên cần sửa
+    public void setThongTinNhanVien(String maNV, String hoTen, String sdt, String email, String chucVu) {
+        this.maNhanVien = maNV;
         txtHoTen.setText(hoTen);
         txtSoDienThoai.setText(sdt);
-
         txtEmail.setText(email);
         comboChucVu.setValue(chucVu);
-        lblThongBao.setText("Đang sửa thông tin nhân viên: " + hoTen);
+        lblThongBao.setText("Đang sửa: " + hoTen + " (" + maNV + ")");
     }
 
     @FXML
     private void handleLuu(ActionEvent event) {
-        String hoTen = txtHoTen.getText();
-        String sdt = txtSoDienThoai.getText();
-        String email = txtEmail.getText();
+        String hoTen = txtHoTen.getText().trim();
+        String sdt = txtSoDienThoai.getText().trim();
+        String email = txtEmail.getText().trim();
         String chucVu = comboChucVu.getValue();
 
-        if (hoTen.isEmpty() || sdt.isEmpty()|| email.isEmpty() || chucVu == null) {
-            showAlert(Alert.AlertType.WARNING, "Vui lòng điền đầy đủ thông tin.");
+        if (hoTen.isEmpty() || sdt.isEmpty() || email.isEmpty() || chucVu == null) {
+            showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin.");
             return;
         }
 
@@ -58,27 +57,31 @@ public class fixNhanVien {
             return;
         }
 
-        // Giả lập cập nhật dữ liệu
-        System.out.println("Thông tin nhân viên đã cập nhật:");
-        System.out.println("Họ tên: " + hoTen);
-        System.out.println("SĐT: " + sdt);
-        System.out.println("Email: " + email);
-        System.out.println("Chức vụ: " + chucVu);
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "")) {
+            String sql = "UPDATE nhanvien SET HoTen=?, ChucVu=?, Sdt=?, Email=? WHERE MaNV=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, hoTen);
+            stmt.setString(2, chucVu);
+            stmt.setString(3, sdt);
+            stmt.setString(4, email);
+            stmt.setString(5, maNhanVien);
+            int rows = stmt.executeUpdate();
 
-        showAlert(Alert.AlertType.INFORMATION, "Cập nhật thành công!");
+            if (rows > 0) {
+                showAlert(Alert.AlertType.INFORMATION, "Cập nhật thành công!");
+                ((Stage) btnLuu.getScene().getWindow()).close(); // đóng cửa sổ
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Không tìm thấy nhân viên để cập nhật.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Lỗi khi cập nhật cơ sở dữ liệu.");
+        }
     }
 
     @FXML
     private void handleHuy(ActionEvent event) {
-        clearForm();
-    }
-
-    private void clearForm() {
-        txtHoTen.clear();
-        txtSoDienThoai.clear();
-        txtEmail.clear();
-        comboChucVu.setValue(null);
-        lblThongBao.setText("");
+        ((Stage) btnHuy.getScene().getWindow()).close(); // đóng cửa sổ
     }
 
     private boolean isValidPhoneNumber(String sdt) {
