@@ -84,7 +84,7 @@ public class ManagementController {
     }
 
     private void loadSanPhamFromDatabase() {
-        String query = "SELECT ten_san_pham, gia, mo_ta FROM douong";
+        String query = "SELECT id, ten_san_pham, gia, mo_ta FROM douong";
 
         try (Connection conn = connectDB();
              Statement stmt = conn.createStatement();
@@ -92,12 +92,14 @@ public class ManagementController {
 
             danhSachSanPham.clear();
             danhSachGoc.clear();
+
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String ten = rs.getString("ten_san_pham");
                 double gia = rs.getDouble("gia");
                 String moTa = rs.getString("mo_ta");
 
-                SanPham sp = new SanPham(ten, gia, moTa);
+                SanPham sp = new SanPham(id ,ten, gia, moTa);
                 danhSachSanPham.add(sp);
                 danhSachGoc.add(sp);
             }
@@ -108,6 +110,7 @@ public class ManagementController {
             e.printStackTrace();
         }
     }
+
 
 
     // === Tạo khuyến mãi mới ===
@@ -198,13 +201,40 @@ public class ManagementController {
 
     @FXML
     public void gotofix(ActionEvent event) {
-        moManHinhMoi("/com/cafe/view/fix.fxml", "Cafe Order", 700, 400);
+        moManHinhMoi("/com/cafe/view/fixSanPham.fxml", "Cafe Order", 700, 400);
     }
 
     @FXML
     public void gotodelete(ActionEvent event) {
-        moManHinhMoi("/com/cafe/view/delete.fxml", "Cafe Order", 700, 400);
+        SanPham selected = bangSanPham.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Chú ý");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn sản phẩm cần xóa.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/deleteSanPham.fxml"));
+            Parent root = loader.load();
+
+            com.cafe.controller.deleteSanPham controller = loader.getController();
+            controller.setSanPham(selected); // Gửi sản phẩm đã chọn
+
+            Stage stage = new Stage();
+            stage.setTitle("Xác nhận xóa sản phẩm");
+            stage.setScene(new Scene(root, 700, 400));
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     private void chuyenManHinh(ActionEvent event, String fxmlPath, String title) {
         try {
