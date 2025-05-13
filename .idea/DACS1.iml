@@ -22,11 +22,12 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="javafx-swt" level="project" />
-    <orderEntry type="library" name="jakarta.xml.bind-api-4.0.0" level="project" />
-    <orderEntry type="library" exported="" name="javafx.media" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="jfoenix-9.0.10" level="project" />
-    <orderEntry type="library" exported="" name="lib1" level="project" />
+    <orderEntry type="library" name="javafx-swt" level="project" />
+    <orderEntry type="library" exported="" name="jakarta.xml.bind-api-4.0.0" level="project" />
+    <orderEntry type="library" name="javafx.media" level="project" />
+    <orderEntry type="library" exported="" name="lib" level="project" />
+    <orderEntry type="library" exported="" name="jfoenix-9.0.10" level="project" />
+    <orderEntry type="library" name="lib1" level="project" />
+    <orderEntry type="library" exported="" name="jsoup-1.19.1" level="application" />
   </component>
 </module>

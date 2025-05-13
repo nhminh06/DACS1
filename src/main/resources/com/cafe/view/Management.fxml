@@ -35,8 +35,9 @@
                     <Button onAction="#gotoadd" styleClass="promo-button" text="➕ Thêm" />
                     <Button onAction="#gotofix" styleClass="promo-button" text="✏Sửa" />
                     <Button onAction="#gotodelete" styleClass="promo-button" text="❌ Xóa" />
+                    <Button onAction="#taiLai" styleClass="promo-button" text="🔄" />
                     <Region HBox.hgrow="ALWAYS" />
-                    <TextField fx:id="timKiem" prefWidth="200" promptText="🔍 Tìm sản phẩm..." styleClass="promo-text-field" />
+                    <TextField fx:id="timKiem" prefWidth="190" promptText="🔍 Tìm sản phẩm..." styleClass="promo-text-field" />
                 </HBox>
 
                 <!-- Bảng sản phẩm -->
@@ -74,7 +75,7 @@
                 </HBox>
 
                 <HBox alignment="CENTER" spacing="10">
-                    <Button prefHeight="30" styleClass="promo-button" text="✅ Tạo khuyến mãi" />
+                    <Button fx:id="taoKhuyenMai" onAction="#taoKhuyenMai" prefHeight="30" styleClass="promo-button" text="✅ Tạo khuyến mãi" />
                 </HBox>
 
                 <Separator />
@@ -89,9 +90,10 @@
                 </TableView>
 
                 <HBox alignment="CENTER" spacing="10">
-                    <Button styleClass="promo-button" text="❌ Xóa khuyến mãi" fx:id="xoaKhuyenMai" />
+                    <Button styleClass="promo-button" text="❌ Xóa khuyến mãi" fx:id="xoaKhuyenMai" onAction="#xoaKhuyenMai" />
                 </HBox>
             </VBox>
+
         </HBox>
     </center>
 

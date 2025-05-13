@@ -40,8 +40,8 @@
     </HBox>
 
     <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button text="✅ Lưu"  styleClass="promo-button"/>
-        <Button text="❌ Hủy" styleClass="promo-button"/>
+        <Button text="✅ Lưu"  styleClass="promo-button" onAction="#themSanPham"/>
+        <Button text="❌ Hủy" styleClass="promo-button" onAction="#huyThemSanPham"/>
     </HBox>
 
 </VBox>
