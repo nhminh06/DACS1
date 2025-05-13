@@ -47,15 +47,15 @@
                 </HBox>
 
                 <!-- Table with scroll -->
-                <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+                <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
                     <content>
-                        <TableView fx:id="bangNhanVien" prefHeight="400" style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="bangNhanVien" prefHeight="400" prefWidth="800" style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="cotMaNV" prefWidth="80" text="Mã NV" />
-                                <TableColumn fx:id="cotTenNV" prefWidth="180" text="Họ và Tên" />
-                                <TableColumn fx:id="cotChucVu" prefWidth="120" text="Chức vụ" />
-                                <TableColumn fx:id="cotSdt" prefWidth="120" text="SĐT" />
-                                <TableColumn fx:id="cotEmail" prefWidth="180" text="Email" />
+                                <TableColumn fx:id="cotTenNV" prefWidth="109.0" text="Họ và Tên" />
+                                <TableColumn fx:id="cotChucVu" prefWidth="116.0" text="Chức vụ" />
+                                <TableColumn fx:id="cotSdt" prefWidth="112.0" text="SĐT" />
+                                <TableColumn fx:id="cotEmail" prefWidth="159.0" text="Email" />
                                 <TableColumn fx:id="cotLuong" prefWidth="122.0" text="Lương" />
                             </columns>
                         </TableView>
