@@ -32,7 +32,7 @@ public class deletenhanvienController {
 
         String sql = "DELETE FROM nhanvien WHERE MaNV = ?";
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, selectedNhanVien.getMaNV());
             stmt.executeUpdate();

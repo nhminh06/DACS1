@@ -29,7 +29,7 @@ public class CustomersController {
     private ObservableList<NhanVien> danhSach = FXCollections.observableArrayList();
 
     private Connection connectDB() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "");
+        return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
     }
 
     @FXML
