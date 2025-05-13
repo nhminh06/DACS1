@@ -39,7 +39,7 @@ public class ManagementController {
     }
 
     private Connection connectDB() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "");
+        return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
     }
 
     private void loadSanPhamFromDatabase() {

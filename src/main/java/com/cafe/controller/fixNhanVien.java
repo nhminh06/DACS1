@@ -57,7 +57,7 @@ public class fixNhanVien {
             return;
         }
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "")) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "")) {
             String sql = "UPDATE nhanvien SET HoTen=?, ChucVu=?, Sdt=?, Email=? WHERE MaNV=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, hoTen);

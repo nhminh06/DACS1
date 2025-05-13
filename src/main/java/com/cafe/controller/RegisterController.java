@@ -22,7 +22,7 @@ public class RegisterController {
     // Kết nối đến cơ sở dữ liệu MySQL
     private Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/taikhoan", "root", "");
+            return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
         } catch (Exception e) {
             e.printStackTrace();
             return null;
