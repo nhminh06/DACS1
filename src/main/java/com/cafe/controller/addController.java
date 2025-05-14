@@ -6,16 +6,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
-import javafx.scene.image.ImageView;
-import java.io.File;
 
 public class addController {
 
@@ -31,7 +30,7 @@ public class addController {
     @FXML
     private ImageView anhSanPhamMoi;
 
-    private String duongDanAnh = "";  // ✅ Lưu đường dẫn ảnh
+    private String duongDanAnh = "";
 
     private Connection connectDB() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
@@ -58,13 +57,12 @@ public class addController {
 
         String insertQuery = "INSERT INTO douong (ten_san_pham, gia, mo_ta, hinh_anh) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = connectDB();
-             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+        try (Connection conn = connectDB(); PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
 
             pstmt.setString(1, ten);
             pstmt.setDouble(2, gia);
             pstmt.setString(3, moTa);
-            pstmt.setString(4, duongDanAnh);  // ✅ Lưu ảnh
+            pstmt.setString(4, duongDanAnh);
 
             pstmt.executeUpdate();
 
@@ -90,18 +88,25 @@ public class addController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Chọn ảnh minh họa");
 
-        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter(
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
                 "Chọn file ảnh", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp"
-        );
-        fileChooser.getExtensionFilters().add(imageFilter);
+        ));
 
         File file = fileChooser.showOpenDialog(tenSanPhamMoi.getScene().getWindow());
 
         if (file != null) {
-            duongDanAnh = file.toURI().toString();  // ✅ Lưu đường dẫn
-            Image image = new Image(duongDanAnh);
+            duongDanAnh = file.getAbsolutePath(); // đường dẫn để lưu vào DB
+
+            // Dùng toURI().toString() để tạo URL hợp lệ cho Image
+            Image image = new Image(file.toURI().toString());
             anhSanPhamMoi.setImage(image);
         }
+    }
+
+    @FXML
+    private void huyThemSanPham(ActionEvent event) {
+        Stage stage = (Stage) tenSanPhamMoi.getScene().getWindow();
+        stage.close();
     }
 
     private void showAlert(Alert.AlertType type, String message) {
@@ -110,11 +115,5 @@ public class addController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    @FXML
-    private void huyThemSanPham(ActionEvent event) {
-        Stage stage = (Stage) tenSanPhamMoi.getScene().getWindow();
-        stage.close();
     }
 }

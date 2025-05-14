@@ -5,12 +5,13 @@ public class SanPham {
     private String ten;
     private double gia;
     private String moTa;
-
-    public SanPham(int id, String ten, double gia, String moTa) {
+    private String hinhAnh;
+    public SanPham(int id, String ten, double gia, String moTa, String hinhAnh) {
         this.id = id;
         this.ten = ten;
         this.gia = gia;
         this.moTa = moTa;
+        this.hinhAnh = hinhAnh;
     }
 
     public int getId() {
@@ -46,5 +47,12 @@ public class SanPham {
     }
     public String getTenSanPham() {
         return ten;
+    }
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
     }
 }

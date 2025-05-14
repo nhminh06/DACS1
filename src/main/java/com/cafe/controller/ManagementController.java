@@ -19,26 +19,20 @@ import java.time.LocalDate;
 
 public class ManagementController {
 
-    @FXML
-    private TableView<SanPham> bangSanPham;
-    @FXML
-    private TableColumn<SanPham, String> cotTen;
-    @FXML
-    private TableColumn<SanPham, Double> cotGia;
-    @FXML
-    private TableColumn<SanPham, String> cotMoTa;
-    @FXML
-    private TextField timKiem;
+    // === FXML cho sản phẩm ===
+    @FXML private TableView<SanPham> bangSanPham;
+    @FXML private TableColumn<SanPham, String> cotTen;
+    @FXML private TableColumn<SanPham, Double> cotGia;
+    @FXML private TableColumn<SanPham, String> cotMoTa;
+    @FXML private TextField timKiem;
+
     private ObservableList<SanPham> danhSachSanPham = FXCollections.observableArrayList();
     private ObservableList<SanPham> danhSachGoc = FXCollections.observableArrayList();
 
-
-
-    // === FXML cho phần khuyến mãi ===
+    // === FXML cho khuyến mãi ===
     @FXML private TextField tenKhuyenMai;
     @FXML private TextField giaTriKhuyenMai;
     @FXML private DatePicker ngayHetHan;
-
     @FXML private TableView<KhuyenMai> bangKhuyenMai;
     @FXML private TableColumn<KhuyenMai, String> cotTenKhuyenMai;
     @FXML private TableColumn<KhuyenMai, Integer> cotGiaTri;
@@ -46,46 +40,45 @@ public class ManagementController {
 
     private ObservableList<KhuyenMai> danhSachKhuyenMai = FXCollections.observableArrayList();
 
-    // Tự động gọi khi giao diện khởi động
     @FXML
     public void initialize() {
-        cotTen.setCellValueFactory(new PropertyValueFactory<>("ten"));
-        cotGia.setCellValueFactory(new PropertyValueFactory<>("gia"));
-        cotMoTa.setCellValueFactory(new PropertyValueFactory<>("moTa"));
-        loadSanPhamFromDatabase();
+        // Cấu hình bảng sản phẩm
+        if (cotTen != null && cotGia != null && cotMoTa != null) {
+            cotTen.setCellValueFactory(new PropertyValueFactory<>("ten"));
+            cotGia.setCellValueFactory(new PropertyValueFactory<>("gia"));
+            cotMoTa.setCellValueFactory(new PropertyValueFactory<>("moTa"));
+            loadSanPhamFromDatabase();
+        }
 
-        // Khuyến mãi
+        // Cấu hình bảng khuyến mãi
         if (cotTenKhuyenMai != null && cotGiaTri != null && cotNgayHetHan != null) {
             cotTenKhuyenMai.setCellValueFactory(new PropertyValueFactory<>("tenMa"));
             cotGiaTri.setCellValueFactory(new PropertyValueFactory<>("giaTri"));
             cotNgayHetHan.setCellValueFactory(new PropertyValueFactory<>("ngayHetHan"));
             loadKhuyenMaiFromDatabase();
         }
+
         // Tìm kiếm sản phẩm
-        timKiem.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null || newValue.isEmpty()) {
-                bangSanPham.setItems(danhSachGoc);
-            } else {
-                String tuKhoa = newValue.toLowerCase();
+        if (timKiem != null) {
+            timKiem.textProperty().addListener((observable, oldValue, newValue) -> {
+                String tuKhoa = newValue == null ? "" : newValue.toLowerCase();
                 ObservableList<SanPham> ketQua = FXCollections.observableArrayList();
                 for (SanPham sp : danhSachGoc) {
                     if (sp.getTen().toLowerCase().contains(tuKhoa)) {
                         ketQua.add(sp);
                     }
                 }
-                bangSanPham.setItems(ketQua);
-            }
-        });
-
+                bangSanPham.setItems(tuKhoa.isEmpty() ? danhSachGoc : ketQua);
+            });
+        }
     }
 
     private Connection connectDB() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
     }
 
-    private void loadSanPhamFromDatabase() {
-        String query = "SELECT id, ten_san_pham, gia, mo_ta FROM douong";
-
+    public void loadSanPhamFromDatabase() {
+        String query = "SELECT id, ten_san_pham, gia, mo_ta, hinh_anh FROM douong";
         try (Connection conn = connectDB();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -94,26 +87,44 @@ public class ManagementController {
             danhSachGoc.clear();
 
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String ten = rs.getString("ten_san_pham");
-                double gia = rs.getDouble("gia");
-                String moTa = rs.getString("mo_ta");
-
-                SanPham sp = new SanPham(id ,ten, gia, moTa);
+                SanPham sp = new SanPham(
+                        rs.getInt("id"),
+                        rs.getString("ten_san_pham"),
+                        rs.getDouble("gia"),
+                        rs.getString("mo_ta"),
+                        rs.getString("hinh_anh")
+                );
                 danhSachSanPham.add(sp);
                 danhSachGoc.add(sp);
             }
 
             bangSanPham.setItems(danhSachSanPham);
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            showError("Lỗi khi tải dữ liệu sản phẩm", e);
         }
     }
 
+    private void loadKhuyenMaiFromDatabase() {
+        String query = "SELECT ten_ma, gia_tri, ngay_het_han FROM khuyen_mai";
+        try (Connection conn = connectDB();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
+            danhSachKhuyenMai.clear();
+            while (rs.next()) {
+                danhSachKhuyenMai.add(new KhuyenMai(
+                        rs.getString("ten_ma"),
+                        rs.getInt("gia_tri"),
+                        rs.getDate("ngay_het_han").toLocalDate()
+                ));
+            }
 
-    // === Tạo khuyến mãi mới ===
+            bangKhuyenMai.setItems(danhSachKhuyenMai);
+        } catch (SQLException e) {
+            showError("Lỗi khi tải dữ liệu khuyến mãi", e);
+        }
+    }
+
     @FXML
     private void taoKhuyenMai(ActionEvent event) {
         String tenMa = tenKhuyenMai.getText().trim();
@@ -121,164 +132,126 @@ public class ManagementController {
         LocalDate ngay = ngayHetHan.getValue();
 
         if (tenMa.isEmpty() || giaTriStr.isEmpty() || ngay == null) {
-            System.out.println("Vui lòng nhập đầy đủ thông tin.");
+            showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin.");
             return;
         }
 
-        int giaTri;
         try {
-            giaTri = Integer.parseInt(giaTriStr);
+            int giaTri = Integer.parseInt(giaTriStr);
+            String query = "INSERT INTO khuyen_mai (ten_ma, gia_tri, ngay_het_han) VALUES (?, ?, ?)";
+            try (Connection conn = connectDB(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, tenMa);
+                pstmt.setInt(2, giaTri);
+                pstmt.setDate(3, Date.valueOf(ngay));
+                pstmt.executeUpdate();
+                loadKhuyenMaiFromDatabase();
+                tenKhuyenMai.clear();
+                giaTriKhuyenMai.clear();
+                ngayHetHan.setValue(null);
+            }
         } catch (NumberFormatException e) {
-            System.out.println("Giá trị không hợp lệ.");
+            showAlert(Alert.AlertType.ERROR, "Giá trị khuyến mãi phải là số nguyên.");
+        } catch (SQLException e) {
+            showError("Không thể thêm khuyến mãi", e);
+        }
+    }
+
+    @FXML
+    private void xoaKhuyenMai(ActionEvent event) {
+        KhuyenMai selected = bangKhuyenMai.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "Vui lòng chọn mã khuyến mãi cần xóa.");
             return;
         }
 
-        String insertQuery = "INSERT INTO khuyen_mai (ten_ma, gia_tri, ngay_het_han) VALUES (?, ?, ?)";
-
-        try (Connection conn = connectDB();
-             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
-
-            pstmt.setString(1, tenMa);
-            pstmt.setInt(2, giaTri);
-            pstmt.setDate(3, Date.valueOf(ngay));
-            pstmt.executeUpdate();
-
-            System.out.println("Tạo mã khuyến mãi thành công!");
-            loadKhuyenMaiFromDatabase();
-
-            tenKhuyenMai.clear();
-            giaTriKhuyenMai.clear();
-            ngayHetHan.setValue(null);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // === Load danh sách khuyến mãi từ DB ===
-    private void loadKhuyenMaiFromDatabase() {
-        String query = "SELECT ten_ma, gia_tri, ngay_het_han FROM khuyen_mai";
-
-        try (Connection conn = connectDB();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            danhSachKhuyenMai.clear();
-            while (rs.next()) {
-                String tenMa = rs.getString("ten_ma");
-                int giaTri = rs.getInt("gia_tri");
-                LocalDate ngay = rs.getDate("ngay_het_han").toLocalDate();
-
-                danhSachKhuyenMai.add(new KhuyenMai(tenMa, giaTri, ngay));
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Xác nhận");
+        confirm.setContentText("Bạn có chắc chắn muốn xóa mã khuyến mãi này?");
+        if (confirm.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            try (Connection conn = connectDB();
+                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM khuyen_mai WHERE ten_ma = ?")) {
+                stmt.setString(1, selected.getTenMa());
+                stmt.executeUpdate();
+                loadKhuyenMaiFromDatabase();
+            } catch (SQLException e) {
+                showError("Không thể xóa khuyến mãi", e);
             }
-
-            bangKhuyenMai.setItems(danhSachKhuyenMai);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @FXML
-    public void gotoorder(ActionEvent event) {
-        chuyenManHinh(event, "/com/cafe/view/order.fxml", "Cafe Order");
+    private void taiLai(ActionEvent event) {
+        loadSanPhamFromDatabase();
+        loadKhuyenMaiFromDatabase();
+        if (timKiem != null) timKiem.clear();
+        if (tenKhuyenMai != null) tenKhuyenMai.clear();
+        if (giaTriKhuyenMai != null) giaTriKhuyenMai.clear();
+        if (ngayHetHan != null) ngayHetHan.setValue(null);
     }
 
-    @FXML
-    public void gotocustomers(ActionEvent event) {
-        chuyenManHinh(event, "/com/cafe/view/customers.fxml", "Cafe Order");
-    }
-
-    @FXML
-    public void gotoreports(ActionEvent event) {
-        chuyenManHinh(event, "/com/cafe/view/reports.fxml", "Cafe Order");
-    }
-
-    @FXML
-    public void gotoadd(ActionEvent event) {
-        moManHinhMoi("/com/cafe/view/add.fxml", "Cafe Order", 700, 400);
-    }
+    // ==== Điều hướng giao diện ====
+    @FXML public void gotoorder(ActionEvent event) { chuyenManHinh(event, "/com/cafe/view/order.fxml", "Cafe Order"); }
+    @FXML public void gotocustomers(ActionEvent event) { chuyenManHinh(event, "/com/cafe/view/customers.fxml", "Khách hàng"); }
+    @FXML public void gotoreports(ActionEvent event) { chuyenManHinh(event, "/com/cafe/view/reports.fxml", "Báo cáo"); }
+    @FXML public void gotoadd(ActionEvent event) { moManHinhMoi("/com/cafe/view/add.fxml", "Thêm sản phẩm", 700, 400); }
 
     @FXML
     public void gotofix(ActionEvent event) {
         SanPham sp = bangSanPham.getSelectionModel().getSelectedItem();
         if (sp == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Thông báo");
-            alert.setContentText("Vui lòng chọn sản phẩm cần sửa.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.WARNING, "Vui lòng chọn sản phẩm cần sửa.");
             return;
         }
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/fixSanPham.fxml"));
-            Parent root = loader.load();  // Load trước khi lấy controller
-
-            fixSanPham controller = loader.getController(); // Đảm bảo controller được lấy sau khi load
-            controller.setThongTinSanPham(sp.getId(), sp.getTen(), sp.getGia(), sp.getMoTa()); // Truyền dữ liệu sản phẩm
-
+            Parent root = loader.load();
+            FixSanPham controller = loader.getController();
+            controller.setThongTinSanPham(sp.getId(), sp.getTen(), sp.getGia(), sp.getMoTa(), sp.getHinhAnh());
             Stage stage = new Stage();
             stage.setTitle("Sửa sản phẩm");
             stage.setScene(new Scene(root, 700, 400));
+            stage.setUserData(this); // Truyền ManagementController vào Stage
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("Lỗi");
-            errorAlert.setContentText("Không thể mở cửa sổ sửa sản phẩm.");
-            errorAlert.showAndWait();
+            showError("Không thể mở giao diện sửa sản phẩm", e);
         }
     }
-
-
-
 
     @FXML
     public void gotodelete(ActionEvent event) {
         SanPham selected = bangSanPham.getSelectionModel().getSelectedItem();
-
         if (selected == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Chú ý");
-            alert.setHeaderText(null);
-            alert.setContentText("Vui lòng chọn sản phẩm cần xóa.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.WARNING, "Vui lòng chọn sản phẩm cần xóa.");
             return;
         }
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/deleteSanPham.fxml"));
             Parent root = loader.load();
-
             com.cafe.controller.deleteSanPham controller = loader.getController();
-            controller.setSanPham(selected); // Gửi sản phẩm đã chọn
-
+            controller.setSanPham(selected);
             Stage stage = new Stage();
-            stage.setTitle("Xác nhận xóa sản phẩm");
+            stage.setTitle("Xóa sản phẩm");
             stage.setScene(new Scene(root, 700, 400));
-            stage.setResizable(false);
             stage.show();
-
         } catch (IOException e) {
-            e.printStackTrace();
+            showError("Không thể mở giao diện xóa sản phẩm", e);
         }
     }
-
 
     private void chuyenManHinh(ActionEvent event, String fxmlPath, String title) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 1200, 900);
             scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
             stage.setScene(scene);
             stage.setTitle(title);
-            stage.setWidth(1200);
-            stage.setHeight(900);
             stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            showError("Không thể chuyển màn hình", e);
         }
     }
 
@@ -286,72 +259,28 @@ public class ManagementController {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             Stage newStage = new Stage();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, width, height);
             scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
             newStage.setScene(scene);
             newStage.setTitle(title);
-            newStage.setWidth(width);
-            newStage.setHeight(height);
             newStage.setResizable(false);
             newStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            showError("Không thể mở cửa sổ mới", e);
         }
     }
-    @FXML
-    private void taiLai(ActionEvent event) {
-        // Làm mới bảng sản phẩm
-        loadSanPhamFromDatabase();
 
-        // Làm mới bảng khuyến mãi
-        loadKhuyenMaiFromDatabase();
-
-        // Xóa các trường nhập liệu
-        tenKhuyenMai.clear();
-        giaTriKhuyenMai.clear();
-        ngayHetHan.setValue(null);
-        timKiem.clear();
+    // === Hộp thoại tiện ích ===
+    private void showAlert(Alert.AlertType type, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
-    // === Xóa khuyến mãi ===
-    @FXML
-    private void xoaKhuyenMai(ActionEvent event) {
-        KhuyenMai khuyenMaiDuocChon = bangKhuyenMai.getSelectionModel().getSelectedItem();
-
-        if (khuyenMaiDuocChon == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Chú ý");
-            alert.setHeaderText(null);
-            alert.setContentText("Vui lòng chọn mã khuyến mãi cần xóa!");
-            alert.showAndWait();
-            return;
-        }
-
-        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmAlert.setTitle("Xác nhận xóa");
-        confirmAlert.setHeaderText(null);
-        confirmAlert.setContentText("Bạn có chắc chắn muốn xóa mã khuyến mãi này?");
-
-        if (confirmAlert.showAndWait().get() == ButtonType.OK) {
-            String tenMa = khuyenMaiDuocChon.getTenMa();
-            String deleteQuery = "DELETE FROM khuyen_mai WHERE ten_ma = ?";
-
-            try (Connection conn = connectDB();
-                 PreparedStatement pstmt = conn.prepareStatement(deleteQuery)) {
-
-                pstmt.setString(1, tenMa);
-                int rowsAffected = pstmt.executeUpdate();
-
-                if (rowsAffected > 0) {
-                    System.out.println("Đã xóa mã khuyến mãi thành công.");
-                    loadKhuyenMaiFromDatabase();
-                } else {
-                    System.out.println("Không tìm thấy mã khuyến mãi cần xóa.");
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+    private void showError(String message, Exception e) {
+        e.printStackTrace();
+        showAlert(Alert.AlertType.ERROR, message + "\n" + e.getMessage());
     }
 }

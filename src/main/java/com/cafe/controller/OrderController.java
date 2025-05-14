@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 
@@ -33,7 +34,7 @@ public class OrderController {
 
     private void loadSanPhamToUI() {
         productContainer.getChildren().clear();
-        String sql = "SELECT ten_san_pham, gia, mo_ta, hinh_anh FROM douong";  // ✅ Lấy cả ảnh
+        String sql = "SELECT ten_san_pham, gia, mo_ta, hinh_anh FROM douong";
 
         try (Connection conn = connectDB();
              Statement stmt = conn.createStatement();
@@ -65,8 +66,13 @@ public class OrderController {
 
         if (hinhAnh != null && !hinhAnh.isEmpty()) {
             try {
-                Image img = new Image(hinhAnh, true);
-                imageView.setImage(img);
+                File imgFile = new File(hinhAnh);
+                if (imgFile.exists()) {
+                    Image img = new Image(imgFile.toURI().toString(), true);
+                    imageView.setImage(img);
+                } else {
+                    System.out.println("Không tìm thấy ảnh: " + hinhAnh);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
