@@ -37,7 +37,7 @@
                     <Button onAction="#gotodelete" styleClass="promo-button" text="❌ Xóa" />
                     <Button onAction="#taiLai" styleClass="promo-button" text="🔄" />
                     <Region HBox.hgrow="ALWAYS" />
-                    <TextField fx:id="timKiem" prefWidth="190" promptText="🔍 Tìm sản phẩm..." styleClass="promo-text-field" />
+                    <TextField fx:id="timKiem" prefWidth="150" promptText="🔍 Tìm sản phẩm..." styleClass="promo-text-field" />
                 </HBox>
 
                 <!-- Bảng sản phẩm -->

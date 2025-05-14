@@ -97,15 +97,15 @@
     }
 
     .trang-thai {
-        -fx-text-fill: #4caf50; /* Green - Available */
+        -fx-text-fill: #4caf50;
     }
 
     .trang-thai-occupied {
-        -fx-text-fill: #d32f2f; /* Red - Occupied */
+        -fx-text-fill: #d32f2f;
     }
 
     .trang-thai-reserved {
-        -fx-text-fill: #f57c00; /* Orange - Reserved */
+        -fx-text-fill: #f57c00;
     }
 
     /* Product Box Styling */
