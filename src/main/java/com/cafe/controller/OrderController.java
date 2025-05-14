@@ -34,9 +34,13 @@ public class OrderController {
 
     private double phanTramGiam = 0;
 
-
     @FXML
     private FlowPane productContainer;
+
+    @FXML
+    private Label discountAmount;
+
+
 
     private Connection connectDB() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
@@ -237,5 +241,33 @@ public class OrderController {
             e.printStackTrace();
         }
     }
+
+
+    public void HienThiKhuyenMai(String tenMa) {
+        String sql = "SELECT gia_tri FROM khuyen_mai WHERE ten_ma = ? AND ngay_het_han >= CURDATE()";
+
+        try (Connection conn = connectDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, tenMa);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                double giaTri = rs.getDouble("gia_tri");
+                setKhuyenMai(giaTri);
+                discountAmount.setText(String.format("%.0f %%", giaTri)); // <-- hiện đúng dấu %
+            } else {
+                setKhuyenMai(0);
+                discountAmount.setText("0 %");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            discountAmount.setText("0 %");
+        }
+    }
+
+
+
 
 }

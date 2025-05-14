@@ -140,6 +140,7 @@
                         <Label fx:id="discountAmount" styleClass="summary-value" text="0 %" />
                     </HBox>
 
+
                     <HBox alignment="CENTER_RIGHT" spacing="10">
                         <Label styleClass="summary-label" text="Tổng cộng:" />
                         <Label fx:id="totalAmount" styleClass="summary-value" text="0 VNĐ" />

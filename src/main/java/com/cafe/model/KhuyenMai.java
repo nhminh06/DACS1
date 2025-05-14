@@ -8,6 +8,7 @@ public class KhuyenMai {
     private final StringProperty tenMa;
     private final IntegerProperty giaTri;
     private final ObjectProperty<LocalDate> ngayHetHan;
+    private double khuyenMai = 0;
 
     public KhuyenMai(String tenMa, int giaTri, LocalDate ngayHetHan) {
         this.tenMa = new SimpleStringProperty(tenMa);
@@ -37,5 +38,10 @@ public class KhuyenMai {
     public LocalDate getNgayHetHan() {
         return ngayHetHan.get();
     }
+
+    public void setKhuyenMai(double giaTri) {
+        this.khuyenMai = giaTri;
+    }
+
 }
 

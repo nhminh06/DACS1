@@ -70,14 +70,15 @@ public class Chonkhuyenmai {
         }
 
         if (orderController != null) {
-            // Truyền giá trị phần trăm giảm giá từ khuyến mãi được chọn
-            orderController.setKhuyenMai(selected.getGiaTri());
+            // Gọi phương thức HienThiKhuyenMai để cập nhật cả giảm giá và giao diện
+            orderController.HienThiKhuyenMai(selected.getTenMa());
         }
 
         // Đóng cửa sổ khuyến mãi
         Stage stage = (Stage) btnChon.getScene().getWindow();
         stage.close();
     }
+
 
     @FXML
     private void huyChon() {
