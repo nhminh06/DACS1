@@ -290,5 +290,30 @@
 
 
 
+/* ComboBox Styling riêng cho khuyến mãi và dịch vụ */
+.combo-select {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #00695c;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 6 7;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #00695c;
+    -fx-cursor: hand;
+}
+
+/* Hover effect */
+.combo-select:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Focus effect (khi click vào chọn) */
+.combo-select:focused {
+    -fx-border-color: #00897b;
+    -fx-background-color: #e0f2f1;
+}
+
 
 
