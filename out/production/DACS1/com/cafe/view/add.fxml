@@ -36,7 +36,7 @@
     <HBox spacing="10" alignment="CENTER_LEFT">
         <ImageView fx:id="anhSanPhamMoi" fitWidth="100" fitHeight="100"
                    preserveRatio="true" style="-fx-border-color: #B0BEC5; -fx-border-radius: 4;"/>
-        <Button text="📷 Chọn ảnh minh họa" fx:id="chonAnhButton" styleClass="promo-button"/>
+        <Button text="📷 Chọn ảnh minh họa" fx:id="chonAnhButton" styleClass="promo-button" onAction="#chonAnhMinhHoa"/>
     </HBox>
 
     <HBox spacing="10" alignment="CENTER_RIGHT">

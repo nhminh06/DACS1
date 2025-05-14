@@ -18,7 +18,7 @@
 .sidebar {
     -fx-background-color: #1c2526;
     -fx-padding: 20;
-    -fx-pref-width: 200;
+    -fx-pref-width: 180;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 0);
 }
 
@@ -58,7 +58,7 @@
 .cot-ban {
     -fx-background-color: #f5f5f5;
     -fx-padding: 15;
-    -fx-pref-width: 160;
+    -fx-pref-width: 145;
     -fx-alignment: top-center;
 }
 
@@ -227,7 +227,7 @@
     .promo-list-area {
         -fx-background-color: #f5f5f5;
         -fx-border-color: #00695c;
-        -fx-border-width: 2;
+        -fx-border-width: 3;
         -fx-border-radius: 6;
     }
 

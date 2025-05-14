@@ -100,7 +100,8 @@
                             <FlowPane fx:id="productContainer"
                                       hgap="20"
                                       vgap="20"
-                                      alignment="TOP_LEFT">
+                                      alignment="TOP_LEFT"
+                                      prefWidth="800">
                                 <padding>
                                     <Insets top="10" right="10" bottom="10" left="10"/>
                                 </padding>
@@ -111,7 +112,7 @@
             </StackPane>
 
             <!-- Invoice Display (GIẢM CHIỀU RỘNG) -->
-            <StackPane fx:id="invoiceDisplay" styleClass="content-area" prefWidth="250">
+            <StackPane fx:id="invoiceDisplay" styleClass="content-area" prefWidth="200">
                 <VBox spacing="15">
                     <Label alignment="CENTER" styleClass="ban-label" text="Invoice">
                         <font>

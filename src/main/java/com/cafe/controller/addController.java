@@ -12,6 +12,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
+import javafx.scene.image.ImageView;
+import java.io.File;
+
 public class addController {
 
     @FXML
@@ -23,12 +28,15 @@ public class addController {
     @FXML
     private TextArea moTaSanPhamMoi;
 
-    // Kết nối tới CSDL
+    @FXML
+    private ImageView anhSanPhamMoi;
+
+    private String duongDanAnh = "";  // ✅ Lưu đường dẫn ảnh
+
     private Connection connectDB() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
     }
 
-    // Hàm xử lý khi nhấn nút "Lưu"
     @FXML
     private void themSanPham(ActionEvent event) {
         String ten = tenSanPhamMoi.getText().trim();
@@ -48,7 +56,7 @@ public class addController {
             return;
         }
 
-        String insertQuery = "INSERT INTO douong (ten_san_pham, gia, mo_ta) VALUES (?, ?, ?)";
+        String insertQuery = "INSERT INTO douong (ten_san_pham, gia, mo_ta, hinh_anh) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = connectDB();
              PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
@@ -56,16 +64,18 @@ public class addController {
             pstmt.setString(1, ten);
             pstmt.setDouble(2, gia);
             pstmt.setString(3, moTa);
+            pstmt.setString(4, duongDanAnh);  // ✅ Lưu ảnh
+
             pstmt.executeUpdate();
 
             showAlert(Alert.AlertType.INFORMATION, "Thêm sản phẩm thành công!");
 
-            // Xóa trắng các trường sau khi thêm
             tenSanPhamMoi.clear();
             giaSanPhamMoi.clear();
             moTaSanPhamMoi.clear();
+            anhSanPhamMoi.setImage(null);
+            duongDanAnh = "";
 
-            // Đóng cửa sổ (tuỳ chọn)
             Stage stage = (Stage) tenSanPhamMoi.getScene().getWindow();
             stage.close();
 
@@ -73,7 +83,25 @@ public class addController {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Lỗi khi thêm sản phẩm.");
         }
+    }
 
+    @FXML
+    private void chonAnhMinhHoa(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Chọn ảnh minh họa");
+
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter(
+                "Chọn file ảnh", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp"
+        );
+        fileChooser.getExtensionFilters().add(imageFilter);
+
+        File file = fileChooser.showOpenDialog(tenSanPhamMoi.getScene().getWindow());
+
+        if (file != null) {
+            duongDanAnh = file.toURI().toString();  // ✅ Lưu đường dẫn
+            Image image = new Image(duongDanAnh);
+            anhSanPhamMoi.setImage(image);
+        }
     }
 
     private void showAlert(Alert.AlertType type, String message) {
@@ -83,9 +111,9 @@ public class addController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     @FXML
     private void huyThemSanPham(ActionEvent event) {
-        // Đóng cửa sổ hiện tại
         Stage stage = (Stage) tenSanPhamMoi.getScene().getWindow();
         stage.close();
     }

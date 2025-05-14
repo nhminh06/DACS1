@@ -1,6 +1,5 @@
 package com.cafe.controller;
 
-import com.cafe.model.SanPham;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,15 +11,15 @@ import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.Locale;
 
 public class OrderController {
 
     @FXML
-    private FlowPane productContainer; // ✅ Sửa từ VBox → FlowPane trong FXML để tạo layout theo hàng
+    private FlowPane productContainer;
 
     private Connection connectDB() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
@@ -34,7 +33,7 @@ public class OrderController {
 
     private void loadSanPhamToUI() {
         productContainer.getChildren().clear();
-        String sql = "SELECT ten_san_pham, gia, mo_ta FROM douong";
+        String sql = "SELECT ten_san_pham, gia, mo_ta, hinh_anh FROM douong";  // ✅ Lấy cả ảnh
 
         try (Connection conn = connectDB();
              Statement stmt = conn.createStatement();
@@ -44,9 +43,10 @@ public class OrderController {
                 String ten = rs.getString("ten_san_pham");
                 double gia = rs.getDouble("gia");
                 String moTa = rs.getString("mo_ta");
+                String hinhAnh = rs.getString("hinh_anh");
 
-                VBox productBox = createProductBox(ten, gia, moTa);
-                productContainer.getChildren().add(productBox); // ✅ mỗi sản phẩm là một VBox trong FlowPane
+                VBox productBox = createProductBox(ten, gia, moTa, hinhAnh);
+                productContainer.getChildren().add(productBox);
             }
 
         } catch (SQLException e) {
@@ -54,23 +54,23 @@ public class OrderController {
         }
     }
 
-    private VBox createProductBox(String ten, double gia, String moTa) {
-        VBox box = new VBox();
+    private VBox createProductBox(String ten, double gia, String moTa, String hinhAnh) {
+        VBox box = new VBox(5);
         box.getStyleClass().add("product-box");
 
-        StackPane imagePane = new StackPane();
-        imagePane.getStyleClass().add("product-image-placeholder");
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
+        imageView.setPreserveRatio(true);
 
-        // Xử lý ID CSS từ tên sản phẩm
-        String cssId = ten.toLowerCase(Locale.ROOT)
-                .replace(" ", "-")
-                .replace("đ", "d")
-                .replace("ê", "e")
-                .replace("ơ", "o")
-                .replace("ư", "u")
-                .replaceAll("[^a-z0-9\\-]", "");
-
-        imagePane.setId(cssId);
+        if (hinhAnh != null && !hinhAnh.isEmpty()) {
+            try {
+                Image img = new Image(hinhAnh, true);
+                imageView.setImage(img);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         Label nameLabel = new Label(ten);
         nameLabel.getStyleClass().add("product-name");
@@ -81,7 +81,7 @@ public class OrderController {
         Button addButton = new Button("Thêm");
         addButton.getStyleClass().add("add-button");
 
-        box.getChildren().addAll(imagePane, nameLabel, priceLabel, addButton);
+        box.getChildren().addAll(imageView, nameLabel, priceLabel, addButton);
         return box;
     }
 
