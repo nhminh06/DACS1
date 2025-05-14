@@ -98,9 +98,9 @@
                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                         <content>
                             <FlowPane fx:id="productContainer"
-                                      hgap="20"
-                                      vgap="20"
-                                      alignment="TOP_LEFT">
+                                      hgap="15"
+                                      vgap="15"
+                                      alignment="TOP_LEFT" prefWidth="400">
                                 <padding>
                                     <Insets top="10" right="10" bottom="10" left="10"/>
                                 </padding>
