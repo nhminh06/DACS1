@@ -8,6 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 import javafx.scene.control.Button;
@@ -18,10 +20,8 @@ import javafx.scene.image.ImageView;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
-
 import java.util.HashMap;
 import java.util.Map;
-import javafx.scene.Node;
 
 public class OrderController {
     @FXML
@@ -30,17 +30,18 @@ public class OrderController {
     @FXML
     private Label totalAmount;
 
-    private Map<String, InvoiceItem> invoiceMap = new HashMap<>();
-
-    private double phanTramGiam = 0;
-
     @FXML
     private FlowPane productContainer;
 
     @FXML
     private Label discountAmount;
 
+    @FXML
+    private FlowPane tableContainer;
 
+    private Map<String, InvoiceItem> invoiceMap = new HashMap<>();
+    private String selectedTable = null;
+    private double phanTramGiam = 0;
 
     private Connection connectDB() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
@@ -49,27 +50,24 @@ public class OrderController {
     @FXML
     public void initialize() {
         loadSanPhamToUI();
+        loadTablesToUI();
         productContainer.setPrefWrapLength(500);
     }
 
     private void loadSanPhamToUI() {
         productContainer.getChildren().clear();
         String sql = "SELECT ten_san_pham, gia, mo_ta, hinh_anh FROM douong";
-
         try (Connection conn = connectDB();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-
             while (rs.next()) {
                 String ten = rs.getString("ten_san_pham");
                 double gia = rs.getDouble("gia");
                 String moTa = rs.getString("mo_ta");
                 String hinhAnh = rs.getString("hinh_anh");
-
                 VBox productBox = createProductBox(ten, gia, moTa, hinhAnh);
                 productContainer.getChildren().add(productBox);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -90,8 +88,6 @@ public class OrderController {
                 if (imgFile.exists()) {
                     Image img = new Image(imgFile.toURI().toString(), true);
                     imageView.setImage(img);
-                } else {
-                    System.out.println("");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -110,20 +106,131 @@ public class OrderController {
 
         box.getChildren().addAll(imageView, nameLabel, priceLabel, addButton);
         return box;
-
-
     }
-    public void setKhuyenMai(double giamPhanTram) {
-        this.phanTramGiam = giamPhanTram;
+
+    private void loadTablesToUI() {
+        tableContainer.getChildren().clear();
+        String sql = "SELECT id_ban, trang_thai FROM ban WHERE id_ban BETWEEN 1 AND 10";
+        try (Connection conn = connectDB();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                int idBan = rs.getInt("id_ban");
+                String trangThai = rs.getString("trang_thai");
+                VBox tableBox = createTableBox(idBan, trangThai);
+                tableContainer.getChildren().add(tableBox);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private VBox createTableBox(int idBan, String trangThai) {
+        VBox box = new VBox(5);
+        box.getStyleClass().add("o-ban");
+
+        Label banLabel = new Label("Bàn " + idBan);
+        banLabel.getStyleClass().add("ban-label");
+
+        Label statusLabel = new Label(trangThai.equals("Trống") ? "Trống" : "Đang dùng");
+        statusLabel.getStyleClass().add("trang-thai");
+        if (trangThai.equals("Đang dùng")) statusLabel.getStyleClass().add("trang-thai-occupied");
+        else statusLabel.getStyleClass().add("trang-thai");
+
+        if (trangThai.equals("Đang dùng")) {
+            Button selectButton = new Button("Chọn");
+            selectButton.getStyleClass().add("add-button");
+            selectButton.setOnAction(e -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Xác nhận");
+                alert.setHeaderText("Bàn đang được dùng");
+                alert.setContentText("Bàn đã dùng xong chưa?");
+                if (alert.showAndWait().get() == ButtonType.OK) {
+                    updateTableStatus(idBan, "Trống");
+                    loadTablesToUI();
+                }
+            });
+            box.getChildren().addAll(banLabel, statusLabel, selectButton);
+        } else {
+            box.getChildren().addAll(banLabel, statusLabel);
+        }
+        return box;
+    }
+
+    private void updateTableStatus(int idBan, String newStatus) {
+        String sql = "UPDATE ban SET trang_thai = ? WHERE id_ban = ?";
+        try (Connection conn = connectDB();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, newStatus);
+            pstmt.setInt(2, idBan);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void showTableSelection() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/chonban.fxml"));
+            Parent root = loader.load();
+            Chonban controller = loader.getController();
+            controller.setOrderController(this);
+            Stage stage = new Stage();
+            stage.setTitle("Chọn bàn");
+            Scene scene = new Scene(root, 600, 400);
+            scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void selectTable(int idBan) {
+        selectedTable = "Bàn " + idBan;
+    }
+
+    @FXML
+    public void handlePayment(ActionEvent event) {
+        if (selectedTable == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Cảnh báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn bàn trước khi thanh toán!");
+            alert.showAndWait();
+            return; // Dừng lại nếu không có bàn được chọn
+        }
+
+        if (invoiceMap.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Cảnh báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng thêm ít nhất 1 mặt hàng trước khi thanh toán!");
+            alert.showAndWait();
+            return; // Dừng lại nếu không có mặt hàng nào
+        }
+
+        int idBan = Integer.parseInt(selectedTable.replace("Bàn ", ""));
+        updateTableStatus(idBan, "Đang dùng");
+        loadTablesToUI();
+        invoiceItems.getChildren().clear();
+        invoiceMap.clear();
         updateTotal();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thanh toán");
+        alert.setHeaderText(null);
+        alert.setContentText("Thanh toán thành công!");
+        alert.showAndWait();
+        selectedTable = null; // Reset selectedTable sau khi thanh toán
     }
+
     private void addToInvoice(String ten, double gia) {
         if (invoiceMap.containsKey(ten)) {
             InvoiceItem item = invoiceMap.get(ten);
             item.quantity++;
             item.update();
         } else {
-            // Nút trừ nhỏ gọn
             Button minusButton = new Button("-");
             minusButton.getStyleClass().add("minus-button");
             minusButton.setMinWidth(15);
@@ -131,41 +238,32 @@ public class OrderController {
             minusButton.setMinHeight(15);
             minusButton.setMaxHeight(15);
 
-            // Tên sản phẩm
             Label tenLabel = new Label(ten);
-            tenLabel.setMinWidth(100); // Giảm chiều rộng để tránh tràn
+            tenLabel.setMinWidth(100);
             tenLabel.getStyleClass().add("product-name");
 
-            // Số lượng
             Label qtyLabel = new Label("x1");
             qtyLabel.setMinWidth(30);
             qtyLabel.getStyleClass().add("summary-value");
 
-            // Giá
             Label giaLabel = new Label(String.format("%,.0f VNĐ", gia));
             giaLabel.setMinWidth(80);
             giaLabel.getStyleClass().add("summary-value");
 
-            // Spacer cho cân chỉnh
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
-            // Gộp tên sản phẩm với nút trừ
             HBox nameBox = new HBox(5, minusButton, tenLabel);
             nameBox.setAlignment(Pos.CENTER_LEFT);
 
-            // Gộp toàn bộ dòng
             HBox line = new HBox(10, nameBox, spacer, qtyLabel, giaLabel);
             line.setAlignment(Pos.CENTER_LEFT);
 
-            // Thêm dòng vào UI
             invoiceItems.getChildren().add(line);
 
-            // Tạo và lưu item
             InvoiceItem item = new InvoiceItem(line, qtyLabel, giaLabel, 1, gia);
             invoiceMap.put(ten, item);
 
-            // Xử lý khi nhấn nút trừ
             minusButton.setOnAction(event -> {
                 item.quantity--;
                 if (item.quantity <= 0) {
@@ -178,21 +276,21 @@ public class OrderController {
             });
         }
         updateTotal();
-
-
     }
+
     private void updateTotal() {
         double total = 0;
         for (InvoiceItem item : invoiceMap.values()) {
             total += item.quantity * item.unitPrice;
         }
-
         double tongSauGiam = total * (1 - phanTramGiam / 100);
         totalAmount.setText(String.format("%,.0f VNĐ", tongSauGiam));
     }
 
-
-
+    public void setKhuyenMai(double giamPhanTram) {
+        this.phanTramGiam = giamPhanTram;
+        updateTotal();
+    }
 
     @FXML
     public void gotoManagement(ActionEvent event) {
@@ -219,7 +317,7 @@ public class OrderController {
             Stage stage = new Stage();
             stage.setTitle("Chọn khuyến mãi");
             stage.setScene(new Scene(root, 600, 400));
-            stage.show(); // Thêm dòng này để hiển thị cửa sổ
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -242,32 +340,23 @@ public class OrderController {
         }
     }
 
-
     public void HienThiKhuyenMai(String tenMa) {
         String sql = "SELECT gia_tri FROM khuyen_mai WHERE ten_ma = ? AND ngay_het_han >= CURDATE()";
-
         try (Connection conn = connectDB();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setString(1, tenMa);
             ResultSet rs = stmt.executeQuery();
-
             if (rs.next()) {
                 double giaTri = rs.getDouble("gia_tri");
                 setKhuyenMai(giaTri);
-                discountAmount.setText(String.format("%.0f %%", giaTri)); // <-- hiện đúng dấu %
+                discountAmount.setText(String.format("%.0f %%", giaTri));
             } else {
                 setKhuyenMai(0);
                 discountAmount.setText("0 %");
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             discountAmount.setText("0 %");
         }
     }
-
-
-
-
 }

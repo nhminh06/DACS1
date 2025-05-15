@@ -5,8 +5,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.cafe.controller.OrderController">
 
@@ -27,59 +25,19 @@
                 <Region VBox.vgrow="ALWAYS" />
             </VBox>
 
-            <VBox fx:id="cotBan" spacing="10" styleClass="cot-ban" prefWidth="200">
+            <VBox fx:id="cotBan" spacing="10" styleClass="cot-ban" prefWidth="250">
                 <Label alignment="CENTER" styleClass="ban-label" text="Table Status">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Label>
-                <ScrollPane fitToWidth="true">
+                <ScrollPane fitToWidth="true" prefHeight="740">
                     <content>
-                        <VBox alignment="TOP_CENTER" spacing="8">
-                            <VBox alignment="CENTER" spacing="6" styleClass="o-ban">
-                                <Label styleClass="ban-label" text="Table 1" />
-                                <Label styleClass="trang-thai" text="Available" />
-                            </VBox>
-                            <VBox alignment="CENTER" spacing="6" styleClass="o-ban">
-                                <Label styleClass="ban-label" text="Table 2" />
-                                <Label styleClass="trang-thai-occupied" text="Occupied" />
-                            </VBox>
-                            <VBox alignment="CENTER" spacing="6" styleClass="o-ban">
-                                <Label styleClass="ban-label" text="Table 3" />
-                                <Label styleClass="trang-thai-reserved" text="Reserved" />
-                            </VBox>
-                            <VBox alignment="CENTER" spacing="6" styleClass="o-ban">
-                                <Label styleClass="ban-label" text="Table 4" />
-                                <Label styleClass="trang-thai" text="Available" />
-                            </VBox>
-                            <VBox alignment="CENTER" spacing="6" styleClass="o-ban">
-                                <Label styleClass="ban-label" text="Table 5" />
-                                <Label styleClass="trang-thai-occupied" text="Occupied" />
-                            </VBox>
-                            <VBox alignment="CENTER" spacing="6" styleClass="o-ban">
-                                <Label styleClass="ban-label" text="Table 6" />
-                                <Label styleClass="trang-thai" text="Available" />
-                            </VBox>
-                            <VBox alignment="CENTER" spacing="6" styleClass="o-ban">
-                                <Label styleClass="ban-label" text="Table 7" />
-                                <Label styleClass="trang-thai-occupied" text="Occupied" />
-                            </VBox>
-                            <VBox alignment="CENTER" spacing="6" styleClass="o-ban">
-                                <Label styleClass="ban-label" text="Table 8" />
-                                <Label styleClass="trang-thai-reserved" text="Reserved" />
-                            </VBox>
-                            <VBox alignment="CENTER" spacing="6" styleClass="o-ban">
-                                <Label styleClass="ban-label" text="Table 9" />
-                                <Label styleClass="trang-thai" text="Available" />
-                            </VBox>
-                            <VBox alignment="CENTER" spacing="6" styleClass="o-ban">
-                                <Label styleClass="ban-label" text="Table 10" />
-                                <Label styleClass="trang-thai-occupied" text="Occupied" />
-                            </VBox>
-                        </VBox>
+                        <FlowPane fx:id="tableContainer" hgap="10" vgap="10" alignment="TOP_CENTER">
+
+                        </FlowPane>
                     </content>
                 </ScrollPane>
-
             </VBox>
         </HBox>
     </left>
@@ -91,14 +49,14 @@
             </padding>
 
             <!-- Product display area -->
-            <StackPane fx:id="productDisplay" styleClass="content-area" HBox.hgrow="ALWAYS">
+            <StackPane fx:id="productDisplay" styleClass="content-area" HBox.hgrow="ALWAYS" prefHeight="600"> <!-- Đồng bộ chiều cao với cotBan -->
                 <VBox spacing="10">
                     <Label alignment="CENTER" styleClass="ban-label" text="Menu">
                         <font>
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="740"> <!-- Chiều cao nội dung Menu -->
                         <content>
                             <FlowPane fx:id="productContainer"
                                       hgap="20"
@@ -140,46 +98,33 @@
                         <Label fx:id="discountAmount" styleClass="summary-value" text="0 %" />
                     </HBox>
 
-
                     <HBox alignment="CENTER_RIGHT" spacing="10">
                         <Label styleClass="summary-label" text="Tổng cộng:" />
                         <Label fx:id="totalAmount" styleClass="summary-value" text="0 VNĐ" />
                     </HBox>
 
                     <VBox alignment="BOTTOM_RIGHT" spacing="10">
-
                         <!-- MenuButton cho chọn khuyến mãi -->
-                        <HBox alignment="CENTER_RIGHT" spacing="15" xmlns:fx="http://javafx.com/fxml">
-
+                        <HBox alignment="CENTER_RIGHT" spacing="15">
                             <!-- ComboBox khuyến mãi -->
                             <Button fx:id="promotionButton"
-                                    text="khuyến mãi"
+                                    text="Khuyến mãi"
                                     onAction="#gotokhuyenmai"
                                     styleClass="promo-button" />
 
-                            <!-- ComboBox phục vụ -->
-                            <ComboBox fx:id="serviceTypeComboBox"
-
-                                      promptText="phục vụ"
-                                      styleClass="combo-select"
-                                      prefWidth="152">
-                                <items>
-                                    <FXCollections fx:factory="observableArrayList">
-                                        <String fx:value="Tại bàn" />
-                                        <String fx:value="Mang đi" />
-                                    </FXCollections>
-                                </items>
-                            </ComboBox>
+                            <!-- Nút chọn bàn -->
+                            <Button fx:id="chosetableButton"
+                                    text="Chọn bàn"
+                                    onAction="#showTableSelection"
+                                    styleClass="promo-button" />
                         </HBox>
-
 
                         <!-- Nút thanh toán -->
                         <Button fx:id="checkoutButton"
                                 styleClass="promo-button"
-                                text="Thanh Toán" />
-
+                                text="Thanh Toán"
+                                onAction="#handlePayment" />
                     </VBox>
-
                 </VBox>
             </StackPane>
         </HBox>
