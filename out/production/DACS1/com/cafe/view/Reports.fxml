@@ -41,7 +41,7 @@
                     <Button fx:id="filterByMonth" styleClass="promo-button" text="📆 Lọc theo tháng" />
                     <Button fx:id="exportReport" styleClass="promo-button" text="📤 Xuất báo cáo" />
                     <Region HBox.hgrow="ALWAYS" />
-                    <TextField fx:id="searchReport" prefWidth="200" promptText="🔍 Tìm báo cáo..." styleClass="promo-text-field" />
+                    <TextField fx:id="searchReport" prefWidth="170" promptText="🔍 Tìm báo cáo..." styleClass="promo-text-field" />
                 </HBox>
 
                 <!-- Table -->

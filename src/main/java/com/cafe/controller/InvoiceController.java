@@ -28,9 +28,14 @@ public class InvoiceController {
     private Label dateTimeLabel;
 
     private OrderController orderController;
+    private boolean isConfirmed = false; // Biến để theo dõi trạng thái xác nhận
 
     public void setOrderController(OrderController orderController) {
         this.orderController = orderController;
+    }
+
+    public boolean isConfirmed() {
+        return isConfirmed;
     }
 
     public void loadInvoiceData(String selectedTable, Map<String, InvoiceItem> invoiceMap, double phanTramGiam, String totalText) {
@@ -80,6 +85,7 @@ public class InvoiceController {
 
     @FXML
     public void closeWindow() {
+        isConfirmed = true; // Đặt isConfirmed thành true khi bấm "Xác nhận"
         Stage stage = (Stage) invoiceItems.getScene().getWindow();
         stage.close();
     }

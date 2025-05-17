@@ -212,16 +212,11 @@ public class OrderController {
             return; // Dừng lại nếu không có mặt hàng nào
         }
 
-        // Cập nhật trạng thái bàn
-        int idBan = Integer.parseInt(selectedTable.replace("Bàn ", ""));
-        updateTableStatus(idBan, "Đang dùng");
-        loadTablesToUI();
-
         // Mở cửa sổ hóa đơn
         try {
             URL resource = getClass().getResource("/com/cafe/view/Invoice.fxml");
             if (resource == null) {
-                throw new IOException(" ");
+                throw new IOException("Resource /com/cafe/view/Invoice.fxml not found. Check if the file exists in src/main/resources/com/cafe/view/ and rebuild the project.");
             }
             FXMLLoader loader = new FXMLLoader(resource);
             Parent root = loader.load();
@@ -236,16 +231,21 @@ public class OrderController {
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
             } else {
-                System.err.println(" ");
+                System.err.println("CSS file /com/cafe/view/Style.css not found.");
             }
             stage.setScene(scene);
             stage.showAndWait(); // Chờ người dùng đóng cửa sổ hóa đơn
 
-            // Sau khi đóng cửa sổ hóa đơn, reset hóa đơn
-            invoiceItems.getChildren().clear();
-            invoiceMap.clear();
-            updateTotal();
-            selectedTable = null;
+            // Chỉ thực hiện reset và cập nhật trạng thái bàn nếu người dùng xác nhận
+            if (invoiceController.isConfirmed()) {
+                int idBan = Integer.parseInt(selectedTable.replace("Bàn ", ""));
+                updateTableStatus(idBan, "Đang dùng");
+                loadTablesToUI();
+                invoiceItems.getChildren().clear();
+                invoiceMap.clear();
+                updateTotal();
+                selectedTable = null;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
