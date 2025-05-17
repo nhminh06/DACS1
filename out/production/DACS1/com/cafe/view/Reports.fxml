@@ -50,7 +50,7 @@
                         <TableColumn fx:id="dateColumn" prefWidth="100" text="Ngày" />
                         <TableColumn fx:id="orderCountColumn" prefWidth="120" text="Số đơn hàng" />
                         <TableColumn fx:id="totalRevenueColumn" prefWidth="150" text="Doanh thu (VND)" />
-                        <TableColumn fx:id="averageOrderValueColumn" prefWidth="150" text="Trung bình/đơn" />
+                        <TableColumn fx:id="averageOrderValueColumn" prefWidth="260" text="Trung bình/đơn" />
                     </columns>
                 </TableView>
 

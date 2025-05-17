@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -211,18 +212,48 @@ public class OrderController {
             return; // Dừng lại nếu không có mặt hàng nào
         }
 
+        // Cập nhật trạng thái bàn
         int idBan = Integer.parseInt(selectedTable.replace("Bàn ", ""));
         updateTableStatus(idBan, "Đang dùng");
         loadTablesToUI();
-        invoiceItems.getChildren().clear();
-        invoiceMap.clear();
-        updateTotal();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Thanh toán");
-        alert.setHeaderText(null);
-        alert.setContentText("Thanh toán thành công!");
-        alert.showAndWait();
-        selectedTable = null; // Reset selectedTable sau khi thanh toán
+
+        // Mở cửa sổ hóa đơn
+        try {
+            URL resource = getClass().getResource("/com/cafe/view/Invoice.fxml");
+            if (resource == null) {
+                throw new IOException(" ");
+            }
+            FXMLLoader loader = new FXMLLoader(resource);
+            Parent root = loader.load();
+            InvoiceController invoiceController = loader.getController();
+            invoiceController.setOrderController(this);
+            invoiceController.loadInvoiceData(selectedTable, invoiceMap, phanTramGiam, totalAmount.getText());
+
+            Stage stage = new Stage();
+            stage.setTitle("Hóa đơn");
+            Scene scene = new Scene(root, 400, 800);
+            URL cssUrl = getClass().getResource("/com/cafe/view/Style.css");
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            } else {
+                System.err.println(" ");
+            }
+            stage.setScene(scene);
+            stage.showAndWait(); // Chờ người dùng đóng cửa sổ hóa đơn
+
+            // Sau khi đóng cửa sổ hóa đơn, reset hóa đơn
+            invoiceItems.getChildren().clear();
+            invoiceMap.clear();
+            updateTotal();
+            selectedTable = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Lỗi");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("Không thể tải hóa đơn: " + e.getMessage());
+            errorAlert.showAndWait();
+        }
     }
 
     private void addToInvoice(String ten, double gia) {

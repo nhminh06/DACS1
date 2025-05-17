@@ -281,7 +281,7 @@ public class CustomersController {
         }
     }
 
-    // ==== Hàm phụ ====
+
 
     private void chuyenManHinh(ActionEvent event, String fxmlPath, int width, int height) {
         try {

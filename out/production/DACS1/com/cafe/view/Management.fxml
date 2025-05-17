@@ -64,7 +64,7 @@
                                 <PropertyValueFactory property="chucVu" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn fx:id="cotCaLam" text="Ca Làm" prefWidth="200">
+                        <TableColumn fx:id="cotCaLam" text="Ca Làm" prefWidth="150">
                             <cellValueFactory>
                                 <PropertyValueFactory property="caLam" />
                             </cellValueFactory>

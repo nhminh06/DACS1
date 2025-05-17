@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.cafe.controller.InvoiceController"
+           styleClass="content-area" prefWidth="300">
+
+    <VBox spacing="15">
+        <Label alignment="CENTER" styleClass="ban-label" text="Invoice">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="dateTimeLabel" alignment="CENTER" styleClass="summary-label" text="Ngày: " />
+        <Separator />
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label minWidth="150" styleClass="summary-label" text="Tên món" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label minWidth="30" styleClass="summary-label" text="SL" />
+            <Label minWidth="80" styleClass="summary-label" text="Giá" />
+        </HBox>
+
+        <!-- Dynamic content here -->
+        <VBox fx:id="invoiceItems" spacing="10" VBox.vgrow="ALWAYS" />
+
+        <Separator />
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Label styleClass="summary-label" text="Giảm giá:" />
+            <Label fx:id="discountAmount" styleClass="summary-value" text="0 %" />
+        </HBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Label styleClass="summary-label" text="Tổng cộng:" />
+            <Label fx:id="totalAmount" styleClass="summary-value" text="0 VNĐ" />
+        </HBox>
+
+        <VBox alignment="BOTTOM_RIGHT" spacing="10">
+            <!-- Nút xác nhận để đóng cửa sổ -->
+            <Button fx:id="checkoutButton"
+                    styleClass="promo-button"
+                    text="Xác nhận"
+                    onAction="#closeWindow" />
+        </VBox>
+    </VBox>
+</StackPane>
