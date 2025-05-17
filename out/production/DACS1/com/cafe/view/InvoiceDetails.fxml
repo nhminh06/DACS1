@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
 
 <?import java.net.URL?>
-<VBox fx:controller="com.cafe.controller.InvoiceDetailsController"
-      xmlns:fx="http://javafx.com/fxml"
-      spacing="10"
-      alignment="CENTER">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="134.0" prefWidth="203.0" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.InvoiceDetailsController">
     <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="10" left="10" right="10" top="10" />
     </padding>
     <children>
-        <Label fx:id="titleLabel"
-               text="Chi tiết hóa đơn"
-               styleClass="title" />
-        <VBox fx:id="detailsContainer"
-              spacing="5"
-              style="-fx-background-color: #f0f0f0;" />
+        <Label fx:id="titleLabel" styleClass="title" text="Chi tiết hóa đơn" />
+        <VBox fx:id="detailsContainer" spacing="5" style="-fx-background-color: #f0f0f0;" />
         <HBox alignment="CENTER">
-            <Button fx:id="closeButton"
-                    text="Đóng"
-                    onAction="#handleClose" />
+            <Button fx:id="closeButton" onAction="#handleClose" text="Đóng" />
         </HBox>
     </children>
     <stylesheets>

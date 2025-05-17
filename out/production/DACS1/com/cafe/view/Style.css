@@ -329,3 +329,135 @@
     -fx-font-family: "Segoe UI";
     -fx-alignment: center;
 }
+
+/*g*/
+/* === GENERAL STYLING === */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #eceff1;
+}
+
+.label {
+    -fx-text-fill: #263238;
+    -fx-font-size: 14px;
+}
+
+.button {
+    -fx-background-color: #00695c;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #00897b;
+}
+
+/* === INVOICE PAGE STYLING === */
+.invoice-header {
+    -fx-background-color: #00695c;
+    -fx-padding: 20;
+    -fx-alignment: center-left;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 2);
+}
+
+.invoice-title {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* Invoice Info Section */
+.invoice-info {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-border-color: #cfd8dc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+/* Invoice Summary Section */
+.invoice-summary {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15;
+    -fx-spacing: 8;
+    -fx-border-color: #cfd8dc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.invoice-summary-label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #37474f;
+}
+
+.invoice-summary-value {
+    -fx-font-size: 14px;
+    -fx-text-fill: #00695c;
+    -fx-font-weight: bold;
+}
+
+/* === INVOICE DETAILS TABLE === */
+.invoice-details-table {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b0bec5;
+    -fx-border-radius: 8;
+    -fx-padding: 10;
+}
+
+.invoice-details-header {
+    -fx-background-color: #004d40;
+    -fx-padding: 8 10;
+    -fx-border-radius: 8 8 0 0;
+}
+
+.invoice-details-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.invoice-details-row {
+    -fx-padding: 5 10;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.invoice-details-row:hover {
+    -fx-background-color: #f1f8f7;
+}
+
+.invoice-details-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #37474f;
+    -fx-alignment: center-left;
+}
+
+.invoice-details-label.total {
+    -fx-text-fill: #d32f2f;
+    -fx-font-weight: bold;
+}
+
+.invoice-details-no-data {
+    -fx-text-fill: #9e9e9e;
+    -fx-font-style: italic;
+    -fx-font-size: 13px;
+    -fx-alignment: center;
+}
+
+/* === INVOICE BUTTONS === */
+.invoice-button {
+    -fx-background-color: #00695c;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+    -fx-padding: 8 16;
+}
+
+.invoice-button:hover {
+    -fx-background-color: #00897b;
+}
