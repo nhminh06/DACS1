@@ -44,7 +44,7 @@
             <Button fx:id="checkoutButton"
                     styleClass="promo-button"
                     text="Xác nhận"
-                    onAction="#closeWindow" />
+                    onAction="#handleThanhToan" />
         </VBox>
     </VBox>
 </StackPane>

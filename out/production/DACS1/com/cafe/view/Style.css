@@ -253,3 +253,79 @@
     -fx-border-color: #00897b;
     -fx-background-color: #e0f2f1;
 }
+
+/* Invoice Details Table Styling */
+
+/* Container for the invoice details */
+.invoice-details-container {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b0bec5;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-spacing: 0;
+}
+
+/* Header row for the invoice details table */
+.invoice-details-header {
+    -fx-background-color: #00695c;
+    -fx-padding: 8 10;
+    -fx-border-radius: 8 8 0 0;
+}
+
+.invoice-details-header .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI";
+    -fx-alignment: center;
+}
+
+/* Row styling for each invoice item */
+.invoice-details-row {
+    -fx-padding: 5 10;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: #ffffff;
+}
+
+.invoice-details-row:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Labels within each row */
+.invoice-details-label {
+    -fx-font-size: 13px;
+    -fx-font-family: "Segoe UI";
+    -fx-alignment: center;
+}
+
+.invoice-details-label.item-name {
+    -fx-text-fill: #263238;
+    -fx-pref-width: 200;
+}
+
+.invoice-details-label.quantity {
+    -fx-text-fill: #455a64;
+    -fx-pref-width: 50;
+}
+
+.invoice-details-label.unit-price {
+    -fx-text-fill: #00695c;
+    -fx-pref-width: 100;
+}
+
+.invoice-details-label.total-price {
+    -fx-text-fill: #d32f2f;
+    -fx-font-weight: bold;
+    -fx-pref-width: 100;
+}
+
+/* No data message styling */
+.invoice-details-no-data {
+    -fx-text-fill: #757575;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI";
+    -fx-alignment: center;
+}

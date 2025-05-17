@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.ReportsController">
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.ReportsController">
 
     <!-- Header -->
     <top>
@@ -23,7 +23,6 @@
             <Button styleClass="sidebar-button" text="📊 Reports" />
         </VBox>
     </left>
-
     <!-- Main Content -->
     <center>
         <HBox spacing="20">
@@ -45,12 +44,12 @@
                 </HBox>
 
                 <!-- Table -->
-                <TableView fx:id="reportTable" prefHeight="250" style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+                <TableView fx:id="reportTable" prefWidth="600" prefHeight="400">
                     <columns>
-                        <TableColumn fx:id="dateColumn" prefWidth="100" text="Ngày" />
-                        <TableColumn fx:id="orderCountColumn" prefWidth="120" text="Số đơn hàng" />
-                        <TableColumn fx:id="totalRevenueColumn" prefWidth="150" text="Doanh thu (VND)" />
-                        <TableColumn fx:id="averageOrderValueColumn" prefWidth="260" text="Trung bình/đơn" />
+                        <TableColumn fx:id="dateColumn" text="Ngày" prefWidth="100"/>
+                        <TableColumn fx:id="quantityColumn" text="Số lượng" prefWidth="100"/>
+                        <TableColumn fx:id="totalRevenueColumn" text="Doanh thu" prefWidth="150"/>
+                        <TableColumn fx:id="averageColumn" text="Trung bình" prefWidth="265"/>
                     </columns>
                 </TableView>
 
@@ -83,7 +82,9 @@
 
                 <!-- Lịch sử đơn hàng -->
                 <Label style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #00796B;" text="📜 Lịch sử đơn hàng" />
+
                 <ListView fx:id="orderHistoryList" prefHeight="100" VBox.vgrow="ALWAYS" />
+                <Button fx:id="chitethoadon" onAction="#viewInvoiceDetails" styleClass="promo-button" text="Chi tiết hóa đơn" />
             </VBox>
         </HBox>
     </center>
