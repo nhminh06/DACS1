@@ -40,6 +40,14 @@ public class ManagementController {
 
     private ObservableList<KhuyenMai> danhSachKhuyenMai = FXCollections.observableArrayList();
 
+    // === FXML cho ca trực ===
+    @FXML private TableView<Doica.NhanVien> bangCaTruc;
+    @FXML private TableColumn<Doica.NhanVien, String> cotTenCa;
+    @FXML private TableColumn<Doica.NhanVien, String> cotChucVuCa;
+    @FXML private TableColumn<Doica.NhanVien, String> cotCaLam;
+
+    private ObservableList<Doica.NhanVien> danhSachCaTruc = FXCollections.observableArrayList();
+
     @FXML
     public void initialize() {
         // Cấu hình bảng sản phẩm
@@ -56,6 +64,14 @@ public class ManagementController {
             cotGiaTri.setCellValueFactory(new PropertyValueFactory<>("giaTri"));
             cotNgayHetHan.setCellValueFactory(new PropertyValueFactory<>("ngayHetHan"));
             loadKhuyenMaiFromDatabase();
+        }
+
+        // Cấu hình bảng ca trực
+        if (cotTenCa != null && cotChucVuCa != null && cotCaLam != null) {
+            cotTenCa.setCellValueFactory(data -> data.getValue().hoTenProperty());
+            cotChucVuCa.setCellValueFactory(data -> data.getValue().chucVuProperty());
+            cotCaLam.setCellValueFactory(data -> data.getValue().caLamProperty());
+            loadCaTrucFromDatabase();
         }
 
         // Tìm kiếm sản phẩm
@@ -125,6 +141,29 @@ public class ManagementController {
         }
     }
 
+    private void loadCaTrucFromDatabase() {
+        String query = "SELECT HoTen, ChucVu, CaLam FROM catruc";
+        try (Connection conn = connectDB();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            danhSachCaTruc.clear();
+            while (rs.next()) {
+                Doica.NhanVien nv = new Doica.NhanVien(
+                        rs.getString("HoTen"),
+                        rs.getString("ChucVu"),
+                        "" // SDT không cần thiết, để trống
+                );
+                nv.setCaLam(rs.getString("CaLam"));
+                danhSachCaTruc.add(nv);
+            }
+
+            bangCaTruc.setItems(danhSachCaTruc);
+        } catch (SQLException e) {
+            showError("Lỗi khi tải dữ liệu ca trực", e);
+        }
+    }
+
     @FXML
     private void taoKhuyenMai(ActionEvent event) {
         String tenMa = tenKhuyenMai.getText().trim();
@@ -183,6 +222,7 @@ public class ManagementController {
     private void taiLai(ActionEvent event) {
         loadSanPhamFromDatabase();
         loadKhuyenMaiFromDatabase();
+        loadCaTrucFromDatabase();
         if (timKiem != null) timKiem.clear();
         if (tenKhuyenMai != null) tenKhuyenMai.clear();
         if (giaTriKhuyenMai != null) giaTriKhuyenMai.clear();
@@ -215,6 +255,24 @@ public class ManagementController {
             stage.show();
         } catch (IOException e) {
             showError("Không thể mở giao diện sửa sản phẩm", e);
+        }
+    }
+    @FXML
+    public void gotodoica(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/doica.fxml"));
+            Parent root = loader.load();
+
+            // Lấy đúng controller class
+            Doica controller = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setTitle("Đổi ca");
+            stage.setScene(new Scene(root, 1000, 500));
+            stage.show();
+
+        } catch (IOException e) {
+            showError("Không thể mở giao diện đổi ca", e);
         }
     }
 

@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.sql.*;
 import com.cafe.model.NhanVien;
 
-
 public class CustomersController {
 
     @FXML private TableView<NhanVien> bangNhanVien;
@@ -56,7 +55,6 @@ public class CustomersController {
         timNhanVien.textProperty().addListener((obs, oldText, newText) -> timKiemNhanVien());
     }
 
-
     private void loadData() {
         danhSach.clear();
         String query = "SELECT * FROM nhanvien";
@@ -71,6 +69,19 @@ public class CustomersController {
                         rs.getDouble("Luong")
                 ));
             }
+
+            // Sắp xếp danh sách theo phần số của MaNV
+            danhSach.sort((nv1, nv2) -> {
+                try {
+                    int num1 = Integer.parseInt(nv1.getMaNV().replace("NV", ""));
+                    int num2 = Integer.parseInt(nv2.getMaNV().replace("NV", ""));
+                    return Integer.compare(num1, num2);
+                } catch (NumberFormatException e) {
+                    // Nếu không parse được số, so sánh chuỗi gốc
+                    return nv1.getMaNV().compareTo(nv2.getMaNV());
+                }
+            });
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -147,6 +158,7 @@ public class CustomersController {
         alert.setContentText(message);
         alert.show();
     }
+
     @FXML
     private void taiLaiTrang() {
         loadData();
@@ -239,7 +251,6 @@ public class CustomersController {
         }
     }
 
-
     @FXML
     public void gotodeletenhanvien(ActionEvent event) {
         NhanVien selected = bangNhanVien.getSelectionModel().getSelectedItem();
@@ -269,7 +280,6 @@ public class CustomersController {
             e.printStackTrace();
         }
     }
-
 
     // ==== Hàm phụ ====
 

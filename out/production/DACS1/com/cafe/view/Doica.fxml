@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox spacing="20" xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cafe.controller.Doica">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Bảng ca trực bên trái -->
+    <VBox spacing="10" prefWidth="500">
+        <Label style="-fx-font-weight: bold; -fx-font-size: 16;" text="📋 Danh sách Ca trực" />
+
+        <TableView fx:id="bangCaTruc" prefHeight="400" prefWidth="480"
+                   style="-fx-background-color: #ffffff; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
+            <columns>
+                <TableColumn fx:id="cotTenCa" prefWidth="180" text="Tên nhân viên" />
+                <TableColumn fx:id="cotChucVuCa" prefWidth="150" text="Chức vụ" />
+                <TableColumn fx:id="cotCaLam" prefWidth="130" text="Ca làm" />
+            </columns>
+        </TableView>
+
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Button fx:id="btnDoiCa" text="🔁 Đổi ca" styleClass="promo-button" />
+                <Button fx:id="btnXoa" text="❌ Xóa khỏi ca" styleClass="promo-button" />
+                <Button fx:id="btnLuu" text="💾 Lưu ca trực" styleClass="promo-button" />
+            </HBox>
+        </HBox>
+    </VBox>
+
+    <!-- Bảng nhân viên bên phải -->
+    <VBox spacing="10" prefWidth="500">
+        <Label style="-fx-font-weight: bold; -fx-font-size: 16;" text="👥 Danh sách Nhân viên" />
+
+        <TableView fx:id="bangNhanVien" prefHeight="400" prefWidth="480"
+                   style="-fx-background-color: #ffffff; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
+            <columns>
+                <TableColumn fx:id="cotTenNV" prefWidth="180" text="Tên nhân viên" />
+                <TableColumn fx:id="cotChucVuNV" prefWidth="150" text="Chức vụ" />
+                <TableColumn fx:id="cotSdtNV" prefWidth="130" text="Số điện thoại" />
+            </columns>
+        </TableView>
+    </VBox>
+</HBox>

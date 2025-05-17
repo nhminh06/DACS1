@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.ManagementController">
 
     <!-- Header -->
@@ -49,6 +50,32 @@
                         <TableColumn fx:id="cotMoTa" prefWidth="240" text="Mô tả" />
                     </columns>
                 </TableView>
+                <Label style="-fx-font-weight: bold; -fx-font-size: 16;" text="🧑‍💼 Nhân viên trực ca" />
+
+                <TableView fx:id="bangCaTruc" layoutX="20" layoutY="600" prefHeight="200" prefWidth="600">
+                    <columns>
+                        <TableColumn fx:id="cotTenCa" text="Họ Tên" prefWidth="200">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="hoTen" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="cotChucVuCa" text="Chức Vụ" prefWidth="200">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="chucVu" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="cotCaLam" text="Ca Làm" prefWidth="200">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="caLam" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Button fx:id="doiCaButton" styleClass="promo-button" text="🔁 Đổi ca" onAction="#gotodoica"/>
+                </HBox>
+
             </VBox>
 
             <!-- Phần khuyến mãi -->
