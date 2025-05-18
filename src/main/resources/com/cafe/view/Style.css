@@ -13,6 +13,13 @@
     -fx-font-weight: bold;
     -fx-font-family: "Segoe UI";
 }
+.titledanhthu {
+    -fx-text-fill: rgba(2, 2, 2, 0.3);
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI";
+}
+
 
 /* Sidebar Styling */
 .sidebar {
