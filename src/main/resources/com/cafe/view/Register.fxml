@@ -50,8 +50,10 @@
         <!-- Nút đăng ký -->
         <Button fx:id="registerButton" maxWidth="150" onAction="#handleRegister"
                 style="-fx-background-color: #00796b; -fx-text-fill: white; -fx-font-weight: bold;" text="Đăng ký" />
+        <Hyperlink text="Quay lại đăng nhập" onAction="#gotologin" style="-fx-text-fill: #333;" />
 
         <!-- Thông báo -->
         <Label fx:id="messageLabel" text="" textFill="red" visible="false" />
     </VBox>
+
 </AnchorPane>

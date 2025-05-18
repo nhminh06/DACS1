@@ -29,5 +29,23 @@
     <orderEntry type="library" exported="" name="jfoenix-9.0.10" level="project" />
     <orderEntry type="library" name="lib1" level="project" />
     <orderEntry type="library" exported="" name="jsoup-1.19.1" level="application" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/jakarta.mail-2.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/jakarta.activation-api-2.0.1.jar!/" />
+          <root url="file://$MODULE_DIR$" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/untitled/src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="jakarta.mail-2.0.1" level="project" />
+    <orderEntry type="library" name="jakarta.mail-2.0.2" level="project" />
+    <orderEntry type="library" exported="" name="jakarta.mail-2.0.3" level="project" />
+    <orderEntry type="library" exported="" name="jakarta.activation-2.0.1" level="project" />
   </component>
 </module>

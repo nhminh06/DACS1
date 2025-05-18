@@ -64,7 +64,10 @@
         <HBox alignment="CENTER" spacing="5">
             <Label text="Chưa có tài khoản?" style="-fx-text-fill: #333;" />
             <Hyperlink fx:id="signupLink" text="Đăng ký ngay" onAction="#gotoregister" />
+
+
         </HBox>
+        <Hyperlink fx:id="forgotPasswordLink"  onAction="#gotoForgotPassword" text="Quên mật khẩu?" />
 
     </VBox>
 </AnchorPane>

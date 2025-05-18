@@ -80,6 +80,22 @@ public class loginController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void gotoForgotPassword() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/forgot_password.fxml"));
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Quên mật khẩu");
+            stage.setWidth(800);
+            stage.setHeight(437);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
