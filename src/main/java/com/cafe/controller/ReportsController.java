@@ -151,10 +151,10 @@ public class ReportsController {
     private void showInvoiceDetails(String maDon) {
         try {
             java.net.URL fxmlLocation = getClass().getResource("/com/cafe/view/InvoiceDetails.fxml");
-            System.out.println("Đang tải InvoiceDetails.fxml tại: " + fxmlLocation);
+
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
             if (loader.getLocation() == null) {
-                throw new IOException("Không tìm thấy file InvoiceDetails.fxml tại /com/cafe/view/InvoiceDetails.fxml");
+                throw new IOException(" ");
             }
             Parent root = loader.load();
             InvoiceDetailsController controller = loader.getController();
