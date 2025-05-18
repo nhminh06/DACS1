@@ -1,27 +1,97 @@
 package com.cafe.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class InvoiceDetailsController {
 
     @FXML private Label titleLabel;
     @FXML private VBox detailsContainer;
+    @FXML private Label discountLabel;
+    @FXML private Label totalLabel;
     @FXML private Button closeButton;
 
-    public void addItem(String tenMon, int soLuong, double donGia, double tongTien) {
-        HBox itemRow = new HBox(10);
-        itemRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+    private double totalBeforeDiscount = 0.0;
+    private double discountPercent = 0.0;
+
+    public void loadInvoiceDetails(String maDon) {
+        if (maDon == null || maDon.trim().isEmpty()) {
+            addMessage("Mã hóa đơn không hợp lệ.");
+            return;
+        }
+
+        detailsContainer.getChildren().clear();
+        titleLabel.setText("Chi tiết hóa đơn: " + maDon);
+        totalBeforeDiscount = 0;
+        discountPercent = 0;
+
+        String ngayLap = null;
+
+        // 1. Lấy ngày lập từ bảng HoaDon
+        String sqlHoaDon = "SELECT NgayLap FROM HoaDon WHERE MaDon = ?";
+        try (Connection conn = connectDB();
+             PreparedStatement stmt = conn.prepareStatement(sqlHoaDon)) {
+            stmt.setString(1, maDon);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                ngayLap = rs.getString("NgayLap");
+            } else {
+                addMessage("Không tìm thấy hóa đơn với mã: " + maDon);
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            addMessage("Lỗi khi truy vấn hóa đơn: " + e.getMessage());
+            return;
+        }
+
+        // 2. Lấy danh sách món và khuyến mãi từ bảng thongke
+        String sqlThongKe = "SELECT ten_mon, so_luong, don_gia, tong_tien, KhuyenMai FROM thongke WHERE MaDon = ? AND DATE(ngay) = ?";
+        try (Connection conn = connectDB();
+             PreparedStatement stmt = conn.prepareStatement(sqlThongKe)) {
+            stmt.setString(1, maDon);
+            stmt.setString(2, ngayLap);
+            ResultSet rs = stmt.executeQuery();
+
+            boolean hasItem = false;
+            while (rs.next()) {
+                hasItem = true;
+                String ten = rs.getString("ten_mon");
+                int soLuong = rs.getInt("so_luong");
+                double donGia = rs.getDouble("don_gia");
+                double tongTien = rs.getDouble("tong_tien");
+                double khuyenMai = rs.getDouble("KhuyenMai");
+                if (discountPercent == 0) {
+                    discountPercent = khuyenMai;
+                }
+                addItem(ten, soLuong, donGia, tongTien);
+                totalBeforeDiscount += tongTien;
+            }
+
+            if (!hasItem) {
+                addMessage("Không có chi tiết món cho hóa đơn này.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            addMessage("Lỗi khi truy vấn thống kê: " + e.getMessage());
+            return;
+        }
+
+        // 3. Cập nhật hiển thị giảm giá và tổng tiền
+        updateTotals();
+    }
+
+    private void addItem(String tenMon, int soLuong, double donGia, double tongTien) {
+        HBox row = new HBox(10);
+        row.setAlignment(Pos.CENTER_LEFT);
 
         Label tenLabel = new Label(tenMon);
         tenLabel.setPrefWidth(200);
@@ -35,48 +105,24 @@ public class InvoiceDetailsController {
         Label tongLabel = new Label(String.format("%,.0f VNĐ", tongTien));
         tongLabel.setPrefWidth(100);
 
-        itemRow.getChildren().addAll(tenLabel, qtyLabel, giaLabel, tongLabel);
-        detailsContainer.getChildren().add(itemRow);
+        row.getChildren().addAll(tenLabel, qtyLabel, giaLabel, tongLabel);
+        detailsContainer.getChildren().add(row);
     }
 
-    public void loadInvoiceDetails(String maDon) throws SQLException {
-        detailsContainer.getChildren().clear();
-        titleLabel.setText("Chi tiết hóa đơn: " + maDon);
+    private void addMessage(String message) {
+        Label msgLabel = new Label(message);
+        msgLabel.setStyle("-fx-text-fill: red;");
+        detailsContainer.getChildren().add(msgLabel);
+        if (totalLabel != null) totalLabel.setText("0 VNĐ");
+        if (discountLabel != null) discountLabel.setText("0%");
+    }
 
-        // Kiểm tra xem MaDon có tồn tại trong HoaDon
-        String queryHoaDon = "SELECT DATE(NgayLap) AS NgayLap FROM HoaDon WHERE MaDon = ?";
-        String ngayLap = null;
-        try (Connection conn = connectDB();
-             PreparedStatement pstmt = conn.prepareStatement(queryHoaDon)) {
-            pstmt.setString(1, maDon);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                ngayLap = rs.getString("NgayLap");
-            } else {
-                addItem("Không tìm thấy hóa đơn với mã: " + maDon, 0, 0, 0);
-                return;
-            }
-        }
-
-        // Lấy chi tiết từ thongke dựa trên MaDon và ngày khớp
-        String queryThongKe = "SELECT ten_mon, so_luong, don_gia, tong_tien FROM thongke WHERE MaDon = ? AND DATE(ngay) = ?";
-        try (Connection conn = connectDB();
-             PreparedStatement pstmt = conn.prepareStatement(queryThongKe)) {
-            pstmt.setString(1, maDon);
-            pstmt.setString(2, ngayLap);
-            ResultSet rs = pstmt.executeQuery();
-            boolean hasData = false;
-            while (rs.next()) {
-                hasData = true;
-                String tenMon = rs.getString("ten_mon");
-                int soLuong = rs.getInt("so_luong");
-                double donGia = rs.getDouble("don_gia");
-                double tongTien = rs.getDouble("tong_tien");
-                addItem(tenMon, soLuong, donGia, tongTien);
-            }
-            if (!hasData) {
-                addItem("Không có dữ liệu chi tiết cho hóa đơn này", 0, 0, 0);
-            }
+    private void updateTotals() {
+        if (discountLabel != null && totalLabel != null) {
+            double discountAmount = totalBeforeDiscount * (discountPercent / 100.0);
+            double finalTotal = totalBeforeDiscount - discountAmount;
+            discountLabel.setText(String.format("%.0f%%", discountPercent));
+            totalLabel.setText(String.format("%,.0f VNĐ", finalTotal));
         }
     }
 

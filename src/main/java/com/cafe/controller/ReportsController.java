@@ -214,7 +214,7 @@ public class ReportsController {
             stage.setHeight(400);
             stage.show();
 
-        } catch (IOException | SQLException e) {
+        } catch  (IOException e) {
             e.printStackTrace();
             showAlert("Lỗi", "Không thể mở chi tiết hóa đơn: " + e.getMessage());
         }

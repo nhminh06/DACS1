@@ -22,4 +22,8 @@ public class InvoiceItem {
         qtyLabel.setText("x" + quantity);
         priceLabel.setText(String.format("%,.0f VNĐ", unitPrice * quantity));
     }
+    public double getTotal() {
+        return quantity * unitPrice;
+    }
+
 }

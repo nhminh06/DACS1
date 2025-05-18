@@ -34,8 +34,10 @@ public class InvoiceController {
 
     private Map<String, InvoiceItem> hoaDonItems;
     private boolean isConfirmed = false;
+    private double phanTramGiam; // Lưu % giảm giá
 
     private OrderController orderController;
+
     public void setOrderController(OrderController orderController) {
         this.orderController = orderController;
     }
@@ -50,6 +52,7 @@ public class InvoiceController {
 
     public void loadInvoiceData(String selectedTable, Map<String, InvoiceItem> invoiceMap, double phanTramGiam, String totalText) {
         this.hoaDonItems = invoiceMap;
+        this.phanTramGiam = phanTramGiam; // Gán giá trị để sử dụng trong thanh toán
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -97,30 +100,33 @@ public class InvoiceController {
         String maDon = generateMaDon(today);
 
         try (Connection conn = connectDB()) {
-            // Lưu thông tin hóa đơn vào bảng HoaDon
+            // Lưu hóa đơn
             String sqlHoaDon = "INSERT INTO HoaDon (MaDon, NgayLap) VALUES (?, ?)";
-            PreparedStatement psHoaDon = conn.prepareStatement(sqlHoaDon);
-            psHoaDon.setString(1, maDon);
-            psHoaDon.setDate(2, Date.valueOf(today));
-            psHoaDon.executeUpdate();
+            try (PreparedStatement psHoaDon = conn.prepareStatement(sqlHoaDon)) {
+                psHoaDon.setString(1, maDon);
+                psHoaDon.setDate(2, Date.valueOf(today));
+                psHoaDon.executeUpdate();
+            }
 
-            // Lưu chi tiết vào bảng thongke với MaDon
-            for (Map.Entry<String, InvoiceItem> entry : hoaDonItems.entrySet()) {
-                String tenMon = entry.getKey();
-                InvoiceItem item = entry.getValue();
-                int soLuong = item.quantity;
-                double donGia = item.unitPrice;
-                double tongTien = soLuong * donGia;
+            // Lưu chi tiết thống kê, có thêm KhuyenMai
+            String sqlThongKe = "INSERT INTO thongke (ngay, ten_mon, so_luong, don_gia, tong_tien, MaDon, KhuyenMai) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement psThongKe = conn.prepareStatement(sqlThongKe)) {
+                for (Map.Entry<String, InvoiceItem> entry : hoaDonItems.entrySet()) {
+                    String tenMon = entry.getKey();
+                    InvoiceItem item = entry.getValue();
+                    int soLuong = item.quantity;
+                    double donGia = item.unitPrice;
+                    double tongTien = soLuong * donGia;
 
-                String sqlThongKe = "INSERT INTO thongke (ngay, ten_mon, so_luong, don_gia, tong_tien, MaDon) VALUES (?, ?, ?, ?, ?, ?)";
-                PreparedStatement psThongKe = conn.prepareStatement(sqlThongKe);
-                psThongKe.setDate(1, Date.valueOf(today));
-                psThongKe.setString(2, tenMon);
-                psThongKe.setInt(3, soLuong);
-                psThongKe.setDouble(4, donGia);
-                psThongKe.setDouble(5, tongTien);
-                psThongKe.setString(6, maDon);
-                psThongKe.executeUpdate();
+                    psThongKe.setDate(1, Date.valueOf(today));
+                    psThongKe.setString(2, tenMon);
+                    psThongKe.setInt(3, soLuong);
+                    psThongKe.setDouble(4, donGia);
+                    psThongKe.setDouble(5, tongTien);
+                    psThongKe.setString(6, maDon);
+                    psThongKe.setDouble(7, phanTramGiam); // Lưu % khuyến mãi
+                    psThongKe.executeUpdate();
+                }
             }
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Thanh toán thành công và đã lưu vào thống kê!");
