@@ -36,11 +36,11 @@
 
                 <!-- Toolbar -->
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Button fx:id="filterByDate" styleClass="promo-button" text="📅 Lọc theo ngày" />
-                    <Button fx:id="filterByMonth" styleClass="promo-button" text="📆 Lọc theo tháng" />
-                    <Button fx:id="exportReport" styleClass="promo-button" text="📤 Xuất báo cáo" />
+                    <Button fx:id="filterByDate" styleClass="promo-button" text="📅 Lọc theo ngày" onAction="#filterByDate"/>
+                    <Button fx:id="filterByMonth" styleClass="promo-button" text="📆 Lọc theo tháng" onAction="#filterByMonth"/>
+                    <Button fx:id="exportReport" styleClass="promo-button" text="📤 Xuất báo cáo" onAction="#exportReport"/>
                     <Region HBox.hgrow="ALWAYS" />
-                    <TextField fx:id="searchReport" prefWidth="170" promptText="🔍 Tìm báo cáo..." styleClass="promo-text-field" />
+                    <TextField fx:id="filterReportList" prefWidth="170" promptText="🔍 Tìm báo cáo..." styleClass="promo-text-field" />
                 </HBox>
 
                 <!-- Table -->

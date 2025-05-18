@@ -15,9 +15,12 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.*;
 
 public class ReportsController {
@@ -46,6 +49,8 @@ public class ReportsController {
 
     private ObservableList<ThongKe> reportList = FXCollections.observableArrayList();
 
+    @FXML private TextField filterReportList;
+
     @FXML
     public void initialize() {
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("ngay"));
@@ -60,6 +65,10 @@ public class ReportsController {
                 showReportDetails(newVal);
             }
         });
+        filterReportList.textProperty().addListener((obs, oldVal, newVal) -> {
+            filterReportList(newVal);
+        });
+
     }
 
     private void loadReportData() {
@@ -102,12 +111,51 @@ public class ReportsController {
         }
     }
 
+    private void loadReportByMonth() {
+        String query = """
+            SELECT DATE_FORMAT(ngay, '%Y-%m') AS month,
+                   SUM(so_luong) AS total_quantity,
+                   SUM(tong_tien) AS total_revenue,
+                   CASE WHEN SUM(so_luong) > 0 THEN SUM(tong_tien) / SUM(so_luong) ELSE 0 END AS avg_per_item
+            FROM thongke
+            GROUP BY month
+            ORDER BY month DESC
+            """;
+
+        try (Connection conn = connectDB();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            reportList.clear();
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Doanh thu theo tháng");
+
+            while (rs.next()) {
+                String thang = rs.getString("month");
+                int soLuong = rs.getInt("total_quantity");
+                double doanhThu = rs.getDouble("total_revenue");
+                double trungBinh = rs.getDouble("avg_per_item");
+
+                ThongKe tk = new ThongKe(thang, soLuong, doanhThu, trungBinh);
+                reportList.add(tk);
+
+                series.getData().add(new XYChart.Data<>(thang, doanhThu));
+            }
+
+            reportTable.setItems(reportList);
+            revenueChart.getData().clear();
+            revenueChart.getData().add(series);
+
+        } catch (SQLException e) {
+            showAlert("Lỗi", "Không thể tải dữ liệu theo tháng: " + e.getMessage());
+        }
+    }
+
     private void showReportDetails(ThongKe report) {
         txtDate.setText(report.getNgay());
         txtOrderCount.setText(String.valueOf(report.getSoLuong()));
         txtTotalRevenue.setText(String.format("%,.0f VNĐ", report.getDoanhThu()));
         txtAverageOrderValue.setText(String.format("%,.0f VNĐ", report.getTrungBinh()));
-
         loadOrderHistory(report.getNgay());
     }
 
@@ -153,9 +201,8 @@ public class ReportsController {
             java.net.URL fxmlLocation = getClass().getResource("/com/cafe/view/InvoiceDetails.fxml");
 
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
-            if (loader.getLocation() == null) {
-                throw new IOException(" ");
-            }
+            if (loader.getLocation() == null) throw new IOException("Không tìm thấy FXML");
+
             Parent root = loader.load();
             InvoiceDetailsController controller = loader.getController();
             controller.loadInvoiceDetails(maDon);
@@ -167,17 +214,14 @@ public class ReportsController {
             stage.setHeight(400);
             stage.show();
 
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
             showAlert("Lỗi", "Không thể mở chi tiết hóa đơn: " + e.getMessage());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Lỗi cơ sở dữ liệu", "Không thể tải chi tiết hóa đơn: " + e.getMessage());
         }
     }
 
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION); // đổi từ ERROR sang INFORMATION cho thông báo bình thường
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
@@ -223,16 +267,66 @@ public class ReportsController {
 
     @FXML
     private void filterByDate() {
-        showAlert("Thông báo", "Chức năng lọc theo ngày chưa được triển khai.");
+        loadReportData();
     }
 
     @FXML
     private void filterByMonth() {
-        showAlert("Thông báo", "Chức năng lọc theo tháng chưa được triển khai.");
+        loadReportByMonth();
     }
 
     @FXML
     private void exportReport() {
-        showAlert("Thông báo", "Chức năng xuất báo cáo chưa được triển khai.");
+        if (reportList.isEmpty()) {
+            showAlert("Thông báo", "Không có dữ liệu để xuất.");
+            return;
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Lưu báo cáo");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        fileChooser.setInitialFileName("bao_cao_doanh_thu.csv");
+
+        File file = fileChooser.showSaveDialog(null);
+        if (file == null) return;
+
+        try (PrintWriter writer = new PrintWriter(file, "UTF-8")) {
+            writer.println("Ngày,Số lượng,Doanh thu,Trung bình");
+            for (ThongKe tk : reportList) {
+                writer.printf("%s,%d,%.0f,%.0f%n",
+                        tk.getNgay(), tk.getSoLuong(), tk.getDoanhThu(), tk.getTrungBinh());
+            }
+
+            showAlert("Thành công", "Đã xuất báo cáo thành công tới:\n" + file.getAbsolutePath());
+
+        } catch (IOException e) {
+            showAlert("Lỗi", "Không thể xuất báo cáo: " + e.getMessage());
+        }
     }
+    private void filterReportList(String keyword) {
+        if (keyword == null || keyword.isEmpty()) {
+            reportTable.setItems(reportList);
+            return;
+        }
+
+        String lowerKeyword = keyword.toLowerCase();
+        ObservableList<ThongKe> filteredList = FXCollections.observableArrayList();
+
+        for (ThongKe tk : reportList) {
+            String ngay = tk.getNgay().toLowerCase();
+            String soLuong = String.valueOf(tk.getSoLuong());
+            String doanhThu = String.format("%.0f", tk.getDoanhThu());
+            String trungBinh = String.format("%.0f", tk.getTrungBinh());
+
+            if (ngay.contains(lowerKeyword)
+                    || soLuong.contains(lowerKeyword)
+                    || doanhThu.contains(lowerKeyword)
+                    || trungBinh.contains(lowerKeyword)) {
+                filteredList.add(tk);
+            }
+        }
+
+        reportTable.setItems(filteredList);
+    }
+
 }
