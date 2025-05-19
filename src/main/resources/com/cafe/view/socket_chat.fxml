@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="com.cafe.controller.socket_chat"
+      xmlns="http://javafx.com/javafx/11"
+      xmlns:fx="http://javafx.com/fxml"
+      spacing="5" prefWidth="300" prefHeight="400"
+      fx:id="rootBox" stylesheets="@style.css" styleClass="vbox">
+
+    <TextArea fx:id="responseArea" editable="false" wrapText="true" prefHeight="350"/>
+
+    <HBox spacing="5">
+        <TextField fx:id="questionField" promptText="Nhập câu hỏi..." prefWidth="220"
+                   onAction="#handleSend"/>
+        <Button text="Gửi" onAction="#handleSend"/>
+    </HBox>
+
+</VBox>

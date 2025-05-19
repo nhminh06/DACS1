@@ -13,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import com.cafe.ChatBotServer.ChatServer;
+
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -273,6 +275,30 @@ public class ManagementController {
 
         } catch (IOException e) {
             showError("Không thể mở giao diện đổi ca", e);
+        }
+    }
+    @FXML
+    public void gotochat(ActionEvent event) {
+        try {
+            // Khởi động ChatServer trong một luồng riêng
+            new Thread(() -> {
+                try {
+                    ChatServer.main(new String[]{});
+                } catch (Exception e) {
+                    showError("Không thể khởi động ChatServer", e);
+                }
+            }).start();
+
+            // Mở giao diện chat
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/socket_chat.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Chat");
+            stage.setScene(new Scene(root, 600, 400));
+            stage.show();
+
+        } catch (IOException e) {
+            showError("Không thể mở giao diện chat", e);
         }
     }
 
