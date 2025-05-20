@@ -36,10 +36,6 @@ public class socket_chat {
     @FXML
     public void gotochat(ActionEvent event) {
         try {
-            // Khởi động ChatServer trong một luồng riêng
-
-
-            // Mở giao diện chat
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/chat.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
@@ -47,8 +43,12 @@ public class socket_chat {
             stage.setScene(new Scene(root, 600, 400));
             stage.show();
 
-        } catch (IOException e) {
 
+            Stage currentStage = (Stage) responseArea.getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

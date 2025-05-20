@@ -22,13 +22,16 @@ public class Chat {
     @FXML
     private void initialize() {
         try {
-            // Yêu cầu người dùng nhập IP và tên
-            String serverIP = JOptionPane.showInputDialog("Nhập IP server:", "10.50.105.245");
+            // Yêu cầu người dùng nhập IP và tên (không có giá trị mặc định trong ô nhập)
+            String serverIP = JOptionPane.showInputDialog("Nhập IP server:");
             if (serverIP == null || serverIP.trim().isEmpty()) {
-                serverIP = "10.50.105.245";
+                serverIP = "127.0.0.1"; // IP mặc định nếu người dùng không nhập
             }
 
             String ten = JOptionPane.showInputDialog("Nhập tên của bạn:");
+            if (ten == null || ten.trim().isEmpty()) {
+                ten = "Người dùng"; // Tên mặc định
+            }
 
             socket = new Socket(serverIP, 12345);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -36,7 +39,7 @@ public class Chat {
 
             out.println(ten);
 
-            // Luồng riêng để nhận tin nhắn
+            // Luồng nhận tin nhắn từ server
             Thread nhanTin = new Thread(() -> {
                 try {
                     String line;
@@ -59,6 +62,7 @@ public class Chat {
         sendButton.setOnAction(event -> sendMessage());
         skchat.setOnAction(event -> sendMessage()); // Nhấn Enter cũng gửi
     }
+
 
     private void sendMessage() {
         String message = skchat.getText().trim();
