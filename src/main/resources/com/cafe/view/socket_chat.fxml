@@ -14,7 +14,13 @@
     <HBox spacing="5">
         <TextField fx:id="questionField" promptText="Nhập câu hỏi..." prefWidth="220"
                    onAction="#handleSend"/>
+        <HBox>
         <Button text="Gửi" onAction="#handleSend"/>
+            <Label text="" prefWidth="240.0"/>
+            <Button text="Chat" onAction="#gotochat"/>
+
+        </HBox>
+
     </HBox>
 
 </VBox>

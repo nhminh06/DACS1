@@ -107,7 +107,7 @@ public class ChatServer {
 
             } else if (q.contains("doanh thu theo ngày")) {
                 String[] parts = q.split(" ");
-                String date = parts[parts.length - 1];  // Giả định cuối câu là yyyy-mm-dd
+                String date = parts[parts.length - 1];
                 String sql = "SELECT SUM(tong_tien) FROM thongke WHERE ngay = ?";
                 try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                     stmt.setString(1, date);

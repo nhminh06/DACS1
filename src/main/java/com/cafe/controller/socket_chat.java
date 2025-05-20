@@ -1,9 +1,16 @@
 package com.cafe.controller;
 
+import com.cafe.ChatBotServer.ChatServer;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.ConnectException;
@@ -25,6 +32,24 @@ public class socket_chat {
         connectToServer();
         Platform.runLater(() -> responseArea.appendText(
                 "⏱ Khởi tạo giao diện trong " + (System.currentTimeMillis() - startTime) + "ms\n"));
+    }
+    @FXML
+    public void gotochat(ActionEvent event) {
+        try {
+            // Khởi động ChatServer trong một luồng riêng
+
+
+            // Mở giao diện chat
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/chat.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Chat");
+            stage.setScene(new Scene(root, 600, 400));
+            stage.show();
+
+        } catch (IOException e) {
+
+        }
     }
 
     private void connectToServer() {
