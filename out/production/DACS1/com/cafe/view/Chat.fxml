@@ -15,6 +15,9 @@
     <HBox spacing="10" alignment="CENTER">
         <TextField fx:id="skchat" promptText="Nhập tin nhắn..." prefWidth="280"/>
         <Button fx:id="sendButton" text="Gửi"/>
+        <Label text="" prefWidth="100.0"/>
+        <Button text="👥" onAction="#moiban"/>
+        <Button text="🔄" onAction="#gotochat"/>
     </HBox>
 
 </VBox>

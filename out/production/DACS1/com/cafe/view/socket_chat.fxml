@@ -17,7 +17,7 @@
         <HBox>
         <Button text="Gửi" onAction="#handleSend"/>
             <Label text="" prefWidth="240.0"/>
-            <Button text="Chat" onAction="#gotochat"/>
+            <Button text="🔄" onAction="#gotochat"/>
 
         </HBox>
 

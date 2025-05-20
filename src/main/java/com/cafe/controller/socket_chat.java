@@ -1,10 +1,12 @@
 package com.cafe.controller;
 
 import com.cafe.ChatBotServer.ChatServer;
+import com.cafe.ChatBotServer.ChatServerv2;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
@@ -36,21 +38,36 @@ public class socket_chat {
     @FXML
     public void gotochat(ActionEvent event) {
         try {
+            // Chạy ChatServerv2 nếu chưa chạy
+            new Thread(() -> {
+                try {
+                    com.cafe.ChatBotServer.ChatServerv2.main(null);
+                } catch (Exception ex) {
+                    System.err.println("Không thể khởi động ChatServerv2: " + ex.getMessage());
+                }
+            }).start();
+
+            // Load giao diện chat
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/chat.fxml"));
             Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Chat");
-            stage.setScene(new Scene(root, 600, 400));
-            stage.show();
 
+            Stage chatStage = new Stage();
+            chatStage.setTitle("Chat");
+            chatStage.setScene(new Scene(root, 600, 400));
+            chatStage.show();
 
-            Stage currentStage = (Stage) responseArea.getScene().getWindow();
+            // Đóng cửa sổ hiện tại
+            Node source = (Node) event.getSource();
+            Stage currentStage = (Stage) source.getScene().getWindow();
             currentStage.close();
 
         } catch (IOException e) {
+            System.err.println("Không thể mở giao diện Chat: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+
 
     private void connectToServer() {
         if (currentPortIndex >= PORTS_TO_TRY.length) {

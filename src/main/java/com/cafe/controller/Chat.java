@@ -1,10 +1,15 @@
 package com.cafe.controller;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.*;
@@ -62,6 +67,32 @@ public class Chat {
         sendButton.setOnAction(event -> sendMessage());
         skchat.setOnAction(event -> sendMessage()); // Nhấn Enter cũng gửi
     }
+    @FXML
+    public void gotochat(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/socket_chat.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Chat");
+            stage.setScene(new Scene(root, 600, 400));
+            stage.show();
+
+            // Đóng cửa sổ hiện tại (từ nút hoặc field hiện tại)
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void moiban(ActionEvent event) {
+        // Mở cửa sổ Swing chat client trên thread riêng cho Swing (EDT)
+        new Thread(() -> {
+            ChatClientSwing.getInstance().moiban();
+        }).start();
+    }
+
 
 
     private void sendMessage() {
