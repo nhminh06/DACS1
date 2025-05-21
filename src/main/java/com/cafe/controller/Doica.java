@@ -104,7 +104,7 @@ public class Doica {
             }
         }
 
-        // Gán mặc định là "Chưa phân"
+
         nvChon.setCaLam("Chưa phân");
         dsCaTruc.add(nvChon);
     }
@@ -135,7 +135,7 @@ public class Doica {
             return;
         }
 
-        // Hộp thoại chọn ca làm
+
         ChoiceDialog<String> dialog = new ChoiceDialog<>("Sáng", "Sáng", "Chiều", "Tối");
         dialog.setTitle("Chọn Ca Làm");
         dialog.setHeaderText("Chọn ca làm cho nhóm nhân viên:");
@@ -143,12 +143,12 @@ public class Doica {
 
         dialog.showAndWait().ifPresent(caDuocChon -> {
             try (Connection conn = connectDB()) {
-                // Xóa toàn bộ dữ liệu cũ trong bảng catruc
+
                 String deleteSql = "DELETE FROM catruc";
                 Statement deleteStmt = conn.createStatement();
                 deleteStmt.executeUpdate(deleteSql);
 
-                // Lưu ca mới
+
                 String sql = "INSERT INTO catruc (HoTen, ChucVu, CaLam) VALUES (?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -178,7 +178,7 @@ public class Doica {
         alert.showAndWait();
     }
 
-    // Lớp NhanVien
+
     public static class NhanVien {
         private final javafx.beans.property.SimpleStringProperty hoTen;
         private final javafx.beans.property.SimpleStringProperty chucVu;

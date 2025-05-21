@@ -66,7 +66,7 @@ public class addController {
 
             pstmt.executeUpdate();
 
-            showAlert(Alert.AlertType.INFORMATION, "Thêm sản phẩm thành công!");
+            showAlert(Alert.AlertType.INFORMATION, "Thêm sản phẩm thành công");
 
             tenSanPhamMoi.clear();
             giaSanPhamMoi.clear();
@@ -95,9 +95,9 @@ public class addController {
         File file = fileChooser.showOpenDialog(tenSanPhamMoi.getScene().getWindow());
 
         if (file != null) {
-            duongDanAnh = file.getAbsolutePath(); // đường dẫn để lưu vào DB
+            duongDanAnh = file.getAbsolutePath();
 
-            // Dùng toURI().toString() để tạo URL hợp lệ cho Image
+
             Image image = new Image(file.toURI().toString());
             anhSanPhamMoi.setImage(image);
         }

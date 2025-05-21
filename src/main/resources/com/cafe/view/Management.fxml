@@ -7,31 +7,30 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cafe.controller.ManagementController">
 
-    <!-- Header -->
+
     <top>
         <HBox fx:id="header" styleClass="header">
-            <Label styleClass="title" text="☕ Cafe Management System" />
+            <Label styleClass="title" text="☕ Hệ thống quản lý quán cà phê" />
         </HBox>
     </top>
 
-    <!-- Sidebar -->
     <left>
         <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
-            <Button onAction="#gotoorder" styleClass="sidebar-button" text="🍽 Orders" />
-            <Button styleClass="sidebar-button" text="🏠 Management" />
-            <Button onAction="#gotocustomers" styleClass="sidebar-button" text="👥 Customers" />
-            <Button onAction="#gotoreports" styleClass="sidebar-button" text="📊 Reports" />
+            <Button onAction="#gotoorder" styleClass="sidebar-button" text="🍽 Gọi Món" />
+            <Button styleClass="sidebar-button" text="🏠 Quản Lý" />
+            <Button onAction="#gotocustomers" styleClass="sidebar-button" text="👥 Nhân Viên" />
+            <Button onAction="#gotoreports" styleClass="sidebar-button" text="📊 Thống Kê" />
         </VBox>
     </left>
 
-    <!-- Main content -->
+
     <center>
         <HBox spacing="30" styleClass="content-area">
 
-            <!-- Phần quản lý sản phẩm -->
+
             <VBox prefWidth="600" spacing="20" style="-fx-background-color: #ffffff; -fx-border-color: #00796B; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;">
 
-                <!-- Thanh công cụ -->
+
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Button onAction="#gotoadd" styleClass="promo-button" text="➕ Thêm" />
                     <Button onAction="#gotofix" styleClass="promo-button" text="✏Sửa" />
@@ -42,7 +41,7 @@
                     <TextField fx:id="timKiem" prefWidth="140" promptText="🔍 Tìm sản phẩm..." styleClass="promo-text-field" />
                 </HBox>
 
-                <!-- Bảng sản phẩm -->
+
                 <Label style="-fx-font-weight: bold; -fx-font-size: 16;" text="📦 Danh sách sản phẩm" />
                 <TableView fx:id="bangSanPham" prefHeight="400" prefWidth="560" style="-fx-background-color: #f9f9f9; -fx-border-color: #90a4ae; -fx-border-radius: 5;">
                     <columns>
@@ -79,7 +78,7 @@
 
             </VBox>
 
-            <!-- Phần khuyến mãi -->
+
             <VBox prefWidth="380" spacing="20" styleClass="promo-list-area">
                 <padding>
                     <Insets bottom="20" left="20" right="20" top="20" />

@@ -20,7 +20,7 @@ public class RegisterController {
     @FXML private TextField emailField;
     @FXML private Label messageLabel;
 
-    // Kết nối đến cơ sở dữ liệu MySQL
+
     private Connection getConnection() {
         try {
             return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
@@ -38,7 +38,6 @@ public class RegisterController {
         String confirm = confirmPasswordField.getText();
         String email = emailField.getText().trim();
 
-        // Kiểm tra hợp lệ
         if (user.isEmpty() || pass.isEmpty() || confirm.isEmpty() || email.isEmpty()) {
             showMessage("Vui lòng điền đầy đủ thông tin.");
             return;
@@ -54,7 +53,7 @@ public class RegisterController {
             return;
         }
 
-        // Đăng ký người dùng
+
         if (registerUser(user, pass, email)) {
             showMessage("Đăng ký thành công! Quay về đăng nhập...", "green");
             goToLogin();
@@ -63,7 +62,7 @@ public class RegisterController {
         }
     }
 
-    // Thêm người dùng vào DB
+
     private boolean registerUser(String user, String pass, String email) {
         String sql = "INSERT INTO users(username, password, email) VALUES (?, ?, ?)";
         try (Connection conn = getConnection();
@@ -79,19 +78,18 @@ public class RegisterController {
         }
     }
 
-    // Hiển thị lỗi
+
     private void showMessage(String message) {
         showMessage(message, "red");
     }
 
-    // Hiển thị thông báo màu
+
     private void showMessage(String message, String color) {
         messageLabel.setText(message);
         messageLabel.setTextFill(javafx.scene.paint.Paint.valueOf(color));
         messageLabel.setVisible(true);
     }
 
-    // Quay lại giao diện đăng nhập
     private void goToLogin() {
         try {
             Stage stage = (Stage) usernameField.getScene().getWindow();
@@ -110,16 +108,9 @@ public class RegisterController {
     }
     @FXML
     private void gotologin() throws IOException {
-        // Load giao diện đăng nhập từ file FXML
         Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/login.fxml"));
-
-        // Thêm stylesheet vào root
         root.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
-
-        // Lấy Stage hiện tại từ emailField
         Stage stage = (Stage) emailField.getScene().getWindow();
-
-        // Tạo Scene mới và đặt vào Stage
         Scene scene = new Scene(root, 800, 437);
         stage.setScene(scene);
         stage.setTitle("Đăng nhập");

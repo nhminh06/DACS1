@@ -22,7 +22,7 @@ public class NhanVien {
         this.luong = new SimpleDoubleProperty(luong);
     }
 
-    // Getters for TableView bindings
+
     public StringProperty maNVProperty() { return maNV; }
     public StringProperty hoTenProperty() { return hoTen; }
     public StringProperty chucVuProperty() { return chucVu; }
@@ -30,7 +30,7 @@ public class NhanVien {
     public StringProperty emailProperty() { return email; }
     public DoubleProperty luongProperty() { return luong; }
 
-    // Getters & Setters (optional)
+
     public String getMaNV() { return maNV.get(); }
     public void setMaNV(String maNV) { this.maNV.set(maNV); }
 

@@ -12,7 +12,7 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <!-- Bảng ca trực bên trái -->
+
     <VBox spacing="10" prefWidth="500">
         <Label style="-fx-font-weight: bold; -fx-font-size: 16;" text="📋 Danh sách Ca trực" />
 
@@ -34,7 +34,7 @@
         </HBox>
     </VBox>
 
-    <!-- Bảng nhân viên bên phải -->
+
     <VBox spacing="10" prefWidth="500">
         <Label style="-fx-font-weight: bold; -fx-font-size: 16;" text="👥 Danh sách Nhân viên" />
 

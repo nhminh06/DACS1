@@ -10,7 +10,7 @@
 
     <top>
         <HBox fx:id="header" styleClass="header">
-            <Label styleClass="title" text="☕ Cafe Management System" />
+            <Label styleClass="title" text="☕ Hệ thống quản lý quán cà phê" />
             <Region HBox.hgrow="ALWAYS" />
         </HBox>
     </top>
@@ -18,15 +18,15 @@
     <left>
         <HBox alignment="TOP_LEFT" spacing="20">
             <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
-                <Button styleClass="sidebar-button" text="🍽 Orders" />
-                <Button onAction="#gotoManagement" styleClass="sidebar-button" text="🏠 Management" />
-                <Button onAction="#gotocustomers" styleClass="sidebar-button" text="👥 Customers" />
-                <Button onAction="#gotoreports" styleClass="sidebar-button" text="📊 Reports" />
+                <Button styleClass="sidebar-button" text="🍽 Gọi Món" />
+                <Button onAction="#gotoManagement" styleClass="sidebar-button" text="🏠 Quản lý" />
+                <Button onAction="#gotocustomers" styleClass="sidebar-button" text="👥 Nhân Viên" />
+                <Button onAction="#gotoreports" styleClass="sidebar-button" text="📊 Thống Kê" />
                 <Region VBox.vgrow="ALWAYS" />
             </VBox>
 
             <VBox fx:id="cotBan" spacing="10" styleClass="cot-ban" prefWidth="250">
-                <Label alignment="CENTER" styleClass="ban-label" text="Table Status">
+                <Label alignment="CENTER" styleClass="ban-label" text="Trạng thái bàn">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -48,15 +48,15 @@
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
 
-            <!-- Product display area -->
-            <StackPane fx:id="productDisplay" styleClass="content-area" HBox.hgrow="ALWAYS" prefHeight="600"> <!-- Đồng bộ chiều cao với cotBan -->
+
+            <StackPane fx:id="productDisplay" styleClass="content-area" HBox.hgrow="ALWAYS" prefHeight="600">
                 <VBox spacing="10">
                     <Label alignment="CENTER" styleClass="ban-label" text="Menu">
                         <font>
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="740"> <!-- Chiều cao nội dung Menu -->
+                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="740">
                         <content>
                             <FlowPane fx:id="productContainer"
                                       hgap="20"
@@ -72,10 +72,10 @@
                 </VBox>
             </StackPane>
 
-            <!-- Invoice display (dynamically populated) -->
+
             <StackPane fx:id="invoiceDisplay" styleClass="content-area" prefWidth="200">
                 <VBox spacing="15">
-                    <Label alignment="CENTER" styleClass="ban-label" text="Invoice">
+                    <Label alignment="CENTER" styleClass="ban-label" text="Hóa Đơn">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -89,7 +89,7 @@
                         <Label minWidth="80" styleClass="summary-label" text="Giá" />
                     </HBox>
 
-                    <!-- Dynamic content here -->
+
                     <VBox fx:id="invoiceItems" spacing="10" VBox.vgrow="ALWAYS" />
 
                     <Separator />
@@ -104,22 +104,22 @@
                     </HBox>
 
                     <VBox alignment="BOTTOM_RIGHT" spacing="10">
-                        <!-- MenuButton cho chọn khuyến mãi -->
+
                         <HBox alignment="CENTER_RIGHT" spacing="15">
-                            <!-- ComboBox khuyến mãi -->
+
                             <Button fx:id="promotionButton"
                                     text="Khuyến mãi"
                                     onAction="#gotokhuyenmai"
                                     styleClass="promo-button" />
 
-                            <!-- Nút chọn bàn -->
+
                             <Button fx:id="chosetableButton"
                                     text="Chọn bàn"
                                     onAction="#showTableSelection"
                                     styleClass="promo-button" />
                         </HBox>
 
-                        <!-- Nút thanh toán -->
+
                         <Button fx:id="checkoutButton"
                                 styleClass="promo-button"
                                 text="Thanh Toán"

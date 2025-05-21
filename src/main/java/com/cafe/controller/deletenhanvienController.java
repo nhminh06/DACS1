@@ -26,7 +26,7 @@ public class deletenhanvienController {
     @FXML
     private void handleXoa() {
         if (selectedNhanVien == null) {
-            showAlert("Không có nhân viên được chọn!");
+            showAlert("Không có nhân viên được chọn.");
             return;
         }
 

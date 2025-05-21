@@ -16,11 +16,11 @@ public class ChatClientSwing extends JFrame {
     private BufferedReader in;
     private PrintWriter out;
 
-    // Singleton: private constructor
+
     private ChatClientSwing() {
         setTitle("🧃 Chat Client");
         setSize(400, 400);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         chatArea = new JTextArea();
@@ -43,7 +43,7 @@ public class ChatClientSwing extends JFrame {
         connectToServer();
     }
 
-    // Phương thức lấy instance duy nhất
+
     public static synchronized ChatClientSwing getInstance() {
         if (instance == null) {
             instance = new ChatClientSwing();
@@ -55,7 +55,7 @@ public class ChatClientSwing extends JFrame {
         try {
             String serverIP = JOptionPane.showInputDialog(this, "Nhập IP server:");
             if (serverIP == null || serverIP.trim().isEmpty()) {
-                serverIP = "127.0.0.1"; // IP mặc định nếu người dùng không nhập
+                serverIP = "127.0.0.1";
             }
 
             String name = JOptionPane.showInputDialog(this, "Nhập tên của bạn:");
@@ -67,9 +67,9 @@ public class ChatClientSwing extends JFrame {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
-            out.println(name); // Gửi tên cho server
+            out.println(name);
 
-            // Thread nhận tin nhắn từ server và cập nhật lên JTextArea
+
             new Thread(() -> {
                 try {
                     String line;
@@ -77,7 +77,7 @@ public class ChatClientSwing extends JFrame {
                         chatArea.append(line + "\n");
                     }
                 } catch (IOException e) {
-                    chatArea.append("❌ Mất kết nối tới server\n");
+                    chatArea.append("Mất kết nối tới server\n");
                 }
             }).start();
 
@@ -95,7 +95,7 @@ public class ChatClientSwing extends JFrame {
         }
     }
 
-    // Mở cửa sổ chat, gọi từ nơi khác trong app nếu cần
+
     public void moiban() {
         SwingUtilities.invokeLater(() -> {
             ChatClientSwing window = ChatClientSwing.getInstance();

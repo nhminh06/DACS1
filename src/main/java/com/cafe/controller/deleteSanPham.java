@@ -25,17 +25,16 @@ public class deleteSanPham {
     @FXML
     private Label tenSanPhamXoa;
 
-    // Gán sản phẩm được chọn từ màn hình trước
+
     public void setSanPham(SanPham sp) {
         this.selectedSanPham = sp;
         tenSanPhamXoa.setText("Bạn có chắc chắn muốn xóa sản phẩm \"" + sp.getTenSanPham() + "\"?");
     }
 
-    // Bắt sự kiện khi nhấn nút Xóa (gọi từ FXML)
     @FXML
     public void handleXoa() {
         if (selectedSanPham == null) {
-            showAlert("Không có sản phẩm được chọn!");
+            showAlert("Không có sản phẩm được chọn.");
             return;
         }
 
@@ -52,23 +51,23 @@ public class deleteSanPham {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Xảy ra lỗi khi xóa sản phẩm!");
+            showAlert("Xảy ra lỗi khi xóa sản phẩm.");
         }
     }
 
-    // Bắt sự kiện khi nhấn nút Hủy
+
     @FXML
     public void handleHuy() {
         closeWindow();
     }
 
-    // Đóng cửa sổ hiện tại
+
     private void closeWindow() {
         Stage stage = (Stage) tenSanPhamXoa.getScene().getWindow();
         stage.close();
     }
 
-    // Hiển thị cảnh báo
+
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText(message);

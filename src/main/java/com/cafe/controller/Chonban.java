@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.FlowPane; // Thêm import này
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -39,7 +39,7 @@ public class Chonban implements Initializable {
         tableContainer.getChildren().clear();
         tableStatusMap.clear();
 
-        // Lấy trạng thái của tất cả các bàn từ cơ sở dữ liệu
+
         String sql = "SELECT id_ban, trang_thai FROM ban WHERE id_ban BETWEEN 1 AND 10";
         try (Connection conn = connectDB();
              Statement stmt = conn.createStatement();
@@ -53,7 +53,6 @@ public class Chonban implements Initializable {
             e.printStackTrace();
         }
 
-        // Hiển thị tất cả các bàn từ 1 đến 10
         for (int idBan = 1; idBan <= 10; idBan++) {
             String trangThai = tableStatusMap.getOrDefault(idBan, "Trống");
             VBox tableBox = new VBox(5);
@@ -70,7 +69,7 @@ public class Chonban implements Initializable {
 
             if (trangThai.equals("Trống")) {
                 Button selectButton = new Button("Chọn");
-                selectButton.getStyleClass().add("add-button"); // Sử dụng add-button
+                selectButton.getStyleClass().add("add-button");
                 final int finalIdBan = idBan;
                 selectButton.setOnAction(e -> {
                     orderController.selectTable(finalIdBan);

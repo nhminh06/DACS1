@@ -10,11 +10,11 @@ public class ChatServerv2 {
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(PORT);
-        System.out.println("🚀 Server đang chạy tại cổng " + PORT);
+        System.out.println("Server đang chạy tại cổng " + PORT);
 
         while (true) {
             Socket socket = serverSocket.accept();
-            System.out.println("🟢 Kết nối mới: " + socket);
+            System.out.println("Kết nối mới: " + socket);
             ClientHandler client = new ClientHandler(socket);
             danhSachClient.add(client);
             client.start();
@@ -43,7 +43,7 @@ public class ChatServerv2 {
                     guiChoTatCa("💬 " + tenClient + ": " + tinNhan);
                 }
             } catch (IOException e) {
-                System.out.println("❌ Lỗi kết nối: " + e.getMessage());
+                System.out.println("Lỗi kết nối: " + e.getMessage());
             } finally {
                 try {
                     socket.close();

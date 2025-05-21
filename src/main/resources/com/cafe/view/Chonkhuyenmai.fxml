@@ -13,17 +13,17 @@
           AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0"
           AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0">
 
-        <!-- ✅ Sửa lỗi padding: Dùng thẻ Insets thay vì giá trị số -->
+
         <padding>
             <Insets top="20" right="20" bottom="20" left="20"/>
         </padding>
 
-        <!-- Tiêu đề -->
+
         <Label text="Chọn Khuyến Mãi"
                style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #4A4A4A;"
                maxWidth="Infinity" alignment="CENTER"/>
 
-        <!-- Bảng danh sách khuyến mãi -->
+
         <TableView fx:id="bangKhuyenMai" prefHeight="300.0">
             <columns>
                 <TableColumn fx:id="cotTenKhuyenMai" text="Tên mã" prefWidth="200"/>
@@ -32,7 +32,7 @@
             </columns>
         </TableView>
 
-        <!-- Nút chọn -->
+
         <HBox alignment="CENTER_RIGHT" spacing="10">
             <Button fx:id="btnChon" text="Chọn"
                     style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;"

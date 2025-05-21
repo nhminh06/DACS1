@@ -21,7 +21,7 @@
         <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold; -fx-text-fill: #263238;" />
         <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="300" promptText="Nhập email" />
 
-        <!-- ✅ Trường nhập lương -->
+
         <Label text="Lương (VNĐ):" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold; -fx-text-fill: #263238;" />
         <TextField fx:id="txtLuong" GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="300" promptText="Nhập lương..." />
 

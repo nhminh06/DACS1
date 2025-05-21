@@ -24,22 +24,21 @@
             <Label text="Tổng" />
         </HBox>
 
-        <!-- Danh sách chi tiết hóa đơn -->
+
         <VBox fx:id="detailsContainer" spacing="5" style="-fx-background-color: #f0f0f0;" />
 
-        <!-- Hiển thị giảm giá -->
+
         <HBox spacing="20" alignment="CENTER_RIGHT">
             <Label text="Giảm giá:" />
             <Label fx:id="discountLabel" style="-fx-font-weight: bold;" text="0%" />
         </HBox>
 
-        <!-- Hiển thị tổng tiền -->
         <HBox spacing="20" alignment="CENTER_RIGHT">
             <Label text="Tổng tiền sau giảm:" />
             <Label fx:id="totalLabel" style="-fx-font-weight: bold;" />
         </HBox>
 
-        <!-- Nút đóng -->
+
         <HBox alignment="CENTER">
             <Button fx:id="closeButton" onAction="#handleClose" text="Đóng" />
         </HBox>

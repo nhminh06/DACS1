@@ -70,11 +70,10 @@ public class Chonkhuyenmai {
         }
 
         if (orderController != null) {
-            // Gọi phương thức HienThiKhuyenMai để cập nhật cả giảm giá và giao diện
+
             orderController.HienThiKhuyenMai(selected.getTenMa());
         }
 
-        // Đóng cửa sổ khuyến mãi
         Stage stage = (Stage) btnChon.getScene().getWindow();
         stage.close();
     }

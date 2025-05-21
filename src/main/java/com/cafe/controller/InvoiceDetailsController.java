@@ -34,7 +34,7 @@ public class InvoiceDetailsController {
 
         String ngayLap = null;
 
-        // 1. Lấy ngày lập từ bảng HoaDon
+
         String sqlHoaDon = "SELECT NgayLap FROM HoaDon WHERE MaDon = ?";
         try (Connection conn = connectDB();
              PreparedStatement stmt = conn.prepareStatement(sqlHoaDon)) {
@@ -48,11 +48,10 @@ public class InvoiceDetailsController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            addMessage("Lỗi khi truy vấn hóa đơn: " + e.getMessage());
+            addMessage("Lỗi khi tìm hóa đơn: " + e.getMessage());
             return;
         }
 
-        // 2. Lấy danh sách món và khuyến mãi từ bảng thongke
         String sqlThongKe = "SELECT ten_mon, so_luong, don_gia, tong_tien, KhuyenMai FROM thongke WHERE MaDon = ? AND DATE(ngay) = ?";
         try (Connection conn = connectDB();
              PreparedStatement stmt = conn.prepareStatement(sqlThongKe)) {
@@ -85,7 +84,6 @@ public class InvoiceDetailsController {
             return;
         }
 
-        // 3. Cập nhật hiển thị giảm giá và tổng tiền
         updateTotals();
     }
 

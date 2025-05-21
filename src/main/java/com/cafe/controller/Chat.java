@@ -27,15 +27,15 @@ public class Chat {
     @FXML
     private void initialize() {
         try {
-            // Yêu cầu người dùng nhập IP và tên (không có giá trị mặc định trong ô nhập)
+
             String serverIP = JOptionPane.showInputDialog("Nhập IP server:");
             if (serverIP == null || serverIP.trim().isEmpty()) {
-                serverIP = "127.0.0.1"; // IP mặc định nếu người dùng không nhập
+                serverIP = "127.0.0.1";
             }
 
             String ten = JOptionPane.showInputDialog("Nhập tên của bạn:");
             if (ten == null || ten.trim().isEmpty()) {
-                ten = "Người dùng"; // Tên mặc định
+                ten = "Người dùng";
             }
 
             socket = new Socket(serverIP, 12345);
@@ -44,7 +44,7 @@ public class Chat {
 
             out.println(ten);
 
-            // Luồng nhận tin nhắn từ server
+
             Thread nhanTin = new Thread(() -> {
                 try {
                     String line;
@@ -53,19 +53,19 @@ public class Chat {
                         Platform.runLater(() -> chatArea.appendText(finalLine + "\n"));
                     }
                 } catch (IOException e) {
-                    Platform.runLater(() -> chatArea.appendText("❌ Mất kết nối tới server\n"));
+                    Platform.runLater(() -> chatArea.appendText("Mất kết nối tới server\n"));
                 }
             });
             nhanTin.setDaemon(true);
             nhanTin.start();
 
         } catch (IOException e) {
-            chatArea.appendText("❌ Không thể kết nối tới server\n");
+            chatArea.appendText("Không thể kết nối tới server\n");
             e.printStackTrace();
         }
 
         sendButton.setOnAction(event -> sendMessage());
-        skchat.setOnAction(event -> sendMessage()); // Nhấn Enter cũng gửi
+        skchat.setOnAction(event -> sendMessage());
     }
     @FXML
     public void gotochat(ActionEvent event) {
@@ -77,7 +77,7 @@ public class Chat {
             stage.setScene(new Scene(root, 600, 400));
             stage.show();
 
-            // Đóng cửa sổ hiện tại (từ nút hoặc field hiện tại)
+
             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
 
@@ -87,7 +87,7 @@ public class Chat {
     }
     @FXML
     public void moiban(ActionEvent event) {
-        // Mở cửa sổ Swing chat client trên thread riêng cho Swing (EDT)
+
         new Thread(() -> {
             ChatClientSwing.getInstance().moiban();
         }).start();

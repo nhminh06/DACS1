@@ -32,7 +32,7 @@
                   prefWidth="300" prefHeight="80" styleClass="promo-text-area"/>
     </GridPane>
 
-    <!-- 💡 Phần ảnh minh họa -->
+
     <HBox spacing="10" alignment="CENTER_LEFT">
         <ImageView fx:id="anhSanPhamMoi" fitWidth="100" fitHeight="100"
                    preserveRatio="true" style="-fx-border-color: #B0BEC5; -fx-border-radius: 4;"/>

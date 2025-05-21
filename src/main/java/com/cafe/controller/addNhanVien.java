@@ -23,14 +23,13 @@ public class addNhanVien {
     @FXML
     private Button btnLuu, btnHuy;
 
-    private ObservableList<NhanVien> danhSach; // Thêm trường để giữ danhSach từ CustomersController
+    private ObservableList<NhanVien> danhSach;
 
-    // Thông tin kết nối CSDL
+
     private static final String DB_URL = "jdbc:mysql://localhost:13306/coffee_shop";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
 
-    // Hàm để thiết lập danhSach
     public void setDanhSach(ObservableList<NhanVien> danhSach) {
         this.danhSach = danhSach;
     }
@@ -70,7 +69,7 @@ public class addNhanVien {
         }
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-            // Sinh mã nhân viên tự động không trùng
+
             int index = 1;
             String maNV;
             while (true) {
@@ -78,15 +77,15 @@ public class addNhanVien {
                 PreparedStatement checkStmt = conn.prepareStatement("SELECT MaNV FROM nhanvien WHERE MaNV = ?");
                 checkStmt.setString(1, maNV);
                 if (!checkStmt.executeQuery().next()) {
-                    break; // Không trùng -> dùng được
+                    break;
                 }
                 index++;
             }
 
-            // Tạo đối tượng NhanVien
+
             NhanVien nv = new NhanVien(maNV, hoTen, chucVu, sdt, email, luong);
 
-            // Lưu vào CSDL
+
             String sql = "INSERT INTO nhanvien (MaNV, HoTen, ChucVu, Sdt, Email, Luong) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, maNV);
@@ -98,9 +97,9 @@ public class addNhanVien {
 
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted > 0) {
-                // Thêm NhanVien mới vào danhSach
+
                 danhSach.add(nv);
-                showAlert("Thêm nhân viên thành công!");
+                showAlert("Thêm nhân viên thành công.");
                 ((Stage) btnLuu.getScene().getWindow()).close();
             } else {
                 showAlert("Không thể thêm nhân viên.");

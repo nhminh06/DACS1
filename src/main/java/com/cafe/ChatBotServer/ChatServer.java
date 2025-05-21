@@ -22,14 +22,14 @@ public class ChatServer {
         for (int port : PORTS_TO_TRY) {
             try {
                 serverSocket = new ServerSocket(port);
-                System.out.println("🤖 ChatBot Server khởi động tại cổng " + port + " trong " +
+                System.out.println("ChatBot Server khởi động tại cổng " + port + " trong " +
                         (System.currentTimeMillis() - startTime) + "ms");
-                System.out.println("⏳ Đang chờ client kết nối...");
+                System.out.println("Đang chờ client kết nối...");
                 break;
             } catch (IOException e) {
-                System.err.println("❌ Không thể bind vào cổng " + port + ": " + e.getMessage());
+                System.err.println("Không thể bind vào cổng " + port + ": " + e.getMessage());
                 if (port == PORTS_TO_TRY[PORTS_TO_TRY.length - 1]) {
-                    System.err.println("❌ Không thể tìm cổng khả dụng!");
+                    System.err.println("Không thể tìm cổng khả dụng!");
                     return;
                 }
             }
@@ -39,11 +39,11 @@ public class ChatServer {
             try {
                 while (true) {
                     Socket clientSocket = serverSocket.accept();
-                    System.out.println("📥 Client kết nối từ " + clientSocket.getInetAddress() + ":" + clientSocket.getPort());
+                    System.out.println("Client kết nối từ " + clientSocket.getInetAddress() + ":" + clientSocket.getPort());
                     executor.submit(() -> handleClient(clientSocket));
                 }
             } catch (IOException e) {
-                System.err.println("❌ Lỗi khi chấp nhận kết nối: " + e.getMessage());
+                System.err.println("Lỗi khi chấp nhận kết nối: " + e.getMessage());
                 e.printStackTrace();
             } finally {
                 try {
@@ -70,9 +70,9 @@ public class ChatServer {
                 out.println(answer);
 
             }
-            System.out.println("🔌 Đã đóng kết nối với " + clientSocket.getInetAddress());
+            System.out.println("Đã đóng kết nối với " + clientSocket.getInetAddress());
         } catch (IOException e) {
-            System.err.println("⚠️ Lỗi với client " + clientSocket.getInetAddress() + ": " + e.getMessage());
+            System.err.println("Lỗi với client " + clientSocket.getInetAddress() + ": " + e.getMessage());
             e.printStackTrace();
         }
     }

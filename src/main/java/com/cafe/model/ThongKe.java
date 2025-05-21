@@ -1,10 +1,10 @@
 package com.cafe.model;
 
 public class ThongKe {
-    private String ngay;       // ngày báo cáo dạng String (yyyy-MM-dd)
-    private int soLuong;       // tổng số lượng món bán ra trong ngày
-    private double doanhThu;   // tổng doanh thu trong ngày
-    private double trungBinh;  // trung bình doanh thu trên mỗi món
+    private String ngay;
+    private int soLuong;
+    private double doanhThu;
+    private double trungBinh;
 
     public ThongKe(String ngay, int soLuong, double doanhThu, double trungBinh) {
         this.ngay = ngay;
@@ -13,7 +13,7 @@ public class ThongKe {
         this.trungBinh = trungBinh;
     }
 
-    // Getters
+
     public String getNgay() {
         return ngay;
     }

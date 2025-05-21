@@ -21,7 +21,7 @@ import java.time.LocalDate;
 
 public class ManagementController {
 
-    // === FXML cho sản phẩm ===
+
     @FXML private TableView<SanPham> bangSanPham;
     @FXML private TableColumn<SanPham, String> cotTen;
     @FXML private TableColumn<SanPham, Double> cotGia;
@@ -31,7 +31,7 @@ public class ManagementController {
     private ObservableList<SanPham> danhSachSanPham = FXCollections.observableArrayList();
     private ObservableList<SanPham> danhSachGoc = FXCollections.observableArrayList();
 
-    // === FXML cho khuyến mãi ===
+
     @FXML private TextField tenKhuyenMai;
     @FXML private TextField giaTriKhuyenMai;
     @FXML private DatePicker ngayHetHan;
@@ -42,7 +42,7 @@ public class ManagementController {
 
     private ObservableList<KhuyenMai> danhSachKhuyenMai = FXCollections.observableArrayList();
 
-    // === FXML cho ca trực ===
+
     @FXML private TableView<Doica.NhanVien> bangCaTruc;
     @FXML private TableColumn<Doica.NhanVien, String> cotTenCa;
     @FXML private TableColumn<Doica.NhanVien, String> cotChucVuCa;
@@ -52,7 +52,7 @@ public class ManagementController {
 
     @FXML
     public void initialize() {
-        // Cấu hình bảng sản phẩm
+
         if (cotTen != null && cotGia != null && cotMoTa != null) {
             cotTen.setCellValueFactory(new PropertyValueFactory<>("ten"));
             cotGia.setCellValueFactory(new PropertyValueFactory<>("gia"));
@@ -60,7 +60,7 @@ public class ManagementController {
             loadSanPhamFromDatabase();
         }
 
-        // Cấu hình bảng khuyến mãi
+
         if (cotTenKhuyenMai != null && cotGiaTri != null && cotNgayHetHan != null) {
             cotTenKhuyenMai.setCellValueFactory(new PropertyValueFactory<>("tenMa"));
             cotGiaTri.setCellValueFactory(new PropertyValueFactory<>("giaTri"));
@@ -68,7 +68,7 @@ public class ManagementController {
             loadKhuyenMaiFromDatabase();
         }
 
-        // Cấu hình bảng ca trực
+
         if (cotTenCa != null && cotChucVuCa != null && cotCaLam != null) {
             cotTenCa.setCellValueFactory(data -> data.getValue().hoTenProperty());
             cotChucVuCa.setCellValueFactory(data -> data.getValue().chucVuProperty());
@@ -76,7 +76,7 @@ public class ManagementController {
             loadCaTrucFromDatabase();
         }
 
-        // Tìm kiếm sản phẩm
+
         if (timKiem != null) {
             timKiem.textProperty().addListener((observable, oldValue, newValue) -> {
                 String tuKhoa = newValue == null ? "" : newValue.toLowerCase();
@@ -154,7 +154,7 @@ public class ManagementController {
                 Doica.NhanVien nv = new Doica.NhanVien(
                         rs.getString("HoTen"),
                         rs.getString("ChucVu"),
-                        "" // SDT không cần thiết, để trống
+                        ""
                 );
                 nv.setCaLam(rs.getString("CaLam"));
                 danhSachCaTruc.add(nv);
@@ -231,10 +231,10 @@ public class ManagementController {
         if (ngayHetHan != null) ngayHetHan.setValue(null);
     }
 
-    // ==== Điều hướng giao diện ====
-    @FXML public void gotoorder(ActionEvent event) { chuyenManHinh(event, "/com/cafe/view/order.fxml", "Cafe Order"); }
-    @FXML public void gotocustomers(ActionEvent event) { chuyenManHinh(event, "/com/cafe/view/customers.fxml", "Khách hàng"); }
-    @FXML public void gotoreports(ActionEvent event) { chuyenManHinh(event, "/com/cafe/view/reports.fxml", "Báo cáo"); }
+
+    @FXML public void gotoorder(ActionEvent event) { chuyenManHinh(event, "/com/cafe/view/order.fxml", "Hệ thống quản lý quán cà phê"); }
+    @FXML public void gotocustomers(ActionEvent event) { chuyenManHinh(event, "/com/cafe/view/customers.fxml", "Hệ thống quản lý quán cà phê"); }
+    @FXML public void gotoreports(ActionEvent event) { chuyenManHinh(event, "/com/cafe/view/reports.fxml", "Hệ thống quản lý quán cà phê"); }
     @FXML public void gotoadd(ActionEvent event) { moManHinhMoi("/com/cafe/view/add.fxml", "Thêm sản phẩm", 700, 400); }
 
     @FXML
@@ -253,7 +253,7 @@ public class ManagementController {
             Stage stage = new Stage();
             stage.setTitle("Sửa sản phẩm");
             stage.setScene(new Scene(root, 700, 400));
-            stage.setUserData(this); // Truyền ManagementController vào Stage
+            stage.setUserData(this);
             stage.show();
         } catch (IOException e) {
             showError("Không thể mở giao diện sửa sản phẩm", e);
@@ -265,7 +265,7 @@ public class ManagementController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/doica.fxml"));
             Parent root = loader.load();
 
-            // Lấy đúng controller class
+
             Doica controller = loader.getController();
 
             Stage stage = new Stage();
@@ -280,7 +280,7 @@ public class ManagementController {
     @FXML
     public void gotochat(ActionEvent event) {
         try {
-            // Khởi động ChatServer trong một luồng riêng
+
             new Thread(() -> {
                 try {
                     ChatServer.main(new String[]{});
@@ -289,7 +289,7 @@ public class ManagementController {
                 }
             }).start();
 
-            // Mở giao diện chat
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/socket_chat.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
@@ -354,7 +354,7 @@ public class ManagementController {
         }
     }
 
-    // === Hộp thoại tiện ích ===
+
     private void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type);
         alert.setTitle("Thông báo");

@@ -221,7 +221,7 @@ public class ReportsController {
     }
 
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION); // đổi từ ERROR sang INFORMATION cho thông báo bình thường
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

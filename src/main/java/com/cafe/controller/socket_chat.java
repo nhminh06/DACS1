@@ -25,7 +25,7 @@ public class socket_chat {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    // Chỉ thử các cổng server có thể đang chạy
+
     private static final Integer[] PORTS_TO_TRY = {8889, 8890, 8891};
     private int currentPortIndex = 0;
 
@@ -38,16 +38,15 @@ public class socket_chat {
     @FXML
     public void gotochat(ActionEvent event) {
         try {
-            // Chạy ChatServerv2 nếu chưa chạy
+
             new Thread(() -> {
                 try {
                     com.cafe.ChatBotServer.ChatServerv2.main(null);
                 } catch (Exception ex) {
-                    System.err.println("Không thể khởi động ChatServerv2: " + ex.getMessage());
+                    System.err.println("Không thể khởi động  Server : " + ex.getMessage());
                 }
             }).start();
 
-            // Load giao diện chat
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/chat.fxml"));
             Parent root = loader.load();
 
@@ -56,7 +55,6 @@ public class socket_chat {
             chatStage.setScene(new Scene(root, 600, 400));
             chatStage.show();
 
-            // Đóng cửa sổ hiện tại
             Node source = (Node) event.getSource();
             Stage currentStage = (Stage) source.getScene().getWindow();
             currentStage.close();
@@ -72,7 +70,7 @@ public class socket_chat {
     private void connectToServer() {
         if (currentPortIndex >= PORTS_TO_TRY.length) {
             Platform.runLater(() -> responseArea.appendText(
-                    "❌ Không thể kết nối đến server trên bất kỳ cổng nào! Đảm bảo server đang chạy.\n"));
+                    "Không thể kết nối đến server trên bất kỳ cổng nào \n"));
             return;
         }
 
@@ -92,7 +90,7 @@ public class socket_chat {
                         Platform.runLater(() -> responseArea.appendText("\uD83E\uDD16 Bot: " + msg + "\n"));
                     }
                 } catch (IOException e) {
-                    Platform.runLater(() -> responseArea.appendText("❌ Mất kết nối: " + e.getMessage() + "\n"));
+                    Platform.runLater(() -> responseArea.appendText("Mất kết nối: " + e.getMessage() + "\n"));
                 } finally {
                     closeConnection();
                 }
@@ -100,12 +98,12 @@ public class socket_chat {
 
         } catch (ConnectException e) {
             Platform.runLater(() -> responseArea.appendText(
-                    "❌ Không kết nối được server trên cổng " + port + ": " + e.getMessage() + "\n"));
+                    "Không kết nối được server trên cổng " + port + ": " + e.getMessage() + "\n"));
             currentPortIndex++;
             retryConnection();
         } catch (IOException e) {
             Platform.runLater(() -> responseArea.appendText(
-                    "❌ Lỗi kết nối trên cổng " + port + ": " + e.getMessage() + "\n"));
+                    "Lỗi kết nối trên cổng " + port + ": " + e.getMessage() + "\n"));
             currentPortIndex++;
             retryConnection();
         }
@@ -133,7 +131,7 @@ public class socket_chat {
             responseArea.appendText("\uD83D\uDE06 Bạn: " + question + "\n");
             questionField.clear();
         } else {
-            responseArea.appendText("❌ Không gửi được: " + (out == null ? "Mất kết nối" : "Câu hỏi rỗng") + "\n");
+            responseArea.appendText("Không gửi được: " + (out == null ? "Mất kết nối" : "Câu hỏi rỗng") + "\n");
         }
     }
 

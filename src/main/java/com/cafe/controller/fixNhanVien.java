@@ -18,14 +18,13 @@ public class fixNhanVien {
     @FXML private Button btnLuu;
     @FXML private Button btnHuy;
 
-    private String maNhanVien; // dùng để định danh nhân viên trong DB
+    private String maNhanVien;
 
     @FXML
     public void initialize() {
         comboChucVu.getItems().addAll("Quản lý", "Thu ngân", "Phục vụ", "Bếp", "Bảo vệ");
     }
 
-    // Hàm gọi từ ngoài để đổ dữ liệu nhân viên cần sửa
     public void setThongTinNhanVien(String maNV, String hoTen, String sdt, String email, String chucVu) {
         this.maNhanVien = maNV;
         txtHoTen.setText(hoTen);
@@ -69,7 +68,7 @@ public class fixNhanVien {
 
             if (rows > 0) {
                 showAlert(Alert.AlertType.INFORMATION, "Cập nhật thành công!");
-                ((Stage) btnLuu.getScene().getWindow()).close(); // đóng cửa sổ
+                ((Stage) btnLuu.getScene().getWindow()).close();
             } else {
                 showAlert(Alert.AlertType.ERROR, "Không tìm thấy nhân viên để cập nhật.");
             }
@@ -81,7 +80,7 @@ public class fixNhanVien {
 
     @FXML
     private void handleHuy(ActionEvent event) {
-        ((Stage) btnHuy.getScene().getWindow()).close(); // đóng cửa sổ
+        ((Stage) btnHuy.getScene().getWindow()).close();
     }
 
     private boolean isValidPhoneNumber(String sdt) {

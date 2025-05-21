@@ -70,14 +70,14 @@ public class CustomersController {
                 ));
             }
 
-            // Sắp xếp danh sách theo phần số của MaNV
+
             danhSach.sort((nv1, nv2) -> {
                 try {
                     int num1 = Integer.parseInt(nv1.getMaNV().replace("NV", ""));
                     int num2 = Integer.parseInt(nv2.getMaNV().replace("NV", ""));
                     return Integer.compare(num1, num2);
                 } catch (NumberFormatException e) {
-                    // Nếu không parse được số, so sánh chuỗi gốc
+
                     return nv1.getMaNV().compareTo(nv2.getMaNV());
                 }
             });
@@ -174,7 +174,7 @@ public class CustomersController {
         txtSoTien.clear();
     }
 
-    // ==== Các hàm chuyển cảnh ====
+
 
     @FXML
     public void gotoManagement(ActionEvent event) {
@@ -197,7 +197,7 @@ public class CustomersController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/addnhanvien.fxml"));
             Parent root = loader.load();
 
-            // Lấy controller của addNhanVien và truyền danhSach
+
             addNhanVien controller = loader.getController();
             controller.setDanhSach(danhSach);
 
@@ -227,7 +227,7 @@ public class CustomersController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/fixnhanvien.fxml"));
             Parent root = loader.load();
 
-            // Lấy controller của fixNhanVien và truyền dữ liệu
+
             fixNhanVien controller = loader.getController();
             controller.setThongTinNhanVien(
                     selected.getMaNV(),
@@ -255,7 +255,7 @@ public class CustomersController {
     public void gotodeletenhanvien(ActionEvent event) {
         NhanVien selected = bangNhanVien.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("Vui lòng chọn nhân viên cần xóa!");
+            showAlert("Vui lòng chọn nhân viên cần xóa.");
             return;
         }
 
@@ -263,7 +263,7 @@ public class CustomersController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cafe/view/deletenhanvien.fxml"));
             Parent root = loader.load();
 
-            // Gửi dữ liệu sang controller của deletenhanvien
+
             deletenhanvienController controller = loader.getController();
             controller.setNhanVien(selected);
 
@@ -290,7 +290,7 @@ public class CustomersController {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
             stage.setScene(scene);
-            stage.setTitle("Cafe Order");
+            stage.setTitle("Hệ thống quản lý quán cà phê");
             stage.setWidth(width);
             stage.setHeight(height);
             stage.setResizable(false);
@@ -307,7 +307,7 @@ public class CustomersController {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
             stage.setScene(scene);
-            stage.setTitle("Cafe Order");
+            stage.setTitle("Hệ thống quản lý quán cà phê");
             stage.setWidth(width);
             stage.setHeight(height);
             stage.setResizable(false);

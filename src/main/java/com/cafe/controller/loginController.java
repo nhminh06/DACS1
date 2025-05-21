@@ -31,7 +31,7 @@ public class loginController {
         if (authenticate(user, pass)) {
             errorLabel.setVisible(false);
             System.out.println("Đăng nhập thành công!");
-            loadMainScreen(); // Chuyển sang giao diện chính
+            loadMainScreen();
         } else {
             errorLabel.setText("Tài khoản hoặc mật khẩu sai!");
             errorLabel.setVisible(true);
@@ -107,7 +107,7 @@ public class loginController {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Cafe Order");
+            primaryStage.setTitle("Hệ thống quản lý quán cà phê");
             primaryStage.setWidth(800);
             primaryStage.setHeight(437);
             primaryStage.setResizable(false);

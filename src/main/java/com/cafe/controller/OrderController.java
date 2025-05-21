@@ -200,7 +200,7 @@ public class OrderController {
             alert.setHeaderText(null);
             alert.setContentText("Vui lòng chọn bàn trước khi thanh toán!");
             alert.showAndWait();
-            return; // Dừng lại nếu không có bàn được chọn
+            return;
         }
 
         if (invoiceMap.isEmpty()) {
@@ -209,14 +209,14 @@ public class OrderController {
             alert.setHeaderText(null);
             alert.setContentText("Vui lòng thêm ít nhất 1 mặt hàng trước khi thanh toán!");
             alert.showAndWait();
-            return; // Dừng lại nếu không có mặt hàng nào
+            return;
         }
 
-        // Mở cửa sổ hóa đơn
+
         try {
             URL resource = getClass().getResource("/com/cafe/view/Invoice.fxml");
             if (resource == null) {
-                throw new IOException("Resource /com/cafe/view/Invoice.fxml not found. Check if the file exists in src/main/resources/com/cafe/view/ and rebuild the project.");
+                throw new IOException();
             }
             FXMLLoader loader = new FXMLLoader(resource);
             Parent root = loader.load();
@@ -234,9 +234,9 @@ public class OrderController {
                 System.err.println("CSS file /com/cafe/view/Style.css not found.");
             }
             stage.setScene(scene);
-            stage.showAndWait(); // Chờ người dùng đóng cửa sổ hóa đơn
+            stage.showAndWait();
 
-            // Chỉ thực hiện reset và cập nhật trạng thái bàn nếu người dùng xác nhận
+
             if (invoiceController.isConfirmed()) {
                 int idBan = Integer.parseInt(selectedTable.replace("Bàn ", ""));
                 updateTableStatus(idBan, "Đang dùng");
@@ -361,7 +361,7 @@ public class OrderController {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Cafe Order");
+            primaryStage.setTitle("Hệ thống quản lý quán cà phê");
             primaryStage.setWidth(1200);
             primaryStage.setHeight(900);
             primaryStage.setResizable(false);

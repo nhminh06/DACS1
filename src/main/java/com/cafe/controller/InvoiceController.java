@@ -34,7 +34,7 @@ public class InvoiceController {
 
     private Map<String, InvoiceItem> hoaDonItems;
     private boolean isConfirmed = false;
-    private double phanTramGiam; // Lưu % giảm giá
+    private double phanTramGiam;
 
     private OrderController orderController;
 
@@ -52,7 +52,7 @@ public class InvoiceController {
 
     public void loadInvoiceData(String selectedTable, Map<String, InvoiceItem> invoiceMap, double phanTramGiam, String totalText) {
         this.hoaDonItems = invoiceMap;
-        this.phanTramGiam = phanTramGiam; // Gán giá trị để sử dụng trong thanh toán
+        this.phanTramGiam = phanTramGiam;
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -100,7 +100,7 @@ public class InvoiceController {
         String maDon = generateMaDon(today);
 
         try (Connection conn = connectDB()) {
-            // Lưu hóa đơn
+
             String sqlHoaDon = "INSERT INTO HoaDon (MaDon, NgayLap) VALUES (?, ?)";
             try (PreparedStatement psHoaDon = conn.prepareStatement(sqlHoaDon)) {
                 psHoaDon.setString(1, maDon);
@@ -108,7 +108,7 @@ public class InvoiceController {
                 psHoaDon.executeUpdate();
             }
 
-            // Lưu chi tiết thống kê, có thêm KhuyenMai
+
             String sqlThongKe = "INSERT INTO thongke (ngay, ten_mon, so_luong, don_gia, tong_tien, MaDon, KhuyenMai) VALUES (?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement psThongKe = conn.prepareStatement(sqlThongKe)) {
                 for (Map.Entry<String, InvoiceItem> entry : hoaDonItems.entrySet()) {
@@ -124,12 +124,12 @@ public class InvoiceController {
                     psThongKe.setDouble(4, donGia);
                     psThongKe.setDouble(5, tongTien);
                     psThongKe.setString(6, maDon);
-                    psThongKe.setDouble(7, phanTramGiam); // Lưu % khuyến mãi
+                    psThongKe.setDouble(7, phanTramGiam);
                     psThongKe.executeUpdate();
                 }
             }
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Thanh toán thành công và đã lưu vào thống kê!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Thanh toán thành công hóa đơn đã được lưu.");
             alert.showAndWait();
 
             isConfirmed = true;
@@ -145,7 +145,7 @@ public class InvoiceController {
 
     private String generateMaDon(LocalDate date) {
         String dateStr = date.format(DateTimeFormatter.ofPattern("yyMMdd"));
-        int sequence = (int) (Math.random() * 1000); // Số ngẫu nhiên từ 0-999
+        int sequence = (int) (Math.random() * 1000);
         return String.format("HD%s%03d", dateStr, sequence);
     }
 

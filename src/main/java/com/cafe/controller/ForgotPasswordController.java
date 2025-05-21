@@ -30,7 +30,7 @@ public class ForgotPasswordController {
             return;
         }
 
-        // Tạo mã xác nhận 6 số ngẫu nhiên
+
         verificationCode = String.format("%06d", new Random().nextInt(1000000));
 
         try {
@@ -93,16 +93,9 @@ public class ForgotPasswordController {
     }
     @FXML
     private void gotologin() throws IOException {
-        // Load giao diện đăng nhập từ file FXML
         Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/login.fxml"));
-
-        // Thêm stylesheet vào root
         root.getStylesheets().add(getClass().getResource("/com/cafe/view/Style.css").toExternalForm());
-
-        // Lấy Stage hiện tại từ emailField
         Stage stage = (Stage) emailField.getScene().getWindow();
-
-        // Tạo Scene mới và đặt vào Stage
         Scene scene = new Scene(root, 800, 437);
         stage.setScene(scene);
         stage.setTitle("Đăng nhập");

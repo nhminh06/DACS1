@@ -5,9 +5,9 @@ import jakarta.mail.internet.*;
 import java.util.Properties;
 
 public class EmailSender {
-    // Email gửi (cố định trong code)
-    private static final String FROM_EMAIL = "mnhat0034@gmail.com";  // Thay bằng email của bạn
-    private static final String APP_PASSWORD = "rqxr eqjw fkoe wejf";  // Thay mật khẩu app
+
+    private static final String FROM_EMAIL = "mnhat0034@gmail.com";
+    private static final String APP_PASSWORD = "rqxr eqjw fkoe wejf";
 
     public static void sendVerificationCode(String toEmail, String code) throws MessagingException {
         Properties props = new Properties();

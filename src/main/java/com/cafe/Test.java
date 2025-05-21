@@ -20,7 +20,7 @@ public class Test extends Application {
         primaryStage.setScene(scene); primaryStage.setTitle("Cafe Order"); primaryStage.setWidth(1200); primaryStage.setHeight(900); primaryStage.setResizable(false); primaryStage.show();
 
 
-        primaryStage.setTitle("Cafe Order");
+        primaryStage.setTitle("Hệ thống quản lý quán cà phê");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

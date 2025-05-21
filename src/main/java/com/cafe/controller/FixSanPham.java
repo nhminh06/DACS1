@@ -15,7 +15,7 @@ public class FixSanPham {
     @FXML private TextField tenSanPhamSua;
     @FXML private TextField giaSanPhamSua;
     @FXML private TextArea moTaSanPhamSua;
-    @FXML private ImageView anhSanPhamSua; // Có thể giữ lại hoặc xóa nếu không cần hiển thị
+    @FXML private ImageView anhSanPhamSua;
     @FXML private Label thongTinSanPhamSua;
 
     private int sanPhamId;
@@ -26,7 +26,7 @@ public class FixSanPham {
         tenSanPhamSua.setText(ten);
         giaSanPhamSua.setText(String.valueOf(gia));
         moTaSanPhamSua.setText(moTa);
-        hinhAnhPath = hinhAnh != null ? hinhAnh : ""; // Gán giá trị từ CSDL
+        hinhAnhPath = hinhAnh != null ? hinhAnh : "";
         thongTinSanPhamSua.setText("Link ảnh hiện tại: " + (hinhAnh != null ? hinhAnh : "Không có"));
     }
 
@@ -77,7 +77,7 @@ public class FixSanPham {
 
             int rows = pstmt.executeUpdate();
             if (rows > 0) {
-                hienThongBao("Cập nhật sản phẩm thành công!");
+                hienThongBao("Cập nhật sản phẩm thành công.");
                 Stage stage = (Stage) tenSanPhamSua.getScene().getWindow();
                 ManagementController managementController = (ManagementController) stage.getUserData();
                 if (managementController != null) {
@@ -85,7 +85,7 @@ public class FixSanPham {
                 }
                 dongCuaSo();
             } else {
-                hienCanhBao("Không thể cập nhật sản phẩm. ID không tồn tại.");
+                hienCanhBao("Không thể cập nhật sản phẩm .");
             }
 
         } catch (SQLException e) {
@@ -108,7 +108,7 @@ public class FixSanPham {
         );
         File file = fileChooser.showOpenDialog(tenSanPhamSua.getScene().getWindow());
         if (file != null) {
-            hinhAnhPath = file.getAbsolutePath(); // Chỉ lưu đường dẫn
+            hinhAnhPath = file.getAbsolutePath();
             thongTinSanPhamSua.setText("Link ảnh đã chọn: " + file.getName());
         }
     }
