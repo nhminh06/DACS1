@@ -19,7 +19,7 @@
         <HBox alignment="TOP_LEFT" spacing="20">
             <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
                 <Button styleClass="sidebar-button" text="🍽 Gọi Món" />
-                <Button onAction="#gotoManagement" styleClass="sidebar-button" text="🏠 Quản lý" />
+                <Button onAction="#gotoManagement" styleClass="sidebar-button" text="🏠 Quản Lý" />
                 <Button onAction="#gotocustomers" styleClass="sidebar-button" text="👥 Nhân Viên" />
                 <Button onAction="#gotoreports" styleClass="sidebar-button" text="📊 Thống Kê" />
                 <Region VBox.vgrow="ALWAYS" />
