@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,7 +22,6 @@ public class RegisterController {
     @FXML private TextField emailField;
     @FXML private Label messageLabel;
 
-
     private Connection getConnection() {
         try {
             return DriverManager.getConnection("jdbc:mysql://localhost:13306/coffee_shop", "root", "");
@@ -29,7 +30,6 @@ public class RegisterController {
             return null;
         }
     }
-
 
     @FXML
     private void handleRegister() {
@@ -53,7 +53,6 @@ public class RegisterController {
             return;
         }
 
-
         if (registerUser(user, pass, email)) {
             showMessage("Đăng ký thành công! Quay về đăng nhập...", "green");
             goToLogin();
@@ -62,13 +61,15 @@ public class RegisterController {
         }
     }
 
-
     private boolean registerUser(String user, String pass, String email) {
         String sql = "INSERT INTO users(username, password, email) VALUES (?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            String hashedPass = hashPassword(pass); // Mã hóa mật khẩu tại đây
+
             stmt.setString(1, user);
-            stmt.setString(2, pass);
+            stmt.setString(2, hashedPass);
             stmt.setString(3, email);
             stmt.executeUpdate();
             return true;
@@ -78,11 +79,29 @@ public class RegisterController {
         }
     }
 
+    //SHA-256
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     private void showMessage(String message) {
         showMessage(message, "red");
     }
-
 
     private void showMessage(String message, String color) {
         messageLabel.setText(message);
@@ -106,6 +125,7 @@ public class RegisterController {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void gotologin() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/com/cafe/view/login.fxml"));

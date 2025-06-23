@@ -10,7 +10,7 @@
            styleClass="content-area" prefWidth="300">
 
     <VBox spacing="15">
-        <Label alignment="CENTER" styleClass="ban-label" text="Invoice">
+        <Label alignment="CENTER" styleClass="ban-label" text="Hóa Đơn">
             <font>
                 <Font size="18.0" />
             </font>

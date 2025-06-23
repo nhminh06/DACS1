@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,7 +23,6 @@ public class loginController {
     @FXML private Button loginButton;
     @FXML
     private Hyperlink signupLink;
-
 
     @FXML
     private void handleLogin() {
@@ -48,12 +49,13 @@ public class loginController {
     }
 
     public boolean authenticate(String user, String pass) {
+        String hashedPass = hashPassword(pass); // băm mật khẩu trước khi truy vấn
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, user);
-            stmt.setString(2, pass);
+            stmt.setString(2, hashedPass);
             ResultSet rs = stmt.executeQuery();
 
             return rs.next();
@@ -61,6 +63,26 @@ public class loginController {
             e.printStackTrace();
         }
         return false;
+    }
+
+    //SHA-256
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void loadMainScreen() {
@@ -80,6 +102,7 @@ public class loginController {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void gotoForgotPassword() {
         try {
@@ -95,9 +118,6 @@ public class loginController {
             e.printStackTrace();
         }
     }
-
-
-
 
     @FXML
     private void gotoregister(javafx.event.ActionEvent event) {
@@ -116,6 +136,4 @@ public class loginController {
             e.printStackTrace();
         }
     }
-
-
 }
