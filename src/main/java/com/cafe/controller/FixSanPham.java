@@ -32,9 +32,10 @@ public class FixSanPham {
 
     @FXML
     private void handleLuu(ActionEvent event) {
-        String tenMoi = tenSanPhamSua.getText() != null ? tenSanPhamSua.getText().trim() : "";
-        String giaStr = giaSanPhamSua.getText() != null ? giaSanPhamSua.getText().trim() : "";
-        String moTaMoi = moTaSanPhamSua.getText() != null ? moTaSanPhamSua.getText().trim() : "";
+        String tenMoi = tenSanPhamSua.getText().trim();
+        String giaStr = giaSanPhamSua.getText().trim();
+        String moTaMoi = moTaSanPhamSua.getText().trim();
+
 
         if (tenMoi.isEmpty() || giaStr.isEmpty() || moTaMoi.isEmpty()) {
             hienCanhBao("Vui lòng nhập đầy đủ thông tin (tên, giá, mô tả).");
@@ -102,7 +103,7 @@ public class FixSanPham {
     @FXML
     private void chonAnhMoi(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Chọn link ảnh sản phẩm");
+        fileChooser.setTitle("Chọn ảnh sản phẩm");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
