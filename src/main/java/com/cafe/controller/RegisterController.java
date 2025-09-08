@@ -66,7 +66,7 @@ public class RegisterController {
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            String hashedPass = hashPassword(pass); // Mã hóa mật khẩu tại đây
+            String hashedPass = hashPassword(pass);
 
             stmt.setString(1, user);
             stmt.setString(2, hashedPass);
@@ -79,7 +79,7 @@ public class RegisterController {
         }
     }
 
-    //SHA-256
+
     private String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

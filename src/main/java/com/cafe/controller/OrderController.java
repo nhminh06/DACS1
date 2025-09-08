@@ -231,7 +231,7 @@ public class OrderController {
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
             } else {
-                System.err.println("CSS file /com/cafe/view/Style.css not found.");
+                System.err.println("");
             }
             stage.setScene(scene);
             stage.showAndWait();
@@ -266,8 +266,6 @@ public class OrderController {
             minusButton.getStyleClass().add("minus-button");
             minusButton.setMinWidth(15);
             minusButton.setMaxWidth(15);
-            minusButton.setMinHeight(15);
-            minusButton.setMaxHeight(15);
 
             Label tenLabel = new Label(ten);
             tenLabel.setMinWidth(100);
